@@ -1,0 +1,7 @@
+# This script will hopefully set up everything you need to work
+# on a linux system. To use it call source <scriptname> from the command line.
+
+pip install virtualenv
+virtualenv venv
+source ./venv/bin/activate
+pip install -r requirements.txt
