@@ -1,0 +1,112 @@
+<!doctype html>  
+<html lang="en">  
+<head>  
+  <meta charset="utf-8">  
+  <title>Instafeed</title>  
+  <meta name="description" content="Instafeed Homepage">  
+  <meta name="author" content="Instafeed Team">
+  <!--[if lt IE 9]>  
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>  
+  <![endif]-->  
+  <style type="text/css">
+    .forms {
+      margin-bottom: 20px;
+      padding: 5px;
+      border: 1px dashed #ccc;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>  
+<body>
+  <!-- Facebook Javascript SDK -->
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+    FB.init({
+      appId      : 429901077067907, // App ID
+      channelUrl : 'https://dry-peak-6840.herokuapp.com/', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    // Additional initialization code here
+    };
+
+    // Load the SDK Asynchronously
+    (function(d){
+       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement('script'); js.id = id; js.async = true;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=429901077067907";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!-- End FB Javascript SDK -->
+
+	<div class="main-container">
+    <h1>Login Page</h1>
+    <hr />
+    <h3>Facebook buttons</h3>
+    <!-- Facebook Registrate Button -->
+    <fb:login-button registration-url="https://www.facebook.com/plugins/registration?
+             client_id=113869198637480&
+             redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fecho%2F&
+             fields=name,birthday,gender,location,email">
+    </fb:login-button>
+
+    <!-- Facebook Login Button -->
+    <div class="fb-login-button" data-show-faces="false" data-width="400" data-max-rows="2"></div>
+
+
+    <h3>Twitter buttons</h3>
+    <!-- insert Twitter Registrate/Login Button here-->
+
+    <hr />
+    <h4>Log in form</h4>
+    <div class="forms">
+  		<form action="#">
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <span>
+          <input type="checkbox" name="checkbox">
+          <label for="checkbox">remember</label>
+        </span>
+        <input type="submit" value="Log in">
+      </form>
+    </div>
+
+    <h4>Registration form</h4>
+    <div class="forms registrate">
+      <form action="#">
+        <label>Username or Email</label><br>
+        <input type="text" name="username" placeholder="username"><br>
+        <label>Enter password</label><br>
+        <input type="password" name="password" placeholder="password"><br>
+        <label>Enter password again</label><br>
+        <input type="password" name="password_confirm" placeholder="password"><br>
+        <span>
+            <input type="checkbox" name="checkbox">
+            <label for="checkbox">remember</label>
+        </span><br />
+        <span>
+            <input type="checkbox" name="checkbox">
+            <label for="checkbox">Accept Agreement (do we have one?)</label>
+        </span><br />
+        <input type="submit" value="Sign up">
+      </form>
+    </div>
+
+	</div>
+</body>  
+</html>  
