@@ -10,10 +10,11 @@
   <![endif]-->
   <link href='http://fonts.googleapis.com/css?family=Rochester' rel='stylesheet' type='text/css'>
   <style type="text/css">
-    .forms {
+    forms {
       margin-bottom: 20px;
       padding: 5px;
       border: 1px dashed #ccc;
+      text-align: left;
     }
     h1, h2, h3, h4, h5, h6 {
       margin-bottom: 5px;
@@ -60,54 +61,26 @@
 
 	<div class="main-container">
     <h1>Instafeed</h1>
-    <h2>Login Page</h2>
-    <hr />
-    <h3>Facebook buttons</h3>
+
+    <form action="#">
+      <label>Username or Email</label><br>
+      <input type="text" name="username" placeholder="username"><br>
+      <label>Enter password</label><br>
+      <input type="password" name="password" placeholder="password"><br>
+      <label>Enter password again</label><br>
+      <input type="password" name="password_confirm" placeholder="password"><br>
+      <span><label><input type="checkbox" name="checkbox">Remember Me</label></span><br />
+      <span><label><input type="checkbox" name="checkbox">Accept Agreement (do we have one?)</label></span><br />
+      <input type="submit" value="Register">
+    </form>
+
     <!-- Facebook Button -->
     <fb:login-button registration-url="https://www.facebook.com/plugins/registration?
              client_id=113869198637480&
              redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fecho%2F&
-             fields=name,birthday,gender,location,email">
+             fields=name,birthday,gender,location,email">Register via Facebook
     </fb:login-button>
-
-    <h3>Twitter buttons</h3>
     <!-- insert Twitter Registrate/Login Button here-->
-
-    <hr />
-    <h4>Log in form</h4>
-    <div class="forms">
-  		<form action="#">
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-        <span>
-          <input type="checkbox" name="checkbox">
-          <label for="checkbox">remember</label>
-        </span>
-        <input type="submit" value="Log in">
-      </form>
-    </div>
-
-    <h4>Registration form</h4>
-    <div class="forms registrate">
-      <form action="#">
-        <label>Username or Email</label><br>
-        <input type="text" name="username" placeholder="username"><br>
-        <label>Enter password</label><br>
-        <input type="password" name="password" placeholder="password"><br>
-        <label>Enter password again</label><br>
-        <input type="password" name="password_confirm" placeholder="password"><br>
-        <span>
-            <input type="checkbox" name="checkbox">
-            <label for="checkbox">remember</label>
-        </span><br />
-        <span>
-            <input type="checkbox" name="checkbox">
-            <label for="checkbox">Accept Agreement (do we have one?)</label>
-        </span><br />
-        <input type="submit" value="Sign up">
-      </form>
-    </div>
-
 	</div>
 </body>  
 </html>  
