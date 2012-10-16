@@ -9,19 +9,13 @@
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>  
   <![endif]-->
   <link href='http://fonts.googleapis.com/css?family=Rochester' rel='stylesheet' type='text/css'>
+  <link href='../static/css/bootstrap.css' rel='stylesheet' type='text/css'>
   <style type="text/css">
-    forms {
-      margin-bottom: 20px;
-      padding: 5px;
-      border: 1px dashed #ccc;
-      text-align: left;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-bottom: 5px;
-    }
-    h1 {
-      font-family: 'Rochester', cursive;
-    }
+    h1 { font-family: 'Rochester', cursive; font-size: 56px; text-align: center; }
+    h1 a { color: inherit; }
+    h1 a:hover { text-decoration: none; color: inherit; }
+    legend { padding-top: 25px; padding-bottom: 2px; }
+    .row { margin-top: 20px; }
   </style>
 </head>  
 <body>
@@ -59,28 +53,46 @@
   </script>
   <!-- End FB Javascript SDK -->
 
-	<div class="main-container">
-    <h1>Instafeed</h1>
-
-    <form action="#">
-      <label>Username or Email</label><br>
-      <input type="text" name="username" placeholder="username"><br>
-      <label>Enter password</label><br>
-      <input type="password" name="password" placeholder="password"><br>
-      <label>Enter password again</label><br>
-      <input type="password" name="password_confirm" placeholder="password"><br>
-      <span><label><input type="checkbox" name="checkbox">Remember Me</label></span><br />
-      <span><label><input type="checkbox" name="checkbox">Accept Agreement (do we have one?)</label></span><br />
-      <input type="submit" value="Register">
-    </form>
-
-    <!-- Facebook Button -->
-    <fb:login-button registration-url="https://www.facebook.com/plugins/registration?
-             client_id=113869198637480&
-             redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fecho%2F&
-             fields=name,birthday,gender,location,email">Register via Facebook
-    </fb:login-button>
-    <!-- insert Twitter Registrate/Login Button here-->
-	</div>
+	<div class="container">
+    <legend><h1><a href=".">Instafeed</a></h1></legend>
+    <div class="row span5 offset2">
+      <form class="form-horizontal" action="#">
+        <div class="control-group">
+          <label class="control-label" for="inputEmail">Email</label>
+          <div class="controls">
+            <input type="text" id="inputEmail" placeholder="Email">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" placeholder="Password">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password again</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" placeholder="Password">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox"> Remember me
+            </label>
+            <label class="checkbox">
+              <input type="checkbox"> Accept Agreement (do we have one?)
+            </label>
+            <div class="row">
+              <input type="submit" class="btn btn-primary" value="Sign in"/>
+              <a class="btn" href="./signup.html">Sign Up Instafeed</a>
+            </div>
+            <div class="row">
+              <div class="fb-login-button" data-show-faces="false" data-width="200" data-max-rows="1">Log in via Facebook</div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
 </body>  
 </html>  
