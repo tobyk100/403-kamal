@@ -1,0 +1,64 @@
+body{
+    background-color: #87CEFA;
+}
+#topBar {
+    height:  50px;
+    border:  1pt solid black;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: xx-large;
+    font-family: 'Rochester', serif;
+}
+
+#post{
+    float:  right;
+    height: 45px;
+}
+
+#postPopup {
+    z-index: 100;
+    right: 50px;
+    top: 50px;
+    height: 200px;
+    width:  500px;
+    border:  2pt solid black;
+    background-color: white;
+    position:  absolute;
+    display:  none;
+}
+
+#postText {
+    resize: none;
+    height:  100px;
+    width: 400px;
+    margin-top: 15px;
+    margin-left: 50px;
+}
+
+#submitPost {
+    width:  100px;
+    margin-left: 200px;
+}
+#feeds{
+    margin-top: 25px;
+    width: 80%;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#twitterFeed, #facebookFeed{
+    border:  1pt solid black;
+    width: 35%;
+    height: 450px;
+    background-color: white;
+}
+
+#twitterFeed, #twitterRefresh{
+   float: left;
+}
+
+#facebookFeed, #facebookRefresh{
+    float:  right;
+}
