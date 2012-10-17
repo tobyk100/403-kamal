@@ -1,0 +1,98 @@
+<!doctype html>  
+<html lang="en">  
+<head>  
+  <meta charset="utf-8">  
+  <title>Instafeed</title>  
+  <meta name="description" content="Instafeed Homepage">  
+  <meta name="author" content="Instafeed Team">
+  <!--[if lt IE 9]>  
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>  
+  <![endif]-->
+  <link href='http://fonts.googleapis.com/css?family=Rochester' rel='stylesheet' type='text/css'>
+  <link href='../static/css/bootstrap.css' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    h1 { font-family: 'Rochester', cursive; font-size: 56px; text-align: center; }
+    h1 a { color: inherit; }
+    h1 a:hover { text-decoration: none; color: inherit; }
+    legend { padding-top: 25px; padding-bottom: 2px; }
+    .row { margin-top: 20px; }
+  </style>
+</head>  
+<body>
+  <!-- Facebook Javascript SDK -->
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+    FB.init({
+      appId      : 429901077067907, // App ID
+      channelUrl : 'https://dry-peak-6840.herokuapp.com/', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    // Additional initialization code here
+    };
+
+    // Load the SDK Asynchronously
+    (function(d){
+       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement('script'); js.id = id; js.async = true;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=429901077067907";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!-- End FB Javascript SDK -->
+
+	<div class="container">
+    <legend><h1><a href=".">Instafeed</a></h1></legend>
+    <div class="row span5 offset2">
+      <form class="form-horizontal" action="#">
+        <div class="control-group">
+          <label class="control-label" for="inputEmail">Email</label>
+          <div class="controls">
+            <input type="text" id="inputEmail" placeholder="Email">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" placeholder="Password">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password again</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" placeholder="Password">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox"> Remember me
+            </label>
+            <label class="checkbox">
+              <input type="checkbox"> Accept Agreement (do we have one?)
+            </label>
+            <div class="row">
+              <input type="submit" class="btn btn-primary" value="Sign in"/>
+              <a class="btn" href="./signup.html">Sign Up Instafeed</a>
+            </div>
+            <div class="row">
+              <div class="fb-login-button" data-show-faces="false" data-width="200" data-max-rows="1">Log in via Facebook</div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+</body>  
+</html>  
