@@ -1,1 +1,1 @@
-web: python exampleapp.py
+web: python instafeed/manage.py runserver
