@@ -1,1 +1,1 @@
-web: python instafeed/manage.py runserver
+web: python instafeed/manage.py runserver "0.0.0.0:$PORT"
