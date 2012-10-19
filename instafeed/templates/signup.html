@@ -10,49 +10,13 @@
   <![endif]-->
   <link href='http://fonts.googleapis.com/css?family=Rochester' rel='stylesheet' type='text/css'>
   <link href='../static/css/bootstrap.css' rel='stylesheet' type='text/css'>
-  <style type="text/css">
-    h1 { font-family: 'Rochester', cursive; font-size: 56px; text-align: center; }
-    h1 a { color: inherit; }
-    h1 a:hover { text-decoration: none; color: inherit; }
-    legend { padding-top: 25px; padding-bottom: 2px; }
-    .row { margin-top: 20px; }
+  <link href='../static/css/index.css' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript" src="../static/js/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" src="../static/js/bootstrap.js"></script>
   </style>
 </head>  
 <body>
-  <!-- Facebook Javascript SDK -->
-  <div id="fb-root"></div>
-  <script>
-    window.fbAsyncInit = function() {
-    FB.init({
-      appId      : 429901077067907, // App ID
-      channelUrl : 'https://dry-peak-6840.herokuapp.com/', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-
-    // Additional initialization code here
-    };
-
-    // Load the SDK Asynchronously
-    (function(d){
-       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement('script'); js.id = id; js.async = true;
-       js.src = "//connect.facebook.net/en_US/all.js";
-       ref.parentNode.insertBefore(js, ref);
-    }(document));
-
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=429901077067907";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  </script>
-  <!-- End FB Javascript SDK -->
-
 	<div class="container">
     <legend><h1><a href=".">Instafeed</a></h1></legend>
     <div class="row span5 offset2">
@@ -81,17 +45,32 @@
               <input type="checkbox"> Remember me
             </label>
             <label class="checkbox">
-              <input type="checkbox"> Accept Agreement (do we have one?)
+              <input type="checkbox" id="agreement-checkbox"> Accept Agreement ( <a href="#agreement" data-toggle="modal">details</a> )
             </label>
-            <div class="row">
-              <input type="submit" class="btn btn-primary" value="Sign up"/>
+          </div>
+          <div class="modal hide" id="agreement">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h3>Instafeed Agreement</h3>
             </div>
-            <div class="row">
-              <div class="fb-login-button" data-show-faces="false" data-width="200" data-max-rows="1">Log in via Facebook</div>
+            <div class="modal-body">
+              <p>The following are dummy texts.</p>
+              <p>
+                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+              </p>
             </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal">Close</a>
+              <a href="#" class="btn btn-primary" data-dismiss="modal">Accept</a>
+            </div>
+          </div>
+          <div class="controls">
+            <input type="submit" class="btn btn-primary" value="Sign up"/>
           </div>
         </div>
       </form>
     </div>
+  </div>
+  <script type="text/javascript" src="../static/js/agreement.js"></script>
 </body>  
 </html>  
