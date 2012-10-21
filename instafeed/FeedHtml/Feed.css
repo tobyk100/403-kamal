@@ -48,11 +48,29 @@ body{
     margin-right: auto;
 }
 
+.FeedPost {
+    border: 1pt solid black;
+    width: 99.5%;
+}
+
+.NameTime {
+    font-size: small;
+}
+
+.Message {
+   font-size: medium;
+}
+
+.logo {
+    float: left;
+    margin-right: 5px;
+}
 #twitterFeed, #facebookFeed{
     border:  1pt solid black;
     width: 35%;
     height: 450px;
     background-color: white;
+    overflow: auto;
 }
 
 #twitterFeed, #twitterRefresh{
