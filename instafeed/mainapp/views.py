@@ -30,3 +30,21 @@ def signup(request):
     form = EmailUserCreationForm()
 
   return render(request, 'signup.html', {'form': form})
+  
+def twitter_request(request):
+  if request.method == 'POST':
+    print "recieved request to post to Twitter"
+    print request.POST
+  elif request.method = 'GET':
+    print "recieved request to retrieve posts from Twitter"
+    print request.GET
+  return HttpResponse()
+
+def facebook_request(request):
+  if request.method == 'POST':
+    print "recieved request to post to Facebook"
+    print request.POST
+  elif request.method = 'GET':
+    print "recieved request to retrieve posts from Facebook"
+    print request.GET
+  return HttpResponse()
