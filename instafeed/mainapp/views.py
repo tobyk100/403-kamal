@@ -35,7 +35,7 @@ def twitter_request(request):
   if request.method == 'POST':
     print "recieved request to post to Twitter"
     print request.POST
-  elif request.method = 'GET':
+  elif request.method == 'GET':
     print "recieved request to retrieve posts from Twitter"
     print request.GET
   return_dict = {'message': 'Tried to interact with twitter', 'code':'200'}
@@ -46,7 +46,7 @@ def facebook_request(request):
   if request.method == 'POST':
     print "recieved request to post to Facebook"
     print request.POST
-  elif request.method = 'GET':
+  elif request.method == 'GET':
     print "recieved request to retrieve posts from Facebook"
     print request.GET
   return_dict = {'message': 'Tried to interact with fb', 'code':'200'}
