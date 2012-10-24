@@ -3,6 +3,9 @@ from django.shortcuts import render
 from emailusernames.forms import EmailUserCreationForm
 from django.contrib.auth import authenticate, login
 
+def feed(request):
+  return render(request, 'Feed.html')
+
 def index(request):
   return render(request, 'index.html')
 
