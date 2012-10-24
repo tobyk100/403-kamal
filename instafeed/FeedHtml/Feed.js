@@ -1,12 +1,18 @@
 window.onload = function () {
-    $('#post').bind('click', displayPostPopup);
-    $('#submitPost').bind('click', submitAndResetPost)
-    $('#facebookRefresh').bind('click', loadFacebookFeed);
-    $('#twitterRefresh').bind('click', loadTwitterFeed);
+    bindButtons();
 }
 
+//Binds all appropriate buttons with clicks
+function bindButtons(){
+    $('#postButton').bind('click', displayPostPopup);
+    $('#accountsButton').bind('click', directToAccounts);
+    $('#dashboardButton').bind('click', directToDashboard)
+    $('#submitPostButton').bind('click', submitAndResetPost);
+    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
+    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
+}
+//Toggles display popup for user to type in post
 function displayPostPopup(){
-    //alert($('#postMessage').css("display"));
     if ($('#postPopup').css("display") == 'none') {
         $('#postPopup').show();
     } else {
@@ -14,18 +20,54 @@ function displayPostPopup(){
     }
 }
 
-function submitAndResetPost() {
-    $('#postText').val('');
-    //AJAX REQUEST TO DJANGO
+//Directs the User to the Account Page
+function directToAccounts() {
+    var url = "/Accounts.html";    
+    $(location).attr('href',url);
 }
 
+//Directs the User to the Account Page
+function directToDashboard() {
+    var url = "/Feed.html";    
+    $(location).attr('href',url);
+}
+
+//Submits a post using an ajax request.
+//On callback return clears the text area so they can enter in another post
+function submitAndResetPost() {
+    alert($('#postText').val());
+    //AJAX REQUEST TO DJANGO
+    //$.post('post', 
+    //    { 
+    //        message : $('#postText').val() 
+    //    },
+    //    function(data,status){
+    //        alert("Data: " + data + "\nStatus: " + status);
+    //        $('#postText').val('');
+    //    });   
+}
+
+//Loads Facebook feeds from server
+//Post request used to get list of posts
 function loadFacebookFeed()
 {
-    createPostInFacebookFeed("Sample message", "3:59", "Brandon");    
+   $.post('facebook_request', 
+       {
+           message : "Get Facebook Feed"
+       },
+       function(data,status){
+           alert("Data: " + data + "\nStatus: " + status);
+           //parse data and call createPostInFacebookFeed
+       });    
+    //createPostInFacebookFeed("Sample message", "3:59", "Brandon");    
 }
 
+
+//Creates a pop in the social media feed with the given parameters
 function createPostInFacebookFeed(message, time, person){
-    $('#facebookFeed').append('<div class ="FeedPost"><img src="FacebookLogo.jpg" class="logo" alt="Facebook"/><div class="NameTime">' + person + ' - ' + time + '</div><div class="Message">' + message + '</div></div>');
+    $('#facebookFeed').append('<div class ="feedPost">' +
+                      '<img src="FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
+                      '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 }
 
 function loadTwitterFeed()
@@ -34,5 +76,7 @@ function loadTwitterFeed()
 } 
 
 function createPostInTwitterFeed(message, time, person){
-    $('#twitterFeed').append('<div class ="FeedPost"><img src="TwitterLogo.jpg" class="logo" alt="Facebook"/><div class="NameTime">' + person + ' - ' + time + '</div><div class="Message">' + message + '</div></div>');
+    $('#twitterFeed').append('<div class ="feedPost">' +
+                    '<img src="TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
+                    '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 } 
