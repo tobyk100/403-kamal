@@ -38,7 +38,9 @@ def twitter_request(request):
   elif request.method = 'GET':
     print "recieved request to retrieve posts from Twitter"
     print request.GET
-  return HttpResponse()
+  return_dict = {'message': 'Tried to interact with twitter', 'code':'200'}
+  json = simplejson.dumps(return_dict)
+  return HttpResponse(json)
 
 def facebook_request(request):
   if request.method == 'POST':
@@ -47,4 +49,6 @@ def facebook_request(request):
   elif request.method = 'GET':
     print "recieved request to retrieve posts from Facebook"
     print request.GET
-  return HttpResponse()
+  return_dict = {'message': 'Tried to interact with fb', 'code':'200'}
+  json = simplejson.dumps(return_dict)
+  return HttpResponse(json)
