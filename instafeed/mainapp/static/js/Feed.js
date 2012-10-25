@@ -51,14 +51,22 @@ function submitAndResetPost() {
 //Post request used to get list of posts
 function loadFacebookFeed()
 {
-   $.post('facebook_request', 
-       {
-           message : "Get Facebook Feed"
-       },
-       function(data,status){
-           alert("Data: " + data + "\nStatus: " + status);
+	$.ajax({
+		type:"POST",
+		url:"/facebook_request/",
+		data:"title=ajax call",
+        datatype:"json",
+        error:function(data){alert('Error:'+data);},
+        success:function(data){alert('OK! ' + data);}
+    });
+   //$.post('facebook_request', 
+       //{
+         //  message : "Get Facebook Feed"
+       //},
+       //function(data,status){
+         //  alert("Data: " + data + "\nStatus: " + status);
            //parse data and call createPostInFacebookFeed
-       });    
+       //});    
     //createPostInFacebookFeed("Sample message", "3:59", "Brandon");    
 }
 

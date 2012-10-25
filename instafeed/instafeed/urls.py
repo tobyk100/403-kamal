@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     url(r'^$', 'mainapp.views.index', name='index'),
     url(r'^signup/', 'mainapp.views.signup', name='signup'),
     url(r'^feed/', 'mainapp.views.feed', name='feed'),
-    url(r'^twitter_request/', 'mainapp.views.twitter_request', name='twitter_request'),
+    url(r'^feed/twitter_request/', 'mainapp.views.twitter_request', name='twitter_request'),
     url(r'^facebook_request/', 'mainapp.views.facebook_request', name='fb_request'),
     # url(r'^instafeed/', include('instafeed.foo.urls')),
 
