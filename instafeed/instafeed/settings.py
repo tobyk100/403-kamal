@@ -12,11 +12,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'instafeed',                      # Or path to database file if using sqlite3.
-        'USER': 'pgadmin',                      # Not used with sqlite3.
-        'PASSWORD': '403-kamal',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'decjmjca0u8vjf',                      # Or path to database file if using sqlite3.
+        'USER': 'xtehbsbwkfjqdx',                      # Not used with sqlite3.
+        'PASSWORD': 'EGjuqbG445JkPEIcpHtZRDs0lc',                  # Not used with sqlite3.
+        'HOST': 'ec2-54-243-38-139.compute-1.amazonaws.com',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -155,6 +155,12 @@ LOGGING = {
         },
     }
 }
+
+# Use different database setting for local testing and production.
+try:
+  from local_settings import *
+except ImportError, e:
+  pass
 
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
