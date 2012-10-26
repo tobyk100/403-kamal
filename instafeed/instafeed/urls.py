@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'mainapp.views.index', name='index'),
     url(r'^signup/', 'mainapp.views.signup', name='signup'),
+    url(r'^login/', 'mainapp.views.login', name='login'),
     url(r'^feed/', 'mainapp.views.feed', name='feed'),
     url(r'^feed/twitter_request/', 'mainapp.views.twitter_request', name='twitter_request'),
     url(r'^facebook_request/', 'mainapp.views.facebook_request', name='fb_request'),
