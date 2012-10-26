@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from emailusernames.forms import EmailUserCreationForm
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin

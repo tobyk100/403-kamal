@@ -116,10 +116,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp',
+    'emailusernames',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'emailusernames.backends.EmailAuthBackend',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -150,3 +155,6 @@ LOGGING = {
         },
     }
 }
+
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()

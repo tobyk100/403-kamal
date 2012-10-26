@@ -75,13 +75,13 @@ function verify_agreement_checkbox(agreement_checkbox) {
 	});
 
 	// validate email address
-	var email_field = $('#inputEmail');
+	var email_field = $('#id_email');
 	email_field.bind('blur', function() {
 		verify_email(email_field);
 	});
 
-	var pw = $('#inputPassword'),
-		pw_again = $('#inputPassword-again');
+	var pw = $('#id_password1'),
+		pw_again = $('#id_password2');
 
 	pw.bind('blur', function() {
 		verify_pw(pw);
