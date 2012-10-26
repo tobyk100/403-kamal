@@ -8,7 +8,8 @@ def feed(request):
   return render(request, 'Feed.html')
 
 def index(request):
-  return render(request, 'index.html')
+  form = EmailAuthenticationForm()
+  return render(request, 'index.html', {'form': form})
 
 def signup(request):
   if request.method == 'POST':
@@ -34,6 +35,16 @@ def signup(request):
     form = EmailUserCreationForm()
 
   return render(request, 'signup.html', {'form': form})
+
+def login(request)
+      email = request.POST['email']
+      email = request.POST['password']
+      user = authenticate(email=email, password=password)
+      if (user is not None) and (user.is_active):
+        login(request, user)
+        return render(request, 'index.html', {'username': email})
+      else
+        return render(request, 'index.html', {'username': email})
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
@@ -61,3 +72,7 @@ def facebook_request(request):
   return_dict = {'message': 'Tried to interact with fb', 'code':'200'}
   json = simplejson.dumps(return_dict)
   return HttpResponse(json)
+
+def accounts(request):
+  render(request, 'Accounts.html');
+
