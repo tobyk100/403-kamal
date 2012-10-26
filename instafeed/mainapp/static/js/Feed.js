@@ -10,7 +10,27 @@ function bindButtons(){
     $('#submitPostButton').bind('click', submitAndResetPost);
     $('#facebookRefreshButton').bind('click', loadFacebookFeed);
     $('#twitterRefreshButton').bind('click', loadTwitterFeed);
+    $('#addFacebookButton').bind('click', displayLoginScreenFacebook);
+    $('#addTwitterButton').bind('click', displayLoginScreenTwitter);
 }
+
+//Shows Twitter login screen if not already shown
+function displayLoginScreenTwitter(){
+    if ($('#addScreenTwitter').css("display") == 'none') {
+        $('#addScreenTwitter').show();
+        $('#addScreenFacebook').hide();
+    }
+}
+
+//Shows Facebook login screen if not already shown
+function displayLoginScreenFacebook(){
+    if ($('#addScreenFacebook').css("display") == 'none') {
+        $('#addScreenFacebook').show();
+        $('#addScreenTwitter').hide();
+    }
+}
+
+
 //Toggles display popup for user to type in post
 function displayPostPopup(){
     if ($('#postPopup').css("display") == 'none') {
@@ -22,13 +42,13 @@ function displayPostPopup(){
 
 //Directs the User to the Account Page
 function directToAccounts() {
-    var url = "/Accounts.html";    
+    var url = "http://dry-peak-6840.herokuapp.com/accounts/";    
     $(location).attr('href',url);
 }
 
 //Directs the User to the Account Page
 function directToDashboard() {
-    var url = "/Feed.html";    
+    var url = "http://dry-peak-6840.herokuapp.com/feed/";    
     $(location).attr('href',url);
 }
 
@@ -37,54 +57,61 @@ function directToDashboard() {
 function submitAndResetPost() {
     alert($('#postText').val());
     //AJAX REQUEST TO DJANGO
-    //$.post('post', 
-    //    { 
-    //        message : $('#postText').val() 
-    //    },
-    //    function(data,status){
-    //        alert("Data: " + data + "\nStatus: " + status);
-    //        $('#postText').val('');
-    //    });   
+    $.ajax({
+	   	type:"POST",
+		url:"/facebook_request/",
+		data:{ title: $('#postText').val() },
+        datatype:"json",
+        error:function(data){alert('Error:'+data);},
+        success:function(data){
+                    alert('Message Posted!' + data);
+                    $('#postText').val("");    
+                }
+    });   
 }
 
 //Loads Facebook feeds from server
 //Post request used to get list of posts
 function loadFacebookFeed()
 {
-	$.ajax({
-		type:"POST",
-		url:"/facebook_request/",
-		data:"title=ajax call",
-        datatype:"json",
-        error:function(data){alert('Error:'+data);},
-        success:function(data){alert('OK! ' + data);}
+    $.ajax({
+        type: "POST",
+        url: "/facebook_request/",
+        data: { title: "ajax call from facebook" },
+        datatype: "json",
+        error: function (data) { alert('Error:' + data); },
+        success: function (data) {
+            alert('OK! ' + data);
+            createPostInFacebookFeed("Sample message", "3:59", "Brandon");
+        }
     });
-   //$.post('facebook_request', 
-       //{
-         //  message : "Get Facebook Feed"
-       //},
-       //function(data,status){
-         //  alert("Data: " + data + "\nStatus: " + status);
-           //parse data and call createPostInFacebookFeed
-       //});    
-    //createPostInFacebookFeed("Sample message", "3:59", "Brandon");    
 }
 
 
 //Creates a pop in the social media feed with the given parameters
 function createPostInFacebookFeed(message, time, person){
     $('#facebookFeed').append('<div class ="feedPost">' +
-                      '<img src="FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
+                      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                       '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 }
 
 function loadTwitterFeed()
 {
-    createPostInTwitterFeed("stry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s", "3:59", "Brandon");    
+    $.ajax({
+        type: "POST",
+        url: "/twitter_request/",
+        data: { title: "ajax call from twitter" },
+        datatype: "json",
+        error: function (data) { alert('Error:' + data); },
+        success: function (data) {
+            alert('OK! ' + data);
+            createPostInTwitterFeed("Sample message", "3:59", "Brandon");
+        }
+    });    
 } 
 
 function createPostInTwitterFeed(message, time, person){
     $('#twitterFeed').append('<div class ="feedPost">' +
-                    '<img src="TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
+                    '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 } 
