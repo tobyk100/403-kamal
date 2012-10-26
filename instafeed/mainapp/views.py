@@ -2,6 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from emailusernames.forms import EmailUserCreationForm
 from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
+
+def feed(request):
+  return render(request, 'Feed.html')
 
 def index(request):
   return render(request, 'index.html')
@@ -30,3 +34,30 @@ def signup(request):
     form = EmailUserCreationForm()
 
   return render(request, 'signup.html', {'form': form})
+
+#Tag needed for ajax call. May need to take this out later to protect from attacks(?)
+@csrf_exempt
+def twitter_request(request):
+  if request.method == 'POST':
+    print "recieved request to post to Twitter"
+    print request.POST
+  elif request.method == 'GET':
+    print "recieved request to retrieve posts from Twitter"
+    print request.GET
+  return_dict = {'message': 'Tried to interact with twitter', 'code':'200'}
+  json = simplejson.dumps(return_dict)
+  return HttpResponse(json)
+
+@csrf_exempt
+def facebook_request(request):
+  print "got here"
+  return HttpResponse("got here");
+  if request.method == 'POST':
+    print "recieved request to post to Facebook"
+    print request.POST
+  elif request.method == 'GET':
+    print "recieved request to retrieve posts from Facebook"
+    print request.GET
+  return_dict = {'message': 'Tried to interact with fb', 'code':'200'}
+  json = simplejson.dumps(return_dict)
+  return HttpResponse(json)

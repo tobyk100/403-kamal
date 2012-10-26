@@ -7,3 +7,5 @@ Jinja2==2.6
 Werkzeug==0.7.1
 simplejson==2.2.1
 requests==0.10.4
+dj-database-url==0.2.0
+django-email-as-username==1.6.2
