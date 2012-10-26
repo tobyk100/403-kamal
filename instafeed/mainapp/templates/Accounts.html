@@ -8,6 +8,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"  
             type="text/javascript"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        <link href="/static/css/Feed.css" type="text/css" rel="stylesheet" />
+	    <script src="/static/js/Feed.js" type="text/javascript"></script>
         <link href="Feed.css" type="text/css" rel="stylesheet" />
 	    <script src="Feed.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rochester">
@@ -62,11 +64,14 @@
             <button id="dashboardButton">Dashboard</button>
         </div>
         <div id="toggleAddScreen">
-            <button id="addFacebook" onclick="login">Facebook</button>
-            <button id="addTwitter">Twitter</button>
+            <button id="addFacebookButton" onclick="login">Facebook</button>
+            <button id="addTwitterButton">Twitter</button>
         </div>
-        <div id="addScreen">
-            //logins shown here
+        <div id="addScreenFacebook">
+            Facebook login screen here
+        </div>
+        <div id="addScreenTwitter">
+            Twitter login screen here
         </div>
     </body>
 </html>
