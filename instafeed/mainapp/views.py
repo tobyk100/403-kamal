@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from emailusernames.forms import EmailUserCreationForm
+from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 
@@ -36,14 +36,14 @@ def signup(request):
 
   return render(request, 'signup.html', {'form': form})
 
-def login(request)
+def login(request):
       email = request.POST['email']
       email = request.POST['password']
       user = authenticate(email=email, password=password)
       if (user is not None) and (user.is_active):
         login(request, user)
         return render(request, 'index.html', {'username': email})
-      else
+      else:
         return render(request, 'index.html', {'username': email})
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
