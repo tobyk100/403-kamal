@@ -72,3 +72,7 @@ def facebook_request(request):
   return_dict = {'message': 'Tried to interact with fb', 'code':'200'}
   json = simplejson.dumps(return_dict)
   return HttpResponse(json)
+
+def accounts(request):
+  render(request, 'Accounts.html');
+
