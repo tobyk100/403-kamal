@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -8,8 +8,7 @@ def feed(request):
   return render(request, 'Feed.html')
 
 def index(request):
-  form = EmailAuthenticationForm()
-  return render(request, 'index.html', {'form': form})
+  return signin(request)
 
 def signup(request):
   if request.method == 'POST':
@@ -29,22 +28,27 @@ def signup(request):
         message = "There was an error automatically logging you in. Try <a href=\"/index/\">logging in</a> manually."
       
       # TODO: fixed the rendering once homepage is ready
-      return render(request, 'index.html', {'username': email, 'message': message})
+      return redirect('/feed/', {'username': email, 'message': message})
 
   else:
     form = EmailUserCreationForm()
 
   return render(request, 'signup.html', {'form': form})
 
-def login(request):
-      email = request.POST['email']
-      email = request.POST['password']
-      user = authenticate(email=email, password=password)
-      if (user is not None) and (user.is_active):
-        login(request, user)
-        return render(request, 'index.html', {'username': email})
-      else:
-        return render(request, 'index.html', {'username': email})
+def signin(request):
+  if request.method == 'POST':
+    email = request.POST['email']
+    password = request.POST['password']
+    user = authenticate(email=email, password=password)
+    if (user is not None) and (user.is_active):
+      login(request, user)
+      return redirect('/feed/', {'username': email})
+    else:
+      return render(request, 'index.html', {'username': email})
+  else:
+    form = EmailAuthenticationForm()
+
+  return render(request, 'index.html', {'form': form})
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
