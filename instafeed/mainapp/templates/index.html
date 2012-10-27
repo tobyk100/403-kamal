@@ -22,7 +22,7 @@
     </legend>
     <div class="row span5 offset2">
       {{ username }}
-      <form class="form-horizontal" action="/login/" method="post">{% csrf_token %} 
+      <form class="form-horizontal" action="/signin/" method="post">{% csrf_token %} 
         {{ form.non_field_errors }}
         <div class="control-group">
           {{ form.email.errors }}
