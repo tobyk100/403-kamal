@@ -12,7 +12,40 @@ function bindButtons(){
     $('#twitterRefreshButton').bind('click', loadTwitterFeed);
     $('#addFacebookButton').bind('click', displayLoginScreenFacebook);
     $('#addTwitterButton').bind('click', displayLoginScreenTwitter);
+    $('#signinToTwitter').bind('click', signinToTwitter);
+    $('#signinToFacebook').bind('click', signinToFacebook);
 }
+
+//Directs to backend to start process to login to Twitter
+function signinToTwitter(){
+       $.ajax({
+        type: "POST",
+        url: "/twitter_signin/",
+        data: { title: "begin twitter signin process" },
+        datatype: "json",
+        error: function (data) { alert('Error:' + data); },
+        success: function (data) {
+            alert('URL: ' + data);
+            $(location).attr('href',data);
+        }
+    }); 
+}
+
+//Directs to backend to start process to login to Facebook
+function signinToFacebook(){
+       $.ajax({
+        type: "POST",
+        url: "/facebook_signin/",
+        data: { title: "begin facebook signin process" },
+        datatype: "json",
+        error: function (data) { alert('Error:' + data); },
+        success: function (data) {
+            alert('URL: ' + data);
+            $(location).attr('href',data);
+        }
+    }); 
+}
+
 
 //Shows Twitter login screen if not already shown
 function displayLoginScreenTwitter(){
