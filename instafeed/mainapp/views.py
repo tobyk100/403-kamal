@@ -54,14 +54,14 @@ def signin(request):
   return render(request, 'index.html', {'form': form})
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
-@csrf_exempt
-def twitter_request(request):
-  json = request.POST
-  if json.get('type') == 'upload':
-    twitter_api.twitter_post('accessdb', 'accessdb', json.get('message'))
-  elif json.get('type') == 'feedRequest':
+#@csrf_exempt
+#def twitter_request(request):
+#  json = request.POST
+#  if json.get('type') == 'upload':
+#    twitter_api.twitter_post('accessdb', 'accessdb', json.get('message'))
+  #elif json.get('type') == 'feedRequest':
     #get stuff from twitter
-  return HttpResponse(json)
+#  return HttpResponse(json)
 
 @csrf_exempt
 def facebook_request(request):
@@ -88,11 +88,8 @@ def twitter_signin(request):
   return HttpResponse(t[0])
 
 #need to test this
-def twitter_callback(request)
+def twitter_callback(request):
   verifier = request.GET.get('oauth_verifier')
   tupple = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
   twitter_api.twitter_post(tupple[0], tupple[1], "test")
   return render(request, 'Accounts.html')
-
-
-
