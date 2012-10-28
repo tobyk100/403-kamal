@@ -93,11 +93,12 @@ function submitAndResetPost() {
     $.ajax({
 	   	type:"POST",
 		url:"/facebook_request/",
-		data:{ title: $('#postText').val() },
+		data:{ message: $('#postText').val(),
+                type: "upload" },
         datatype:"json",
         error:function(data){alert('Error:'+data);},
         success:function(data){
-                    alert('Message Posted!' + data);
+                    alert('Message Posted!');
                     $('#postText').val("");    
                 }
     });   
@@ -133,7 +134,7 @@ function loadTwitterFeed()
     $.ajax({
         type: "POST",
         url: "/twitter_request/",
-        data: { title: "ajax call from twitter" },
+        data: { type: "feedRequest" },
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
