@@ -90,6 +90,8 @@ def twitter_signin(request):
 #need to test this
 def twitter_callback(request):
   verifier = request.GET.get('oauth_verifier')
-  tupple = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
-  twitter_api.twitter_post(tupple[0], tupple[1], "test")
+  token_info = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
+  user = request.user
+  print user.username
+  #twitter_account = TwitterAccount(user_id=
   return render(request, 'Accounts.html')
