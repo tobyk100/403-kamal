@@ -12,5 +12,6 @@ class FacebookAccount(Account):
   expires = models.DateTimeField()
 
 class TwitterAccount(Account):
+  access_token = models.CharField(max_length=255)
   access_secret = models.CharField(max_length=255)
   expires = models.DateTimeField()

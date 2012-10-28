@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect
 from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sessions.models import Session
 import twitter_api
+import models
 
 def feed(request):
   return render(request, 'Feed.html')
@@ -54,14 +56,11 @@ def signin(request):
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
 def twitter_request(request):
-  if request.method == 'POST':
-    print "recieved request to post to Twitter"
-    print request.POST
-  elif request.method == 'GET':
-    print "recieved request to retrieve posts from Twitter"
-    print request.GET
-  return_dict = {'message': 'Tried to interact with twitter', 'code':'200'}
-  json = simplejson.dumps(return_dict)
+  json = request.POST
+  if json.get('type') == 'upload':
+    twitter_api.twitter_post('accessdb', 'accessdb', json.get('message'))
+  elif json.get('type') == 'feedRequest':
+    #get stuff from twitter
   return HttpResponse(json)
 
 @csrf_exempt
@@ -79,12 +78,20 @@ def facebook_request(request):
   return HttpResponse(json)
 
 def accounts(request):
-  render(request, 'Accounts.html');
+  return render(request, 'Accounts.html')
 
-def twitter_signin(Request):
+@csrf_exempt
+def twitter_signin(request):
   t = twitter_api.twitter_authentication_url()
   request.session['request_token'] = t[1]
   request.session['request_secret'] = t[2]
-  return(t[0])
+  return HttpResponse(t[0])
+
+def twitter_callback(request)
+  verifier = request.GET.get('oauth_verifier')
+  tupple = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
+  twitter_api.twitter_post(tupple[0], tupple[1], "test")
+  return render(request, 'Accounts.html')
+
 
 
