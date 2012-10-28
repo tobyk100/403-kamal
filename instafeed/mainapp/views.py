@@ -56,6 +56,7 @@ def signin(request):
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
 def twitter_request(request):
+  #TODO(Toby)
 #  json = request.POST
 #  if json.get('type') == 'upload':
 #    twitter_api.twitter_post('accessdb', 'accessdb', json.get('message'))
@@ -93,6 +94,6 @@ def twitter_callback(request):
   verifier = request.GET.get('oauth_verifier')
   token_info = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
   user = request.user
-#  twitter_account = TwitterAccount(user_id=user.id
-  #return render(request, 'Accounts.html')
-  return HttpResponse(user.id)
+  twitter_account = TwitterAccount(user_id=user.id, access_token=token_info[0], access_secret=token_info[1])
+  twitter_account.save()
+  return render(request, 'Accounts.html')
