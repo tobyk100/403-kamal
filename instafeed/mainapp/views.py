@@ -54,13 +54,14 @@ def signin(request):
   return render(request, 'index.html', {'form': form})
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
-#@csrf_exempt
-#def twitter_request(request):
+@csrf_exempt
+def twitter_request(request):
 #  json = request.POST
 #  if json.get('type') == 'upload':
 #    twitter_api.twitter_post('accessdb', 'accessdb', json.get('message'))
   #elif json.get('type') == 'feedRequest':
     #get stuff from twitter
+    return HttpResponse("Hello")
 #  return HttpResponse(json)
 
 @csrf_exempt
