@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
+import twitter_api
 
 def feed(request):
   return render(request, 'Feed.html')
@@ -79,4 +80,11 @@ def facebook_request(request):
 
 def accounts(request):
   render(request, 'Accounts.html');
+
+def twitter_signin(Request):
+  t = twitter_api.twitter_authentication_url()
+  request.session['request_token'] = t[1]
+  request.session['request_secret'] = t[2]
+  return(t[0])
+
 

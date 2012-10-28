@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^accounts/','mainapp.views.accounts', name='accounts'),
     url(r'^feed/twitter_request/', 'mainapp.views.twitter_request', name='twitter_request'),
     url(r'^facebook_request/', 'mainapp.views.facebook_request', name='fb_request'),
+    url(r'^twitter_signin/', 'mainapp.views.twitter_signin', name='twitter_signin'),
     # url(r'^instafeed/', include('instafeed.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
