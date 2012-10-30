@@ -71,6 +71,28 @@ body{
     float:  right;
 }
 
+#toggleAddScreen, #addScreenFacebook, #addScreenTwitter {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+#addScreenFacebook {
+    height: 350px;
+    background-color: white;
+}
+
+#addScreenTwitter {
+    height: 350px;
+    background-color: white;
+    display: none;
+}
+
+#toggleAddScreen {
+    background-color: grey;
+    margin-top: 35px;
+}
+
 /* Styles for Bootstrap */
 .navbar .navbar-inner .brand {
   font-family: 'Rochester', cursive;
