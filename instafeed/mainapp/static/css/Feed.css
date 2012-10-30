@@ -2,6 +2,16 @@ body{
     background-color: #87CEFA;
 }
 
+#topBar {
+    height:  50px;
+    border:  1pt solid black;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: xx-large;
+    font-family: 'Rochester';
+}
+
 #post{
     float:  right;
     height: 45px;
