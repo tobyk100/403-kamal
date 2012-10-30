@@ -1,15 +1,6 @@
 body{
     background-color: #87CEFA;
 }
-#topBar {
-    height:  50px;
-    border:  1pt solid black;
-    background-color: black;
-    color: white;
-    text-align: center;
-    font-size: xx-large;
-    font-family: 'Rochester', serif;
-}
 
 #post{
     float:  right;
@@ -41,7 +32,6 @@ body{
     margin-left: 200px;
 }
 #feeds{
-    margin-top: 25px;
     width: 80%;
     height: 500px;
     margin-left: auto;
@@ -79,4 +69,22 @@ body{
 
 #facebookFeed, #facebookRefresh{
     float:  right;
+}
+
+/* Styles for Bootstrap */
+.navbar .navbar-inner .brand {
+  font-family: 'Rochester', cursive;
+  font-size: 30px;
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+
+.navbar .nav {
+  position: absolute;
+  top: 0; right: 0; left: auto;
+}
+
+.container {
+  margin-top: 50px;
 }

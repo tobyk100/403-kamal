@@ -11,7 +11,14 @@ def feed(request):
   return render(request, 'Feed.html')
 
 def index(request):
-  return signin(request)
+  # Just trying... if cookies are set, then we can just redirect them to feed page
+  sid = request.COOKIES.get('sessionid', None)
+  uid = request.COOKIES.get('uid', None)
+  # TODO also check expiration date/time
+  if sid is None or uid is None:
+    return signin(request)
+  else:
+    return feed(request)
 
 def signup(request):
   if request.method == 'POST':
@@ -29,7 +36,7 @@ def signup(request):
         message = "Registration successful"
       else:
         message = "There was an error automatically logging you in. Try <a href=\"/index/\">logging in</a> manually."
-      
+
       # TODO: fixed the rendering once homepage is ready
       return redirect('/feed/', {'username': email, 'message': message})
 
