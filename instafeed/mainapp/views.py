@@ -63,27 +63,31 @@ def signin(request):
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
 def twitter_request(request):
-  #TODO(Toby)
-#  json = request.POST
-#  if json.get('type') == 'upload':
-#    twitter_api.twitter_post('accessdb', 'accessdb', json.get('message'))
-  #elif json.get('type') == 'feedRequest':
+  try:
+    #grabs tokens from the db
+    one_user = TwitterAccount.objects.get(user_id=request.user.id)
+  except Entry.DoesNotExist:
+    return HttpResponse("failed to get data for user")
+  json = request.POST
+  if json.get('type') == 'upload':
+    print "trying to post"
+    twitter_api.twitter_post(one_user.access_token, one_user.access_secret, json.get('message'))
+  elif json.get('type') == 'feedRequest':
     #get stuff from twitter
-    return HttpResponse("Hello")
-#  return HttpResponse(json)
+    print "requesting posts from twitter"
+    twitter_post = twitter_api.twitter_user_timeline(one_user.access_token, one_user.access_secret, 10)
+  return HttpResponse(json)
 
 @csrf_exempt
 def facebook_request(request):
-  print "got here"
-  return HttpResponse("got here");
-  if request.method == 'POST':
-    print "recieved request to post to Facebook"
-    print request.POST
-  elif request.method == 'GET':
-    print "recieved request to retrieve posts from Facebook"
-    print request.GET
-  return_dict = {'message': 'Tried to interact with fb', 'code':'200'}
-  json = simplejson.dumps(return_dict)
+  json = request.POST
+  if json.get('type') == 'upload':
+    #post to fb
+    pass
+  elif json.get('type') == 'feedRequest':
+    #get stuff from fb
+    pass
+  return HttpResponse("Hello")
   return HttpResponse(json)
 
 def accounts(request):
