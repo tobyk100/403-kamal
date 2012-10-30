@@ -1,0 +1,17 @@
+.social_accounts_container {
+  width: 60%;
+  margin: 30px auto;
+}
+
+.social_accounts_container legend {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-horizontal .control-label {
+  width: 245px;
+}
+
+.form-horizontal .controls {
+  margin-left: 275px;
+}

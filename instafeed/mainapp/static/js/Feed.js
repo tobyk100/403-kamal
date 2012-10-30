@@ -6,7 +6,6 @@ window.onload = function () {
 function bindButtons(){
     $('#postButton').bind('click', displayPostPopup);
     $('#accountsButton').bind('click', directToAccounts);
-    $('#dashboardButton').bind('click', directToDashboard)
     $('#submitPostButton').bind('click', submitAndResetPost);
     $('#facebookRefreshButton').bind('click', loadFacebookFeed);
     $('#twitterRefreshButton').bind('click', loadTwitterFeed);
@@ -28,7 +27,7 @@ function signinToTwitter(){
             alert('URL: ' + data);
             $(location).attr('href',data);
         }
-    }); 
+    });
 }
 
 //Directs to backend to start process to login to Facebook
@@ -43,7 +42,7 @@ function signinToFacebook(){
             alert('URL: ' + data);
             $(location).attr('href',data);
         }
-    }); 
+    });
 }
 
 
@@ -73,18 +72,6 @@ function displayPostPopup(){
     }
 }
 
-//Directs the User to the Account Page
-function directToAccounts() {
-    var url = "http://dry-peak-6840.herokuapp.com/accounts/";    
-    $(location).attr('href',url);
-}
-
-//Directs the User to the Account Page
-function directToDashboard() {
-    var url = "http://dry-peak-6840.herokuapp.com/feed/";    
-    $(location).attr('href',url);
-}
-
 //Submits a post using an ajax request.
 //On callback return clears the text area so they can enter in another post
 function submitAndResetPost() {
@@ -99,9 +86,9 @@ function submitAndResetPost() {
         error:function(data){alert('Error:'+data);},
         success:function(data){
                     alert('Message Posted!');
-                    $('#postText').val("");    
+                    $('#postText').val("");
                 }
-    });   
+    });
 }
 
 //Loads Facebook feeds from server
@@ -141,11 +128,12 @@ function loadTwitterFeed()
             alert('OK! ' + data);
             createPostInTwitterFeed("Sample message", "3:59", "Brandon");
         }
-    });    
-} 
+    });
+}
 
 function createPostInTwitterFeed(message, time, person){
     $('#twitterFeed').append('<div class ="FeedPost">' +
                     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
-} 
+}
+
