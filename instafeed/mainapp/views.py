@@ -83,8 +83,10 @@ def facebook_request(request):
   json = request.POST
   if json.get('type') == 'upload':
     #post to fb
+    pass
   elif json.get('type') == 'feedRequest':
     #get stuff from fb
+    pass
   return HttpResponse("Hello")
   return HttpResponse(json)
 
