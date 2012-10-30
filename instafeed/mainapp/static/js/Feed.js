@@ -124,7 +124,7 @@ function loadFacebookFeed()
 
 //Creates a pop in the social media feed with the given parameters
 function createPostInFacebookFeed(message, time, person){
-    $('#facebookFeed').append('<div class ="feedPost">' +
+    $('#facebookFeed').append('<div class ="FeedPost">' +
                       '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                       '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 }
@@ -145,7 +145,7 @@ function loadTwitterFeed()
 } 
 
 function createPostInTwitterFeed(message, time, person){
-    $('#twitterFeed').append('<div class ="feedPost">' +
+    $('#twitterFeed').append('<div class ="FeedPost">' +
                     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 } 
