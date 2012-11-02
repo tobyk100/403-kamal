@@ -99,6 +99,7 @@ def twitter_callback(request):
   verifier = request.GET.get('oauth_verifier')
   token_info = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
   user = request.user
-  twitter_account = TwitterAccount(user_id=user.id, access_token=token_info[0], access_secret=token_info[1])
-  twitter_account.save()
+  if user:
+    twitter_account = TwitterAccount(user_id=user, access_token=token_info[0], access_secret=token_info[1])
+    twitter_account.save()
   return render(request, 'Accounts.html')
