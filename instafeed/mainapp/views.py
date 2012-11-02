@@ -94,6 +94,12 @@ def accounts(request):
   return render(request, 'Accounts.html')
 
 @csrf_exempt
+def facebook_signin(request):
+  #TODO: flesh out facebook sign in, add tokens to database
+  f = facebook_auth()
+  return HttpResponse("Hello")
+
+@csrf_exempt
 def twitter_signin(request):
   t = twitter_api.twitter_authentication_url()
   request.session['request_token'] = t[1]
