@@ -31,11 +31,11 @@ def twitter_post (access_token, access_secret, text):
   api = tweepy.API(auth)
   api.update_status(text)
 
-def twitter_user_timeline (access_token, access_secret, count):
+def twitter_home_timeline (access_token, access_secret, count):
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
   auth.set_access_token(access_token, access_secret)
 
   api = tweepy.API(auth)
-  return api.user_timeline(count=count)
+  api.home_timeline(count=count)
 
 
