@@ -36,6 +36,12 @@ def twitter_home_timeline (access_token, access_secret, count):
   auth.set_access_token(access_token, access_secret)
 
   api = tweepy.API(auth)
-  api.home_timeline(count=count)
+  statuses = api.home_timeline(count=count)
 
+  status_list = []
+  for status in statuses:
+    status_list.append({'text': status.text, 
+                       'user': {'name': status.user.name}})
+
+  return status_list;
 
