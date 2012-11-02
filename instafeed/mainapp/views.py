@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
 import twitter_api
+import facebook_api
 import models
 
 def feed(request):
@@ -96,8 +97,9 @@ def accounts(request):
 @csrf_exempt
 def facebook_signin(request):
   #TODO: flesh out facebook sign in, add tokens to database
-  f = facebook_auth()
-  return HttpResponse("Hello")
+  f = facebook_api.facebook_auth()
+  response['success'] = 'true';
+  return HttpResponse(json.dumps(reponse))
 
 @csrf_exempt
 def twitter_signin(request):
