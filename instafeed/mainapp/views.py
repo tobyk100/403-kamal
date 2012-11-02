@@ -66,7 +66,7 @@ def signin(request):
 def twitter_request(request):
   try:
     #grabs tokens from the db
-    one_user = TwitterAccount.objects.get(user_id=request.user.id)
+    one_user = TwitterAccount.get_account(request.user.id)
   except Entry.DoesNotExist:
     return HttpResponse("failed to get data for user")
   json = request.POST
@@ -82,14 +82,22 @@ def twitter_request(request):
 @csrf_exempt
 def facebook_request(request):
   json = request.POST
+  post_text = json.get(message)
   if json.get('type') == 'upload':
-    #post to fb
-    pass
+    try:
+      fb_account = FacebookAccount.get_account(request.user.id)
+    except Entry.DoesNotExist:
+      response['success'] = 'false'
+      response['message'] = 'Failed to get data for user'
+      return HttpResponse(json.dumps(response), mimetype="application/json")
+    else:
+      response['success'] = 'true'
+      facebook_api.facebook_post_feed(post_text, fb_account.access_token)
   elif json.get('type') == 'feedRequest':
+    fb_account = FacebookAccount.objects.get(user_id=request.user.id)
     #get stuff from fb
     pass
-  return HttpResponse("Hello")
-  return HttpResponse(json)
+  return HttpResponse(response)
 
 def accounts(request):
   return render(request, 'Accounts.html')
