@@ -4,9 +4,8 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
-import twitter_api
-import facebook_api
-import models
+import twitter_api, facebook_api, json, models
+
 
 def feed(request):
   return render(request, 'Feed.html')
@@ -81,6 +80,7 @@ def twitter_request(request):
 
 @csrf_exempt
 def facebook_request(request):
+  response = {}
   json = request.POST
   post_text = json.get(message)
   if json.get('type') == 'upload':
@@ -94,6 +94,7 @@ def facebook_request(request):
 
 @csrf_exempt
 def facebook_upload(request):
+  response = {}
   try:
     fb_account = FacebookAccount.get_account(request.user.id)
   except Entry.DoesNotExist:
@@ -106,6 +107,7 @@ def facebook_upload(request):
 
 @csrf_exempt
 def facebook_feed_request(request):
+  response = {}
   try:
     fb_account = FacebookAccount.get_account(request.user.id)
   except Entry.DoesNotExist:
@@ -113,8 +115,8 @@ def facebook_feed_request(request):
     response['message'] = 'Failed to get data for user'
   else:
     response['success'] = 'true'
-    response['updates'] = 
-      facebook_api.facebook_read_user_status_updates(fb_account.access_token)
+    response['updates'] =  \
+        facebook_api.facebook_read_user_status_updates(fb_account.access_token)
   return response
 
 def accounts(request):
@@ -123,9 +125,11 @@ def accounts(request):
 @csrf_exempt
 def facebook_signin(request):
   #TODO: flesh out facebook sign in, add tokens to database
-  f = facebook_api.facebook_auth()
+  response = {}
+  auth_url = facebook_api.facebook_auth_url()
+  print auth_url
   response['success'] = 'true';
-  return HttpResponse(json.dumps(reponse))
+  return HttpResponse(json.dumps(response))
 
 @csrf_exempt
 def twitter_signin(request):
