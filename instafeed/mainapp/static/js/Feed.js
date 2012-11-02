@@ -5,7 +5,7 @@ window.onload = function () {
 //Binds all appropriate buttons with clicks
 function bindButtons(){
     $('#postButton').bind('click', displayPostPopup);
-    $('#accountsButton').bind('click', directToAccounts);
+    //$('#accountsButton').bind('click', directToAccounts); TODO This function doesn't exist yet
     $('#submitPostButton').bind('click', submitAndResetPost);
     $('#facebookRefreshButton').bind('click', loadFacebookFeed);
     $('#twitterRefreshButton').bind('click', loadTwitterFeed);
