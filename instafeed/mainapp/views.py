@@ -84,20 +84,38 @@ def facebook_request(request):
   json = request.POST
   post_text = json.get(message)
   if json.get('type') == 'upload':
-    try:
-      fb_account = FacebookAccount.get_account(request.user.id)
-    except Entry.DoesNotExist:
-      response['success'] = 'false'
-      response['message'] = 'Failed to get data for user'
-      return HttpResponse(json.dumps(response), mimetype="application/json")
-    else:
-      response['success'] = 'true'
-      facebook_api.facebook_post_feed(post_text, fb_account.access_token)
+    response = facebook_upload(request)
   elif json.get('type') == 'feedRequest':
-    fb_account = FacebookAccount.objects.get(user_id=request.user.id)
-    #get stuff from fb
-    pass
-  return HttpResponse(response)
+    response = facebook_feed_request(request)
+  else:
+    response['success'] = 'false'
+    response['message'] = 'Uknown facebook request.'
+  return HttpResponse(json.dumps(response), mimetype="application/json")
+
+@csrf_exempt
+def facebook_upload(request):
+  try:
+    fb_account = FacebookAccount.get_account(request.user.id)
+  except Entry.DoesNotExist:
+    response['success'] = 'false'
+    response['message'] = 'Failed to get data for user'
+  else:
+    response['success'] = 'true'
+    facebook_api.facebook_post_feed(post_text, fb_account.access_token)
+  return response
+
+@csrf_exempt
+def facebook_feed_request(request):
+  try:
+    fb_account = FacebookAccount.get_account(request.user.id)
+  except Entry.DoesNotExist:
+    response['success'] = 'false'
+    response['message'] = 'Failed to get data for user'
+  else:
+    response['success'] = 'true'
+    response['updates'] = 
+      facebook_api.facebook_read_user_status_updates(fb_account.access_token)
+  return response
 
 def accounts(request):
   return render(request, 'Accounts.html')
