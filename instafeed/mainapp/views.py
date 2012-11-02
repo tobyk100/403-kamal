@@ -4,8 +4,9 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
-import twitter_api, facebook_api, json, models
+import twitter_api, facebook_api, json
 from facebook_views import facebook_request, facebook_upload, facebook_feed_request, facebook_signin
+from models import TwitterAccount, Account
 
 
 def feed(request):
