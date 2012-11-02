@@ -79,7 +79,8 @@ def twitter_request(request):
   elif json.get('type') == 'feedRequest':
     #get stuff from twitter
     print "requesting posts from twitter"
-    twitter_post = twitter_api.twitter_user_timeline(one_user.access_token, one_user.access_secret, 10)
+    twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
+    
   return HttpResponse(json)
 @csrf_exempt
 def twitter_signin(request):
