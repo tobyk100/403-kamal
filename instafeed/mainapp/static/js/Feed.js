@@ -83,7 +83,7 @@ function submitAndResetPost() {
 	data:{ message: $('#postText').val(),
                type: "upload"} ,
         datatype:"json",
-        error:function(data){alert('Error:'+data);},
+        error:function(data){alert('Error:',data);},
         success:function(data){
                     alert('Message Posted!');
                     $('#postText').val("");
