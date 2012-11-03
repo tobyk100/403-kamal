@@ -71,7 +71,7 @@ def twitter_request(request):
   try:
     #grabs tokens from the db
     one_user = TwitterAccount.get_account(request.user.id)
-  except Entry.DoesNotExist:
+  except DoesNotExist:
     return_dict = {'error': 'failed to get data for user'}
     json = json.dumps(return_dict)
     return HttpResponse(json)
