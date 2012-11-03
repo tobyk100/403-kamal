@@ -70,22 +70,23 @@ def accounts(request):
 def twitter_request(request):
   try:
     #grabs tokens from the db
+    one_user = TwitterAccount.objects.get(user_id=request.user.id)
+  except TwitterAccount.DoesNotExist:
     one_user = TwitterAccount.get_account(request.user.id)
-  except DoesNotExist:
     return_dict = {'error': 'failed to get data for user'}
-    json = json.dumps(return_dict)
+    return_json = json.dumps(return_dict)
     return HttpResponse(json)
-  json = request.POST
-  if json.get('type') == 'upload':
+  request_json = request.POST
+  if request_json.get('type') == 'upload':
     print "trying to post"
-    twitter_api.twitter_post(one_user.access_token, one_user.access_secret, json.get('message'))
-  elif json.get('type') == 'feedRequest':
+    twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
+  elif request_json.get('type') == 'feedRequest':
     #get stuff from twitter
     print "requesting posts from twitter"
     twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
     return_dict = {'tweets': twitter_post}
-    json = json.dumps(return_dict)
-  return HttpResponse(json)
+    return_json = json.dumps(return_dict)
+  return HttpResponse(return_json)
 
 @csrf_exempt
 def twitter_signin(request):
