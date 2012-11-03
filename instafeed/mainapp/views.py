@@ -4,8 +4,9 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
-import twitter_api, facebook_api, json, models
+import twitter_api, facebook_api, json
 from facebook_views import facebook_request, facebook_upload, facebook_feed_request, facebook_signin
+from models import TwitterAccount, Account
 
 
 def feed(request):
@@ -70,8 +71,10 @@ def twitter_request(request):
   try:
     #grabs tokens from the db
     one_user = TwitterAccount.get_account(request.user.id)
-  except Entry.DoesNotExist:
-    return HttpResponse("failed to get data for user")
+  except DoesNotExist:
+    return_dict = {'error': 'failed to get data for user'}
+    json = json.dumps(return_dict)
+    return HttpResponse(json)
   json = request.POST
   if json.get('type') == 'upload':
     print "trying to post"
@@ -79,8 +82,11 @@ def twitter_request(request):
   elif json.get('type') == 'feedRequest':
     #get stuff from twitter
     print "requesting posts from twitter"
-    twitter_post = twitter_api.twitter_user_timeline(one_user.access_token, one_user.access_secret, 10)
+    twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
+    return_dict = {'tweets': twitter_post}
+    json = json.dumps(return_dict)
   return HttpResponse(json)
+
 @csrf_exempt
 def twitter_signin(request):
   t = twitter_api.twitter_authentication_url()
@@ -93,6 +99,7 @@ def twitter_callback(request):
   verifier = request.GET.get('oauth_verifier')
   token_info = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
   user = request.user
-  twitter_account = TwitterAccount(user_id=user.id, access_token=token_info[0], access_secret=token_info[1])
-  twitter_account.save()
+  if user:
+    twitter_account = TwitterAccount(user_id=user, access_token=token_info[0], access_secret=token_info[1])
+    twitter_account.save()
   return render(request, 'Accounts.html')
