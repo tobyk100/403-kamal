@@ -72,7 +72,9 @@ def twitter_request(request):
     #grabs tokens from the db
     one_user = TwitterAccount.get_account(request.user.id)
   except Entry.DoesNotExist:
-    return HttpResponse("failed to get data for user")
+    return_dict = {'error': 'failed to get data for user'}
+    json = json.dumps(return_dict)
+    return HttpResponse(json)
   json = request.POST
   if json.get('type') == 'upload':
     print "trying to post"
@@ -81,8 +83,10 @@ def twitter_request(request):
     #get stuff from twitter
     print "requesting posts from twitter"
     twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
-    
+    return_dict = {'tweets': twitter_post}
+    json = json.dumps(return_dict)
   return HttpResponse(json)
+
 @csrf_exempt
 def twitter_signin(request):
   t = twitter_api.twitter_authentication_url()

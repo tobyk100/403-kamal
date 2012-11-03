@@ -103,8 +103,10 @@ function loadFacebookFeed()
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
             alert('OK! ' + data);
-	    //TODO loop through json and call function with data
-            createPostInFacebookFeed("Sample message", "3:59", "Brandon");
+            // data is a JSON array, each JSON elements has {text, datetime, author}
+            $.each(data, function(elem) {
+              createPostInFacebookFeed(elem['text'], elem['datetime'], elem['author']);
+            });
         }
     });
 }
@@ -127,9 +129,10 @@ function loadTwitterFeed()
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
             alert('OK! ' + data);
-	    //loop through json
-	    //extrax message, time, author and pass to function
-            createPostInTwitterFeed("Sample message", "3:59", "Brandon");
+            // data is a JSON array, each JSON elements has {text, datetime, author}
+            $.each(data, function(v) {
+              createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
+            });
         }
     });
 }
