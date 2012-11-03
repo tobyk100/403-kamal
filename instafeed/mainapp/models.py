@@ -15,8 +15,10 @@ class Account(models.Model):
   # Raises an Entry.DoesNotExist exception if their account is not found.
   def get_account(request_id):
     try:
+      print "get into get_account"
       acc = self.objects.get(user_id=request_id)
     except DoesNotExist:
+      print "error is correct"
       return None
     return acc
 
