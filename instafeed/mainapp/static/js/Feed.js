@@ -79,7 +79,7 @@ function submitAndResetPost() {
     //AJAX REQUEST TO DJANGO
     $.ajax({
 	   	type:"POST",
-		url:"/facebook_request/",
+		url:"/twitter_request/",
 		data:{ message: $('#postText').val(),
                 type: "upload" },
         datatype:"json",
