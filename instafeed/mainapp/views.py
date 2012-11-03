@@ -70,8 +70,13 @@ def accounts(request):
 def twitter_request(request):
   try:
     #grabs tokens from the db
+<<<<<<< HEAD
     one_user = TwitterAccount.objects.get(user_id=request.user.id)
   except TwitterAccount.DoesNotExist:
+=======
+    one_user = TwitterAccount.get_account(request.user.id)
+  except DoesNotExist:
+>>>>>>> 306d4f291d2be0ffcd4c4a46e9849167c33cdde9
     return_dict = {'error': 'failed to get data for user'}
     return_json = json.dumps(return_dict)
     return HttpResponse(json)
