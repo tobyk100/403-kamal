@@ -128,11 +128,15 @@ function loadTwitterFeed()
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('OK! ' + data);
+           // alert('OK! ' + data);
             // data is a JSON array, each JSON elements has {text, datetime, author}
-            $.each(data, function(v) {
-              createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
-            });
+            //$.each(data, function(v) {
+             // createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
+            //});
+	    var posts = JSON.parse(data);
+            for(var i = 0; i < posts.tweets.length){
+                createPostInTwitterFeed(posts.tweets[i].text, "Temp Time" , posts.tweets[i].user.name)
+	    }
         }
     });
 }
