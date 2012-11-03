@@ -75,7 +75,7 @@ function displayPostPopup(){
 //Submits a post using an ajax request.
 //On callback return clears the text area so they can enter in another post
 function submitAndResetPost() {
-    alert($('#postText').val());
+   // alert($('#postText').val());
     //AJAX REQUEST TO DJANGO
     $.ajax({
 	type:"POST",
@@ -86,7 +86,7 @@ function submitAndResetPost() {
         error:function(data){alert('Error:'+data);},
         success:function(data){
                     alert('Message Posted!');
-                    $('#postText').val("");
+                    $('#postText').val('');
                 }
     });
 }
