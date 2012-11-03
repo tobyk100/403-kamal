@@ -78,10 +78,10 @@ function submitAndResetPost() {
     alert($('#postText').val());
     //AJAX REQUEST TO DJANGO
     $.ajax({
-	   	type:"POST",
-		url:"/twitter_request/",
-		data:{ message: $('#postText').val(),
-                type: "upload" },
+	type:"POST",
+	url:"/twitter_request/",
+	data:{ message: $('#postText').val(),
+               type: "upload"} ,
         datatype:"json",
         error:function(data){alert('Error:'+data);},
         success:function(data){

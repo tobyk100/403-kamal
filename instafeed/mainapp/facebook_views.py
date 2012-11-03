@@ -30,7 +30,8 @@ def facebook_upload(request):
     response['message'] = 'Failed to get data for user'
   else:
     response['success'] = 'true'
-    facebook_api.facebook_post_feed(post_text, fb_account.access_token)
+    
+  facebook_api.facebook_post_feed(request.message, fb_account.access_token)
   return response
 
 @csrf_exempt
@@ -51,7 +52,8 @@ def facebook_feed_request(request):
 def facebook_signin(request):
   #TODO: flesh out facebook sign in, add tokens to database
   response = {}
-  auth_url = facebook_api.facebook_auth_url()
-  print auth_url
+  token = facebook_api.facebook_auth()
+  print token
+  response['token'] = token;
   response['success'] = 'true';
   return HttpResponse(json.dumps(response))
