@@ -14,8 +14,12 @@ class Account(models.Model):
   #   print acc.request_token
   # Raises an Entry.DoesNotExist exception if their account is not found.
   def get_account(request_id):
-    acc = self.objects.get(user_id=request_id)
+    try:
+      acc = self.objects.get(user_id=request_id)
+    except DoesNotExist:
+      return None
     return acc
+
   user_id = models.ForeignKey(User) # Both Twitter and FacebookAccount
                                     # inheret these fields
   access_token = models.CharField(max_length=255)
