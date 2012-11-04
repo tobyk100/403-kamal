@@ -18,7 +18,7 @@ class Account(models.Model):
     try:
       print "get into get_account"
       print request_id
-      acc = cls.objects.get(user_id=request_id)
+      acc = cls.objects.filter(user_id=request_id)
     except cls.DoesNotExist:
       print "error is correct"
       return None
