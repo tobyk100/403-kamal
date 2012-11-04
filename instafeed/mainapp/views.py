@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
 import twitter_api, facebook_api, json
 from facebook_views import facebook_request, facebook_upload, facebook_feed_request, facebook_signin
-from models import TwitterAccount, Account
+from models import TwitterAccount, FacebookAccount, Account
 
 
 def feed(request):
@@ -63,7 +63,15 @@ def signin(request):
   return render(request, 'index.html', {'form': form})
 
 def accounts(request):
-  return render(request, 'Accounts.html')
+  facebook_account = FacebookAccount.get_account(request.user.id)
+  twitter_account = TwitterAccount.get_account(request.user.id)
+  return render(
+      request,
+      'Accounts.html',
+      {
+        'has_facebook': facebook_account != None,
+        'has_twitter': twitter_account != None
+      })
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
@@ -103,4 +111,4 @@ def twitter_callback(request):
   if user:
     twitter_account = TwitterAccount(user_id=user, access_token=token_info[0], access_secret=token_info[1])
     twitter_account.save()
-  return render(request, 'Accounts.html')
+  return accounts(request)

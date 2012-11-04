@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Account is an abstract class. FacebookAccount and TwitterAccount derive
 # Account. They both inherent all the fields and methods from Account.
-# To get a users account info call the get_account method with their 
+# To get a users account info call the get_account method with their
 # user_id
 
 class Account(models.Model):
@@ -13,11 +13,13 @@ class Account(models.Model):
   #   acc = FacebookAccount.get_account(request.user.id)
   #   print acc.request_token
   # Raises an Entry.DoesNotExist exception if their account is not found.
-  def get_account(request_id):
+  @classmethod
+  def get_account(cls, request_id):
     try:
       print "get into get_account"
-      acc = self.objects.get(user_id=request_id)
-    except DoesNotExist:
+      print request_id
+      acc = cls.objects.get(user_id=request_id)
+    except cls.DoesNotExist:
       print "error is correct"
       return None
     return acc
@@ -25,7 +27,7 @@ class Account(models.Model):
   user_id = models.ForeignKey(User) # Both Twitter and FacebookAccount
                                     # inheret these fields
   access_token = models.CharField(max_length=255)
-  
+
   class Meta:
     abstract = True;
 

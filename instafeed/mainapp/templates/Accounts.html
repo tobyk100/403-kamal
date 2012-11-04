@@ -22,15 +22,21 @@
       <div class="control-group">
         <label class="control-label" for="signinToFacebook">Facebook</label>
         <div class="controls">
+          {% if has_facebook %}
+          <button id="signinToFacebook" class="btn" disabled="disabled">Facebook Connected</button>
+          {% else %}
           <button id="signinToFacebook" class="btn">Facebook Login</button>
+          {% endif %}
         </div>
       </div>
       <div class="control-group">
         <label class="control-label" for="signinToTwitter">Twitter</label>
         <div class="controls">
-          <button id="signinToTwitter" class="btn">
-            Twitter Login
-          </button>
+          {% if has_facebook %}
+          <button id="signinToTwitter" class="btn" disabled="disabled">Twitter Connected</button>
+          {% else %}
+          <button id="signinToTwitter" class="btn">Twitter Login</button>
+          {% endif %}
         </div>
       </div>
     </div>
