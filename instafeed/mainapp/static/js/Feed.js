@@ -75,7 +75,7 @@ function displayPostPopup(){
 //Submits a post using an ajax request.
 //On callback return clears the text area so they can enter in another post
 function submitAndResetPost() {
-    alert($('#postText').val());
+   // alert($('#postText').val());
     //AJAX REQUEST TO DJANGO
     $.ajax({
 	type:"POST",
@@ -86,7 +86,7 @@ function submitAndResetPost() {
         error:function(data){alert('Error:',data);},
         success:function(data){
                     alert('Message Posted!');
-                    $('#postText').val("");
+                    $('#postText').val('');
                 }
     });
 }
@@ -128,11 +128,15 @@ function loadTwitterFeed()
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('OK! ' + data);
+           // alert('OK! ' + data);
             // data is a JSON array, each JSON elements has {text, datetime, author}
-            $.each(data, function(v) {
-              createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
-            });
+            //$.each(data, function(v) {
+             // createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
+            //});
+	    var posts = JSON.parse(data);
+            for(var i = 0; i < posts.tweets.length){
+                createPostInTwitterFeed(posts.tweets[i].text, "Temp Time" , posts.tweets[i].user.name)
+	    }
         }
     });
 }
