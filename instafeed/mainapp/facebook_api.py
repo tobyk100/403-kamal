@@ -41,7 +41,7 @@ def facebook_read_user_status_updates(access_token):
 #moduel into InstaFeed, but this method is useful to debug this moduel or see
 #it in action. 
 def facebook_auth():
-	F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status']
+	F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status', 'offline_access']
 	return F.authenticate()
 
 #Returns the url the user needs to be redirected to to log into Facebook.
