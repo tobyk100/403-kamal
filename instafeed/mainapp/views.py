@@ -74,13 +74,12 @@ def signin(request):
 def accounts(request):
   facebook_account = FacebookAccount.get_account(request_id=request.user.id)
   twitter_account = TwitterAccount.get_account(request_id=request.user.id)
-  # if account doesn't exist, model returns an empty list
   return render(
       request,
       'Accounts.html',
       {
-        'has_facebook': not (facebook_account is None or len(facebook_account) == 0),
-        'has_twitter': not (twitter_account is None or len(twitter_account) == 0)
+        'has_facebook': facebook_account is not None,
+        'has_twitter': twitter_account is not None
       })
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)

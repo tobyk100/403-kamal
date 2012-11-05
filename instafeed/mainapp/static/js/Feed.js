@@ -83,11 +83,8 @@ function submitAndResetPost() {
 	data:{ message: $('#postText').val(),
                type: "upload"} ,
         datatype:"json",
-        error:function(data){alert('Error Posting to Twitter:',data);},
-        success:function(data){
-                    alert('Message Posted to Twitter');
-                    //$('#postText').val('');
-                }
+        error: function(data) {alert('Error Posting to Twitter:',data);},
+        success: function(data) { }
     });
 
     $.ajax({
@@ -99,7 +96,6 @@ function submitAndResetPost() {
         error:function(data){alert('Error Posting to Facebook:',data);},
         success:function(data){
                     alert('Message Posted to Facebook');
-                    //$('#postText').val('');
                 }
     });
 }
