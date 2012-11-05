@@ -32,7 +32,7 @@ def facebook_upload(request):
   else:
     response['success'] = 'true'
     
-  facebook_api.facebook_post_feed(request.message, fb_account.access_token)
+  facebook_api.facebook_post_feed(request.POST.get('message'), fb_account.access_token)
   return response
 
 @csrf_exempt
