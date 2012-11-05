@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
 import twitter_api, facebook_api, json, models
-from views import accounts
 
 @csrf_exempt
 def facebook_request(request):
