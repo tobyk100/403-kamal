@@ -118,9 +118,9 @@ function loadFacebookFeed()
             // createPostInFacebookFeed(elem['text'], elem['datetime'], elem['author']);
             // });
 
-            var posts = JSON.parse(data);
-            for(var i = 0; i < posts.statuses.length; i++){
-                createPostInTwitterFeed(posts.statuses[i].text, posts.statuses[i].time , posts.statuses[i].user.name);
+            //var posts = JSON.parse(data);
+            for(var i = 0; i < data.updates.length; i++){
+                createPostInTwitterFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1]);
             }
         }
     });
