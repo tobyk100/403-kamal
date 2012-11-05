@@ -39,8 +39,9 @@ def signup(request):
       else:
         message = "There was an error automatically logging you in. Try <a href=\"/index/\">logging in</a> manually."
 
-      # TODO: fixed the rendering once homepage is ready
-      return redirect('/feed/', {'username': email, 'message': message})
+      # Since user does not have any accounts by the time they signe in,
+      # we should redirect them to accounts page instead of feed page.
+      return redirect('/accounts/')
 
   else:
     form = EmailUserCreationForm()
@@ -52,9 +53,17 @@ def signin(request):
     email = request.POST['email']
     password = request.POST['password']
     user = authenticate(email=email, password=password)
+
     if (user is not None) and (user.is_active):
       login(request, user)
-      return redirect('/feed/', {'username': email})
+      # TODO: fixed the rendering once homepage is ready
+      facebook_account = FacebookAccount.get_account(request_id=request.user.id)
+      twitter_account = TwitterAccount.get_account(request_id=request.user.id)
+      if ((facebook_account is None or len(facebook_account) == 0) and \
+          (twitter_account is None or len(twitter_account) == 0)):
+        return redirect('/accounts/')
+      else:
+        return redirect('/feed/', {'username': email})
     else:
       return render(request, 'index.html', {'username': email})
   else:
@@ -104,7 +113,7 @@ def twitter_request(request):
   else:
     print "returning failure"
     return HttpResponse("failure")
-  
+
 
 @csrf_exempt
 def twitter_signin(request):
