@@ -111,7 +111,8 @@ function loadFacebookFeed()
     $.ajax({
         type: "POST",
         url: "/facebook_request/",
-        data: { title: "ajax call from facebook" },
+        data: { title: "ajax call from facebook"
+		type: "feedRequest"},
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
