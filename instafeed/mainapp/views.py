@@ -86,19 +86,20 @@ def twitter_request(request):
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
   request_json = request.POST
-  return_json = None
   if request_json.get('type') == 'upload':
     print "trying to post"
     twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
     return_dict['success'] = true
     return_json = json.dumps(return_dict)
+    return HttpResponse(return_json)
   elif request_json.get('type') == 'feedRequest':
     #get stuff from twitter
     print "requesting posts from twitter"
     twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
     return_dict = {'tweets': twitter_post}
     return_json = json.dumps(return_dict)
-  return HttpResponse(return_json)
+    return HttpResponse(return_json)
+  
 
 @csrf_exempt
 def twitter_signin(request):
