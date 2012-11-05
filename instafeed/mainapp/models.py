@@ -22,6 +22,7 @@ class Account(models.Model):
     except cls.DoesNotExist:
       print "error is correct"
       return None
+    if len(acc) == 0: return None
     return acc[0]
 
   user_id = models.ForeignKey(User) # Both Twitter and FacebookAccount
