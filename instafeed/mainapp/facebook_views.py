@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
 import twitter_api, facebook_api, json, models
+from views import accounts
 
 @csrf_exempt
 def facebook_request(request):
@@ -56,5 +57,8 @@ def facebook_signin(request):
 
 @csrf_exempt
 def facebook_callback(request):
-  access_token = request.GET.get('access_token')
+  fb_access_token = request.GET.get('access_token')
   expires_in = request.GET.get('expires_in')
+  facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
+  facebook_account.save()
+  return accounts(request)
