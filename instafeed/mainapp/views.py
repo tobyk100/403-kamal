@@ -95,10 +95,12 @@ def twitter_request(request):
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
   request_json = request.POST
+  print "calling twitter request"
   if request_json.get('type') == 'upload':
     print "trying to post"
     twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
-    return_dict['success'] = true
+    print "just posted"
+    return_dict['success'] = 'true'
     return_post_json = json.dumps(return_dict)
     print "returning from post"
     return HttpResponse(return_post_json)
