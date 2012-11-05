@@ -22,7 +22,7 @@ class Account(models.Model):
     except cls.DoesNotExist:
       print "error is correct"
       return None
-    return acc
+    return acc[0]
 
   user_id = models.ForeignKey(User) # Both Twitter and FacebookAccount
                                     # inheret these fields

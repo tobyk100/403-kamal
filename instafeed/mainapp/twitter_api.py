@@ -13,7 +13,7 @@ def twitter_authentication_url ():
 
 def twitter_authenticate (verifier, request_token, request_secret):
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-  
+
   auth.set_request_token(request_token, request_secret)
 
   try:
