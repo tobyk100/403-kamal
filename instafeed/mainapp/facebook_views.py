@@ -12,6 +12,7 @@ def facebook_request(request):
   response = {}
   json_request = request.POST
   if json_request.get('type') == 'upload':
+    print "posting to fb"
     response = facebook_upload(request)
   elif json_request.get('type') == 'feedRequest':
     response = facebook_feed_request(request)
