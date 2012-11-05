@@ -40,7 +40,8 @@ def twitter_home_timeline (access_token, access_secret, count):
 
   status_list = []
   for status in statuses:
-    status_list.append({'text': status.text, 
+    status_list.append({'text': status.text,
+                        'time': status.created_at,
                        'user': {'name': status.user.name}})
 
   return status_list;
