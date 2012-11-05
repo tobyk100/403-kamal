@@ -57,7 +57,7 @@ def facebook_signin(request):
 
 @csrf_exempt
 def facebook_callback(request):
-  print request.GET
+  print request
   fb_access_token = request.GET.get('access_token')
   expires_in = request.GET.get('expires_in')
   facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
