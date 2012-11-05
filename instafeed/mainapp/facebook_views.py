@@ -51,9 +51,8 @@ def facebook_feed_request(request):
 @csrf_exempt
 def facebook_signin(request):
   print "trying to sign into facebook"
-  facebook_api.facebook_auth()
-  return_dict = {'success': 'true'}
-  return HttpResponse(json.dumps(return_dict))
+  url = facebook_api.facebook_auth_url()
+  return HttpResponse(url)
 
 @csrf_exempt
 def facebook_callback(request):
