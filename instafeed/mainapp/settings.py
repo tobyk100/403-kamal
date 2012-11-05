@@ -1,4 +1,4 @@
-DEBUG = False 
+DEBUG = False
 
 if DEBUG:
   consumer_key="NTuzgYZY3fCMMQcIDn73Xg"
