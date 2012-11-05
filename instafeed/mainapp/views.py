@@ -89,6 +89,8 @@ def twitter_request(request):
   if request_json.get('type') == 'upload':
     print "trying to post"
     twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
+    return_dict['success'] = true
+    return_json = json.dumps(return_dict)
   elif request_json.get('type') == 'feedRequest':
     #get stuff from twitter
     print "requesting posts from twitter"
