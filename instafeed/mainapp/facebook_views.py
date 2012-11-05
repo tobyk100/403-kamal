@@ -10,10 +10,10 @@ from models import TwitterAccount, FacebookAccount, Account
 @csrf_exempt
 def facebook_request(request):
   response = {}
-  json = request.POST
-  if json.get('type') == 'upload':
+  json_request = request.POST
+  if json_request.get('type') == 'upload':
     response = facebook_upload(request)
-  elif json.get('type') == 'feedRequest':
+  elif json_request.get('type') == 'feedRequest':
     response = facebook_feed_request(request)
   else:
     response['success'] = 'false'
