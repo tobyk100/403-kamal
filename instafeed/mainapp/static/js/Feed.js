@@ -134,7 +134,7 @@ function loadTwitterFeed()
              // createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
             //});
 	    var posts = JSON.parse(data);
-            for(var i = 0; i < posts.tweets.length){
+            for(var i = 0; i < posts.tweets.length; i++){
                 createPostInTwitterFeed(posts.tweets[i].text, "Temp Time" , posts.tweets[i].user.name)
 	    }
         }
