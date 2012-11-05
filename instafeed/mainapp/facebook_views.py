@@ -10,11 +10,11 @@ from models import TwitterAccount, FacebookAccount, Account
 @csrf_exempt
 def facebook_request(request):
   response = {}
-  json = request.POST
-  post_text = json.get(message)
-  if json.get('type') == 'upload':
+  json_request = request.POST
+  if json_request.get('type') == 'upload':
+    print "posting to fb"
     response = facebook_upload(request)
-  elif json.get('type') == 'feedRequest':
+  elif json_request.get('type') == 'feedRequest':
     response = facebook_feed_request(request)
   else:
     response['success'] = 'false'
@@ -29,9 +29,9 @@ def facebook_upload(request):
   except Entry.DoesNotExist:
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
-  else:
-    response['success'] = 'true'
-    
+    return response
+  
+  response['success'] = 'true'
   facebook_api.facebook_post_feed(request.POST.get('message'), fb_account.access_token)
   return response
 
@@ -43,10 +43,10 @@ def facebook_feed_request(request):
   except Entry.DoesNotExist:
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
-  else:
-    response['success'] = 'true'
-    response['updates'] =  \
-        facebook_api.facebook_read_user_status_updates(fb_account.access_token)
+    return response
+  
+  response['success'] = 'true'
+  response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
   return response
 
 @csrf_exempt
