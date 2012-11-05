@@ -99,6 +99,7 @@ def twitter_request(request):
     return_dict = {'tweets': twitter_post}
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
+  return HttpResponse("Shouldnt get here")
   
 
 @csrf_exempt
