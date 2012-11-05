@@ -100,7 +100,7 @@ def twitter_request(request):
     print "trying to post"
     twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
     print "just posted"
-    return_dict['success'] = 'true'
+    return_dict = {'success': 'true'}
     return_post_json = json.dumps(return_dict)
     print "returning from post"
     return HttpResponse(return_post_json)

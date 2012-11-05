@@ -152,7 +152,7 @@ def get_auth_url():
                                    'redirect_uri':REDIRECT_URI,
                                    'response_type':'token',
                                    'scope':','.join(AUTH_SCOPE)}))
-    print url
+    return url
 
 def authenticate():
     """Authenticate with facebook so you can make api calls that require auth.
