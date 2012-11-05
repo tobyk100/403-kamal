@@ -120,7 +120,7 @@ function loadFacebookFeed()
 
             //var posts = JSON.parse(data);
             for(var i = 0; i < data.updates.length; i++){
-                createPostInTwitterFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1]);
+                createPostInFacebookFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1]);
             }
         }
     });
@@ -150,7 +150,7 @@ function loadTwitterFeed()
             //});
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
-                createPostInFacebookFeed(posts.tweets[i].text, "12:00" , posts.tweets[i].user.name)
+                createPostInTwitterFeed(posts.tweets[i].text, "12:00" , posts.tweets[i].user.name)
 	    }
         }
     });
