@@ -50,8 +50,10 @@ def facebook_feed_request(request):
 
 @csrf_exempt
 def facebook_signin(request):
-  #TODO: flesh out facebook sign in, add tokens to database
+  print "trying to sign into facebook"
   facebook_api.facebook_auth()
+  return_dict = {'success': 'true'}
+  return HttpResponse(json.dumps(return_dict))
 
 @csrf_exempt
 def facebook_callback(request):
