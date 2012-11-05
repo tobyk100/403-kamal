@@ -83,10 +83,23 @@ function submitAndResetPost() {
 	data:{ message: $('#postText').val(),
                type: "upload"} ,
         datatype:"json",
-        error:function(data){alert('Error:',data);},
+        error:function(data){alert('Error Posting to Twitter:',data);},
         success:function(data){
-                    alert('Message Posted!');
-                    $('#postText').val('');
+                    alert('Message Posted to Twitter');
+                    //$('#postText').val('');
+                }
+    });
+
+    $.ajax({
+	type:"POST",
+	url:"/facebook_request/",
+	data:{ message: $('#postText').val(),
+               type: "upload"} ,
+        datatype:"json",
+        error:function(data){alert('Error Posting to Facebook:',data);},
+        success:function(data){
+                    alert('Message Posted to Facebook');
+                    //$('#postText').val('');
                 }
     });
 }
@@ -102,11 +115,16 @@ function loadFacebookFeed()
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('OK! ' + data);
+            alert('Facebook feeds: ' + data);
             // data is a JSON array, each JSON elements has {text, datetime, author}
-            $.each(data, function(elem) {
-              createPostInFacebookFeed(elem['text'], elem['datetime'], elem['author']);
-            });
+            // $.each(data, function(elem) {
+            // createPostInFacebookFeed(elem['text'], elem['datetime'], elem['author']);
+            // });
+
+	    var posts = JSON.parse(data);
+            for(var i = 0; i < posts.statuses.length; i++){
+                createPostInTwitterFeed(posts.statuses[i].text, posts.statuses[i].time , posts.statuses[i].user.name)
+	    }
         }
     });
 }
@@ -146,4 +164,3 @@ function createPostInTwitterFeed(message, time, person){
                     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 }
-
