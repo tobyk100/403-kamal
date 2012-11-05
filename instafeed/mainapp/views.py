@@ -84,7 +84,7 @@ def twitter_request(request):
     one_user = TwitterAccount.get_account(request.user.id)
     return_dict = {'error': 'failed to get data for user'}
     return_json = json.dumps(return_dict)
-    return HttpResponse(json)
+    return HttpResponse(return_json)
   request_json = request.POST
   if request_json.get('type') == 'upload':
     print "trying to post"
