@@ -66,6 +66,7 @@ def facebook_callback(request):
   else:
     return render(request, 'channel.html')
 
+@csrf_exempt
 def facebook_access(request):
   fb_access_token = request.POST.get('token')
   facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
