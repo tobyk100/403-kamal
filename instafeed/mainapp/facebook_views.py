@@ -57,7 +57,14 @@ def facebook_signin(request):
 
 @csrf_exempt
 def facebook_callback(request):
-  return render(request, 'channel.html')
+  if request.GET.get('access_token') != None:
+    fb_access_token = request.POST.get('access_token')
+    facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
+    return_dict = {}
+    return_dict['success'] = 'true'
+    return HttpResponse(json.dumps(return_dict))
+  else:
+    return render(request, 'channel.html')
 
 def facebook_access(request):
   fb_access_token = request.POST.get('access_token')
