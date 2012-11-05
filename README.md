@@ -25,6 +25,6 @@ Views needed by front end javascript
 * Return JSON object containing list of posts each with a message, author and date/time
 
 #####Connect to our heroku database:
-* psql -hec2-54-243-38-139.compute-1.amazonaws.com -U xtehbsbwkfjqdx -d8
-* decjmjca0u8vjf -p 5432 -W
+* psql -hec2-54-243-38-139.compute-1.amazonaws.com -U xtehbsbwkfjqdx -d decjmjca0u8vjf -p 5432 -W
+* Password: EGjuqbG445JkPEIcpHtZRDs0lc
 

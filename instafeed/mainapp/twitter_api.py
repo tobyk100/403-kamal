@@ -1,7 +1,5 @@
 import tweepy
-
-consumer_key="FL6V9vrWlfVKzpFVB0iDmg"
-consumer_secret="Td8Mn4BzStppzPNDblylAibTXmDfRt0gjzN1cFAI"
+from settings import consumer_key, consumer_secret
 
 def twitter_authentication_url ():
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -15,6 +13,7 @@ def twitter_authentication_url ():
 
 def twitter_authenticate (verifier, request_token, request_secret):
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+  
   auth.set_request_token(request_token, request_secret)
 
   try:
