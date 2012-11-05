@@ -86,11 +86,9 @@ def accounts(request):
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
 def twitter_request(request):
-  try:
-    #grabs tokens from the db
-    one_user = TwitterAccount.objects.get(user_id=request.user.id)
-  except TwitterAccount.DoesNotExist:
-    one_user = TwitterAccount.get_account(request.user.id)
+  one_user = TwitterAccount.get_account(request_id=request.user.id)
+  if one_user is None:
+    print 'exception twitter account does not exist'
     return_dict = {'error': 'failed to get data for user'}
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
