@@ -150,7 +150,7 @@ function loadTwitterFeed()
             //});
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
-                createPostInTwitterFeed(posts.tweets[i].text, "12:00" , posts.tweets[i].user.name)
+                createPostInFacebookFeed(posts.tweets[i].text, "12:00" , posts.tweets[i].user.name)
 	    }
         }
     });
