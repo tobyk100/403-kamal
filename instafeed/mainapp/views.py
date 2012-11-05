@@ -90,16 +90,20 @@ def twitter_request(request):
     print "trying to post"
     twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
     return_dict['success'] = true
-    return_json = json.dumps(return_dict)
-    return HttpResponse(return_json)
+    return_post_json = json.dumps(return_dict)
+    print "returning from post"
+    return HttpResponse(return_post_json)
   elif request_json.get('type') == 'feedRequest':
     #get stuff from twitter
     print "requesting posts from twitter"
     twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
     return_dict = {'tweets': twitter_post}
-    return_json = json.dumps(return_dict)
-    return HttpResponse(return_json)
-  return HttpResponse("Shouldnt get here")
+    return_tweets_json = json.dumps(return_dict)
+    print "returning tweets"
+    return HttpResponse(return_tweets_json)
+  else:
+    print "returning failure"
+    return HttpResponse("failure")
   
 
 @csrf_exempt

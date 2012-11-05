@@ -13,10 +13,10 @@ urlpatterns = patterns('',
     url(r'^feed/', 'mainapp.views.feed', name='feed'),
     url(r'^accounts/','mainapp.views.accounts', name='accounts'),
     url(r'^twitter_request/', 'mainapp.views.twitter_request', name='twitter_request'),
-    url(r'^facebook_request/', 'mainapp.views.facebook_request', name='fb_request'),
+    url(r'^facebook_request/', 'mainapp.facebook_views.facebook_request', name='fb_request'),
     url(r'^twitter_signin/', 'mainapp.views.twitter_signin', name='twitter_signin'),
-    url(r'^facebook_signin/', 'mainapp.views.facebook_signin', name='facebook_signin'),
-    #FIXME may need to update this regex
+    url(r'^facebook_signin/', 'mainapp.facebook_views.facebook_signin', name='facebook_signin'),
+    url(r'^facebook_callback', 'mainapp.facebook_views.facebook_callback', name='twitter_callback'),
     url(r'^twitter_callback', 'mainapp.views.twitter_callback', name='twitter_callback'),                   
     # url(r'^instafeed/', include('instafeed.foo.urls')),
 

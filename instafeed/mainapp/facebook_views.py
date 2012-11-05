@@ -51,9 +51,9 @@ def facebook_feed_request(request):
 @csrf_exempt
 def facebook_signin(request):
   #TODO: flesh out facebook sign in, add tokens to database
-  response = {}
-  token = facebook_api.facebook_auth()
-  print token
-  response['token'] = token;
-  response['success'] = 'true';
-  return HttpResponse(json.dumps(response))
+  facebook_api.facebook_auth()
+
+@csrf_exempt
+def facebook_callback(request):
+  access_token = request.GET.get('access_token')
+  expires_in = request.GET.get('expires_in')
