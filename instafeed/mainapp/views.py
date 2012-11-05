@@ -59,8 +59,7 @@ def signin(request):
       # TODO: fixed the rendering once homepage is ready
       facebook_account = FacebookAccount.get_account(request_id=request.user.id)
       twitter_account = TwitterAccount.get_account(request_id=request.user.id)
-      if ((facebook_account is None or len(facebook_account) == 0) and \
-          (twitter_account is None or len(twitter_account) == 0)):
+      if facebook_account is None and twitter_account is None:
         return redirect('/accounts/')
       else:
         return redirect('/feed/', {'username': email})
@@ -74,23 +73,20 @@ def signin(request):
 def accounts(request):
   facebook_account = FacebookAccount.get_account(request_id=request.user.id)
   twitter_account = TwitterAccount.get_account(request_id=request.user.id)
-  # if account doesn't exist, model returns an empty list
   return render(
       request,
       'Accounts.html',
       {
-        'has_facebook': not (facebook_account is None or len(facebook_account) == 0),
-        'has_twitter': not (twitter_account is None or len(twitter_account) == 0)
+        'has_facebook': facebook_account is not None,
+        'has_twitter': twitter_account is not None
       })
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
 def twitter_request(request):
-  try:
-    #grabs tokens from the db
-    one_user = TwitterAccount.objects.get(user_id=request.user.id)
-  except TwitterAccount.DoesNotExist:
-    one_user = TwitterAccount.get_account(request.user.id)
+  one_user = TwitterAccount.get_account(request_id=request.user.id)
+  if one_user is None:
+    print 'exception twitter account does not exist'
     return_dict = {'error': 'failed to get data for user'}
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
