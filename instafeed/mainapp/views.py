@@ -39,8 +39,9 @@ def signup(request):
       else:
         message = "There was an error automatically logging you in. Try <a href=\"/index/\">logging in</a> manually."
 
-      # TODO: fixed the rendering once homepage is ready
-      return redirect('/feed/', {'username': email, 'message': message})
+      # Since user does not have any accounts by the time they signe in,
+      # we should redirect them to accounts page instead of feed page.
+      return redirect('/accounts/')
 
   else:
     form = EmailUserCreationForm()
@@ -52,9 +53,17 @@ def signin(request):
     email = request.POST['email']
     password = request.POST['password']
     user = authenticate(email=email, password=password)
+
     if (user is not None) and (user.is_active):
       login(request, user)
-      return redirect('/feed/', {'username': email})
+      # TODO: fixed the rendering once homepage is ready
+      facebook_account = FacebookAccount.get_account(request_id=request.user.id)
+      twitter_account = TwitterAccount.get_account(request_id=request.user.id)
+      if ((facebook_account is None or len(facebook_account) == 0) and \
+          (twitter_account is None or len(twitter_account) == 0)):
+        return redirect('/accounts/')
+      else:
+        return redirect('/feed/', {'username': email})
     else:
       return render(request, 'index.html', {'username': email})
   else:
@@ -86,19 +95,21 @@ def twitter_request(request):
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
   request_json = request.POST
-  return_json = None
   if request_json.get('type') == 'upload':
     print "trying to post"
     twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
     return_dict['success'] = true
     return_json = json.dumps(return_dict)
+    return HttpResponse(return_json)
   elif request_json.get('type') == 'feedRequest':
     #get stuff from twitter
     print "requesting posts from twitter"
     twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
     return_dict = {'tweets': twitter_post}
     return_json = json.dumps(return_dict)
-  return HttpResponse(return_json)
+    return HttpResponse(return_json)
+
+  return HttpResponse("Shouldnt get here")
 
 @csrf_exempt
 def twitter_signin(request):
