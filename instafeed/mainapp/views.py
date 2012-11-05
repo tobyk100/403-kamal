@@ -59,8 +59,7 @@ def signin(request):
       # TODO: fixed the rendering once homepage is ready
       facebook_account = FacebookAccount.get_account(request_id=request.user.id)
       twitter_account = TwitterAccount.get_account(request_id=request.user.id)
-      if ((facebook_account is None or len(facebook_account) == 0) and \
-          (twitter_account is None or len(twitter_account) == 0)):
+      if facebook_account is None and twitter_account is None:
         return redirect('/accounts/')
       else:
         return redirect('/feed/', {'username': email})
