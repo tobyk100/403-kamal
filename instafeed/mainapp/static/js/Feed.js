@@ -75,29 +75,23 @@ function displayPostPopup(){
 //Submits a post using an ajax request.
 //On callback return clears the text area so they can enter in another post
 function submitAndResetPost() {
-   // alert($('#postText').val());
-    //AJAX REQUEST TO DJANGO
-    $.ajax({
-	type:"POST",
-	url:"/twitter_request/",
-	data:{ message: $('#postText').val(),
-               type: "upload"} ,
-        datatype:"json",
-        error: function(data) {alert('Error Posting to Twitter:',data);},
-        success: function(data) { }
-    });
+  var message = $('#postText').val();
+  if (message != '') {
+    post_ajax_call(message, '/facebook_request/');
+    post_ajax_call(message, '/twitter_request/');
+  }
+}
 
-    $.ajax({
-	type:"POST",
-	url:"/facebook_request/",
-	data:{ message: $('#postText').val(),
-               type: "upload"} ,
-        datatype:"json",
-        error:function(data){alert('Error Posting to Facebook:',data);},
-        success:function(data){
-                    alert('Message Posted to Facebook');
-                }
-    });
+function post_ajax_call(msg, url) {
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: {
+      message: msg,
+      type: 'upload'
+    },
+    datatype: 'json'
+  });
 }
 
 //Loads Facebook feeds from server
