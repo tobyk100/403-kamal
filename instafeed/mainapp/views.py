@@ -71,15 +71,7 @@ def signin(request):
   return render(request, 'index.html', {'form': form})
 
 def accounts(request):
-  facebook_account = FacebookAccount.get_account(request_id=request.user.id)
-  twitter_account = TwitterAccount.get_account(request_id=request.user.id)
-  return render(
-      request,
-      'Accounts.html',
-      {
-        'has_facebook': facebook_account is not None,
-        'has_twitter': twitter_account is not None
-      })
+  return render(request, 'Accounts.html')
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt

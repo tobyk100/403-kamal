@@ -52,7 +52,6 @@ def facebook_feed_request(request):
 
 @csrf_exempt
 def facebook_signin(request):
-  print "trying to sign into facebook"
   url = facebook_api.facebook_auth_url()
   return HttpResponse(url)
 
