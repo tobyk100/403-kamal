@@ -10,7 +10,6 @@ from models import TwitterAccount, FacebookAccount, Account
 @csrf_exempt
 def facebook_request(request):
   response = {}
-  print "callling fb request"
   json_request = request.POST
   if json_request.get('type') == 'upload':
     print "posting to fb"

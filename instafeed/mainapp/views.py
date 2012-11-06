@@ -86,30 +86,22 @@ def accounts(request):
 def twitter_request(request):
   one_user = TwitterAccount.get_account(request_id=request.user.id)
   if one_user is None:
-    print 'exception twitter account does not exist'
     return_dict = {'error': 'failed to get data for user'}
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
   request_json = request.POST
-  print "calling twitter request"
   if request_json.get('type') == 'upload':
-    print "trying to post"
     twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
-    print "just posted"
     return_dict = {'success': 'true'}
     return_post_json = json.dumps(return_dict)
-    print "returning from post"
     return HttpResponse(return_post_json)
   elif request_json.get('type') == 'feedRequest':
     #get stuff from twitter
-    print "requesting posts from twitter"
     twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
     return_dict = {'tweets': twitter_post}
     return_tweets_json = json.dumps(return_dict)
-    print "returning tweets"
     return HttpResponse(return_tweets_json)
   else:
-    print "returning failure"
     return HttpResponse("failure")
 
 

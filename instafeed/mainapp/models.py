@@ -16,11 +16,8 @@ class Account(models.Model):
   @classmethod
   def get_account(cls, request_id):
     try:
-      print "get into get_account"
-      print request_id
       acc = cls.objects.filter(user_id=request_id)
     except cls.DoesNotExist:
-      print "error is correct"
       return None
     if len(acc) == 0: return None
     return acc[0]

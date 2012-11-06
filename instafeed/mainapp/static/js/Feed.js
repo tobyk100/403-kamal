@@ -90,7 +90,10 @@ function post_ajax_call(msg, url) {
       message: msg,
       type: 'upload'
     },
-    datatype: 'json'
+    datatype: 'json',
+    error: function(data) {
+      console.log(data);
+    }
   });
 }
 
