@@ -1,5 +1,12 @@
 import tweepy
-from twitter_lib import consumer_key, consumer_secret
+from settings import DEBUG
+
+if DEBUG:
+  consumer_key="NTuzgYZY3fCMMQcIDn73Xg"
+  consumer_secret="9NAvbXWoZktTQYb9BHTQnMtleNq6UBJXlbsDUWJY"
+else:
+  consumer_key="FL6V9vrWlfVKzpFVB0iDmg"
+  consumer_secret="Td8Mn4BzStppzPNDblylAibTXmDfRt0gjzN1cFAI"
 
 def twitter_authentication_url ():
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
