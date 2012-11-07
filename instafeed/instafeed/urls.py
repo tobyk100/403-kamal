@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^facebook_callback', 'mainapp.facebook_views.facebook_callback', name='facebook_callback'),
     url(r'^facebook_access', 'mainapp.facebook_views.facebook_access', name='facebook_access'),
     url(r'^twitter_callback', 'mainapp.views.twitter_callback', name='twitter_callback'),                   
+    url(r'^google_signin', 'mainapp.google_views.google_signin', name='google_signin'),                   
     # url(r'^instafeed/', include('instafeed.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
