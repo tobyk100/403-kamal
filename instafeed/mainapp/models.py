@@ -8,11 +8,10 @@ from django.contrib.auth.models import User
 
 class Account(models.Model):
   # Returns the users account as a python object. To access their account info
-  # access the fields of the object.
+  # access the fields of the object. Returns None if account doesn't exist.
   # Example usage:
   #   acc = FacebookAccount.get_account(request.user.id)
   #   print acc.request_token
-  # Raises an Entry.DoesNotExist exception if their account is not found.
   @classmethod
   def get_account(cls, request_id):
     try:
