@@ -31,6 +31,10 @@ class Account(models.Model):
 class FacebookAccount(Account):
   pass
 
+class GoogleAccount(Account):
+  refresh_token = models.CharField(max_length=255)
+
 class TwitterAccount(Account):
   access_secret = models.CharField(max_length=255)
+
 
