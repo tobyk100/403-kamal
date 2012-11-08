@@ -1,11 +1,29 @@
-from django.shortcuts import redirect
-from django.http import HttpResponse
-import json, os
+from django.http import HttpResponse, HttpResponseRedirect
+import json
+import google_api
 
-def google_signin(request):
-  params = {}
-  params['response_type'] = 'code'
-  params['client_id'] = '138535205339.apps.googleusercontent.com'
-  params['redirect_id'] = 'http://dry-peak-6840.herokuapp.com/google_callback'
-  params['scope'] = 'https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&'
-  return redirect('http://accounts.google.com/o/oauth2/auth', params)
+def google_request_code(request):
+  url = google_api.request_code()
+  return HttpResponseRedirect(url)
+
+def google_request_token(request):
+  request_post = google_api.request_token(request.code)
+  url = google_api.request_token_url()
+  redirect = HttpResponseRedirect(url)
+  redirect.POST.update(request_post)
+
+  return redirect
+
+# returns a json object with the following fields:
+#   authorized - A boolean representing whether the user gave us access
+def google_callback_code(request):
+  response = {}
+  response['authorized'] = (request.GET.get('error') != 'access_denied')
+  if response['authorized']:
+    response['code'] = request.GET.get('code')
+
+  return HttpResponse(json.dumps(response))
+
+def google_callback_token(request):
+  request_post = 
+  pass
