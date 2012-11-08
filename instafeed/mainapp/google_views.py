@@ -25,5 +25,4 @@ def google_callback_code(request):
   return HttpResponse(json.dumps(response))
 
 def google_callback_token(request):
-  request_post = 
   pass
