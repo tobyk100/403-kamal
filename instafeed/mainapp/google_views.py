@@ -2,11 +2,26 @@ from django.http import HttpResponse, HttpResponseRedirect
 import json
 import google_api
 
+def google_signin(request):
+  response = {}
+  user = request.user
+  account = GoogleAccount.get_account(user)
+  if account != None:
+    response['success'] = True
+  else:
+    response['success'] = False
+
+  return HttpResponse(json.dumps(response))
+
+def google_get_posts(request):
+  pass
+
+
 def google_request_code(request):
   url = google_api.request_code()
   return HttpResponseRedirect(url)
 
-def google_request_token(request):
+def google_request_refresh_token(request):
   request_post = google_api.request_token(request.code)
   url = google_api.request_token_url()
   redirect = HttpResponseRedirect(url)
