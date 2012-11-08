@@ -33,3 +33,4 @@ class FacebookAccount(Account):
 
 class TwitterAccount(Account):
   access_secret = models.CharField(max_length=255)
+
