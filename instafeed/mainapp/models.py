@@ -37,11 +37,3 @@ class GoogleAccount(Account):
 
 class TwitterAccount(Account):
   access_secret = models.CharField(max_length=255)
-
-class FlowModel(models.Model):
-    id = models.ForeignKey(User, primary_key=True)
-    flow = FlowField()
-
-class CredentialsModel(models.Model):
-    id = models.ForeignKey(User, primary_key=True)
-    credential = CredentialsField()
