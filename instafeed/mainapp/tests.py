@@ -6,31 +6,56 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.test import TestCase
 from django.utils import unittest
 from mainapp.models import GoogleAccount
 from django.http import HttpResponse, HttpRequest
 from django.test.client import Client
+from emailusernames.utils import create_user
 import json
 
 
 
 class GoogleTest(TestCase):
   def setUp(self):
-    user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-    user.save()
+    self.email = 'john'
+    self.password = 'johnpassword'
+    user = create_user(self.email, self.password)
+    self.user = user
 
-  def test_google_model(self):
+  def tearDown(self):
+    users = User.objects.all()
+    users.delete()
+
+  def addAccountToDB(self):
     user = User.objects.get(id=1)
-    account = GoogleAccount(user_id=user, access_token="test_access_token", 
-        refresh_token="test_refresh_token")
+    self.access_token = "test_access_token"
+    self.refresh_token = "test_refresh_token"
+    account = GoogleAccount(user_id=user, access_token=self.access_token, 
+        refresh_token = self.refresh_token)
     account.save()
-    account = GoogleAccount.get_account(user.id)
-    self.assertEqual("test_access_token", account.access_token)
-    self.assertEqual("test_refresh_token", account.refresh_token)
 
-  def test_google_signin_not_authenticated(self):
+  def test_model(self):
+    self.addAccountToDB()
+    user = User.objects.get(id=1)
+    account = GoogleAccount.get_account(user.id)
+    self.assertEqual(self.access_token, account.access_token)
+    self.assertEqual(self.refresh_token, account.refresh_token)
+
+  def test_signin_not_authenticated(self):
     c = Client()
     response = c.post('/google_signin/')
     json_response = json.loads(response.content)
-    self.assertEqual(json_response["success"], False)
+    self.assertFalse(json_response["success"])
+    self.assertFalse(json_response["authenticated"])
+
+  def test_signin_authenticated_no_account(self):
+    user = User.objects.get(id=1)
+    c = Client()
+    c.login(email=self.email, password=self.password)
+    response = c.post('/google_signin/')
+    json_response = json.loads(response.content)
+    self.assertTrue(json_response["success"])
+    self.assertTrue(json_response["authenticated"])
+    self.assertFalse(json_response["account"])

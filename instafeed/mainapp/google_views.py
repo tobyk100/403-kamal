@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 import google_api
+from models import GoogleAccount
 
 """
 Main use case flows:
@@ -25,15 +26,18 @@ def google_signin(request):
   response = {}
   if not request.user.is_authenticated():
     response['success'] = False
+    response['authenticated'] = False
     response['message'] = "User not authenticated"
     return HttpResponse(json.dumps(response))
 
   account = GoogleAccount.get_account(request.user)
   if account is None:
-    redirect = _request_refresh_token(request)
-    redirect['success'] = True
-    redirect['message'] = "User redirected to G+ for signin"
-    return redirect
+    #redirect = _request_refresh_token(request)
+    response['success'] = True
+    response['authenticated'] = True
+    response['account'] = False
+    response['message'] = "User redirected to G+ for signin"
+    return HttpResponse(json.dumps(response))
 
   response['refresh_token'] = account.refresh_token
   return HttpResponse(json.dumps(response))
@@ -57,7 +61,7 @@ def google_request_code(request):
   return HttpResponseRedirect(url)
 
 def _request_refresh_token(request):
-  request_post = google_api.request_token(request.code)
+  request_post = google_api.request_token_post(request.code)
   url = google_api.request_token_url()
   redirect = HttpResponseRedirect(url)
   redirect.POST.update(request_post)
