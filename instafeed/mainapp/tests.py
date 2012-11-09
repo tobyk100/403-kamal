@@ -13,7 +13,9 @@ from mainapp.models import GoogleAccount
 from django.http import HttpResponse, HttpRequest
 from django.test.client import Client
 from emailusernames.utils import create_user
+import google_api
 import json
+import mox
 
 
 
@@ -43,19 +45,23 @@ class GoogleTest(TestCase):
     self.assertEqual(self.access_token, account.access_token)
     self.assertEqual(self.refresh_token, account.refresh_token)
 
-  def test_signin_not_authenticated(self):
+  def test_signup_not_authenticated(self):
     c = Client()
-    response = c.post('/google_signin/')
+    response = c.post('/google_signup/')
     json_response = json.loads(response.content)
     self.assertFalse(json_response["success"])
     self.assertFalse(json_response["authenticated"])
 
-  def test_signin_authenticated_no_account(self):
+  def test_signup_authenticated_no_account(self):
     user = User.objects.get(id=1)
     c = Client()
     c.login(email=self.email, password=self.password)
-    response = c.post('/google_signin/')
+    response = c.post('/google_signup/')
     json_response = json.loads(response.content)
     self.assertTrue(json_response["success"])
     self.assertTrue(json_response["authenticated"])
     self.assertFalse(json_response["account"])
+
+  def test_request_code(self):
+    c = Client()
+    c.login(email=self.email, password=self.password)

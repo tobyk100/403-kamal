@@ -36,6 +36,28 @@ def request_token_post(code):
 def request_token_url():
   return TOKEN_URL
 
+def google_request_token(request):
+  account = GoogleAccount.get_account(request.user)
+  refresh_token = request_refresh_token(request) if not account else \
+                  account.refresh_token
 
-if __name__ == '__main__':
-  print "hi"
+def request_refresh_token(request):
+  request_post = google_api.request_token_post(request.code)
+  url = request_token_url()
+  redirect = HttpResponseRedirect(url)
+  redirect.POST.update(request_post)
+
+  return redirect
+
+# returns a json object with the following fields:
+#   authorized - A boolean representing whether the user gave us access
+def google_callback_code(request):
+  response = {}
+  response['authorized'] = (request.GET.get('error') != 'access_denied')
+  if response['authorized']:
+    response['code'] = request.GET.get('code')
+
+  return HttpResponse(json.dumps(response))
+
+def google_callback_token(request):
+  pass
