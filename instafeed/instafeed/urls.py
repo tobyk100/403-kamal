@@ -20,7 +20,6 @@ urlpatterns = patterns('',
     url(r'^facebook_access', 'mainapp.facebook_views.facebook_access', name='facebook_access'),
     url(r'^twitter_callback', 'mainapp.views.twitter_callback', name='twitter_callback'),                   
     url(r'^google_signup/', 'mainapp.google_views.google_signup', name='google_signup'),
-    url(r'^google_callback_code', 'mainapp.google_views.google_callback_code', name='google_callback_code'),                   
     url(r'^google_callback_token', 'mainapp.google_views.google_callback_token', name='google_callback_token'),                   
     # url(r'^instafeed/', include('instafeed.foo.urls')),
 
