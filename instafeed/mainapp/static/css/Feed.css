@@ -2,6 +2,10 @@ body{
     background-color: #87CEFA;
 }
 
+.container {
+  width: 100%;
+}
+
 #post{
     float:  right
     height: 45px;
@@ -31,12 +35,6 @@ body{
     width:  100px;
     margin-left: 200px;
 }
-#feeds{
-    width: 80%;
-    height: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 .FeedPost {
     border: 1pt solid black;
@@ -61,19 +59,63 @@ body{
     margin-right: 5px;
 }
 
-#twitterFeed, #facebookFeed{
-    border:  1pt solid black;
-    width: 35%;
-    height: 450px;
-    background-color: white;
-    overflow: auto;
+.refreshButton {
+  width: 25px;
+  height: 25px;
+  margin-top: -38px;
+  margin-right: 2px;
+  float: right;
+  background-position: -235px -19px;
 }
 
-#twitterFeed, #twitterRefresh{
-   float: left;
+.refreshButton:hover {
+  background-color: #888;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
 }
 
-#facebookFeed, #facebookRefresh{
-    float:  right;
+#feeds {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.feedsDisplayCol {
+  border:  1pt solid black;
+  width: 360px;
+  height: 800px;
+  background-color: white;
+  overflow: auto;
+  margin-left: 12px;
+}
+
+.feedsDisplayCol .header {
+  margin-top: 0px;
+  width: 100%;
+  height: 30px;
+  background-color: #666666;
+  color: #FFFFFF;
+}
+
+.feedsDisplayCol .header h2 {
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 0px;
+  margin-left: 5px;
+  line-height: 30px;
+}
+
+#facebookFeedCol {
+  margin-left: 10px;
+}
+
+#twitterFeedCol {
+  margin-left: 390px;
+  margin-top: -801px;
+}
+
+#googleFeedCol {
+  margin-left: 770px;
+  margin-top: -802px;
+}

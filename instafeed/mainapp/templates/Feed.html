@@ -1,32 +1,44 @@
 {% extends "base_dashboard.html" %}
+
 {% block stylesheets %}
-<link href="/static/css/Feed.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/Feed.css" type="text/css" rel="stylesheet" />
 {% endblock %}
+
 {% block scripts %}
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-<script src="/static/js/Feed.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script src="/static/js/Feed.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block postbutton %}
-  <li>
-    <a href="#" onclick="displayPostPopup()">Post</a>
-  </li>
+    <li>
+        <a href="#" onclick="displayPostPopup()">Post</a>
+    </li>
 {% endblock %}
 
 {% block content %}
-        <div id="postPopup">
-            <textarea id="postText" placeholder="Enter Post..."></textarea>
-            <button id="submitPostButton">Submit Post</button>
+    <div id="postPopup">
+        <textarea id="postText" placeholder="Enter Post..."></textarea>
+        <button id="submitPostButton">Submit Post</button>
+    </div>
+
+    <div id="feeds">
+        <div id="facebookFeedCol" class="feedsDisplayCol">
+            <div class="header">
+                <h2>Facebook</h2>
+                <div id="facebookRefreshButton" class="refreshButton icon-refresh icon-white"></div>
+            </div>
         </div>
-        <div id="feeds">
-            <button id="twitterRefreshButton">Refresh Feed</button>
-            <button id="facebookRefreshButton">Refresh Feed</button>
-
-            <div id="facebookFeed">
-
+        <div id="twitterFeedCol" class="feedsDisplayCol">
+            <div class="header">
+                <h2>Twitter</h2>
+                <div id="twitterRefreshButton" class="refreshButton icon-refresh icon-white"></div>
             </div>
-
-            <div id="twitterFeed">
+        </div>
+        <div id="googleFeedCol" class="feedsDisplayCol">
+            <div class="header">
+                <h2>Google+</h2>
+                <div id="googleRefreshButton" class="refreshButton icon-refresh icon-white"></div>
             </div>
-          </div>
+        </div>
+    </div>
 {% endblock %}

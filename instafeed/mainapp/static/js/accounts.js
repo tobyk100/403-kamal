@@ -1,16 +1,37 @@
+$('#signinToTwitter').bind('click', signinToTwitter);
+$('#signinToFacebook').bind('click', signinToFacebook);
 
+function signinToTwitter() {
+   $.ajax({
+        type: "POST",
+        url: "/twitter_signin/",
+        data: {
+            title: "begin twitter signin process"
+        },
+        datatype: "json",
+        error: function (data) {
+            console.log('Error:', data);
+        },
+        success: function (data) {
+            $(location).attr('href',data);
+        }
+    });
+}
 
+function signinToFacebook() {
+   $.ajax({
+        type: "POST",
+        url: "/facebook_signin/",
+        data: {
+            title: "begin facebook signin process"
+        },
+        datatype: "json",
+        error: function (data) {
+            console.log('Error:', data);
+        },
+        success: function (data) {
+            $(location).attr('href',data);
+        }
+    });
+}
 
-// Bootstrap
-$('#myTab a[href="#profile"]').bind('click', function (e) {
-  e.preventDefault();
-  $(this).tab('show');
-})
-$('#myTab a[href="#social-networks"]').bind('click', function (e) {
-  e.preventDefault();
-  $(this).tab('show');
-})
-$('#myTab a[href="#settings"]').bind('click', function (e) {
-  e.preventDefault();
-  $(this).tab('show');
-})
