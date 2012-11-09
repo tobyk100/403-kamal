@@ -54,7 +54,7 @@ function loadFacebookFeed() {
         },
         datatype: "json",
         error: function (data) {
-	    $(location).attr('href',data.url);
+	    $(location).attr('href',data.responseText);
 	},
         success: function (data) {
 	    $('#facebookFeedPosts').empty();
