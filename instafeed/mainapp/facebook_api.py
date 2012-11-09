@@ -31,7 +31,8 @@ def facebook_read_user_status_updates(access_token):
 				last_name = names['last_name']
 				name = first_name + " " + last_name
 			time =  str(created_time)
-			posts.append((message, name, time))
+			image = "graph.facebook.com/" + str(post['actor_id']) + "/picture"
+			posts.append((message, name, time, image))
 	return posts	
 
 #This function will open a web browser with the page the user needs to log in to.
@@ -48,7 +49,7 @@ def facebook_auth():
 #If you use this function, front end will have to handle the redirect and 
 #parse out the returned 'access_token'
 def facebook_auth_url():
-	F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status']
+	F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status', 'offline_access']
 	return F.get_auth_url()
 
 #Example of how to use facebook_api.py:
@@ -58,9 +59,9 @@ def facebook_auth_url():
 def main():
 	#Log in to facebook to get your access token
 	access_token = facebook_auth()
-
+#	access_token = "AAAGGZCiT8uIMBAHBG4DVpzdNj0GAmbF8YVAe6orZBwZBfr0ByJZAvSL1eP34fccBZA67lvx46vZAabZBKPdltZCFGZAGoVEYYZBuYZBfpFU08PyQJoHJhZC865Rh"
 	#Update your status
-	post = "Posting from InstaFeed!"
+	post = "Posting from InstaFeed!adsfadsfa"
 	facebook_post_feed(post, access_token);
 
 	#View your news feed
@@ -72,6 +73,7 @@ def main():
 		print "message: " + post[0]
 		print "name: " + post[1]
 		print "timestamp: " + post[2]
+		print "image: " + post[3]
 		print ""
 #for debugging
 if __name__ == "__main__":	

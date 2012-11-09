@@ -24,7 +24,7 @@ function signinToTwitter(){
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('URL: ' + data);
+            //alert('URL: ' + data);
             $(location).attr('href',data);
         }
     });
@@ -39,7 +39,7 @@ function signinToFacebook(){
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('URL: ' + data);
+           // alert('URL: ' + data);
             $(location).attr('href',data);
         }
     });
@@ -83,18 +83,18 @@ function submitAndResetPost() {
 }
 
 function post_ajax_call(msg, url) {
-  $.ajax({
-    type: 'POST',
-    url: url,
-    data: {
-      message: msg,
-      type: 'upload'
-    },
-    datatype: 'json',
-    error: function(data) {
-      console.log(data);
-    }
-  });
+    $.ajax({
+	type: 'POST',
+	url: url,
+	data: {
+	    message: msg,
+	    type: 'upload'
+	},
+	datatype: 'json',
+	error: function(data) {
+	    $(location).attr('href',data);
+	}
+    });
 }
 
 //Loads Facebook feeds from server
@@ -107,28 +107,31 @@ function loadFacebookFeed()
         data: { title: "ajax call from facebook",
 		type: "feedRequest"},
         datatype: "json",
-        error: function (data) { alert('Error:' + data); },
+        error: function (data) { 
+	    $(location).attr('href',data.url);
+	},
         success: function (data) {
-            alert('Facebook feeds: ' + data);
-            // data is a JSON array, each JSON elements has {text, datetime, author}
-            // $.each(data, function(elem) {
-            // createPostInFacebookFeed(elem['text'], elem['datetime'], elem['author']);
-            // });
-
-            //var posts = JSON.parse(data);
+	    $('#facebookFeed').empty();
             for(var i = 0; i < data.updates.length; i++){
-                createPostInFacebookFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1]);
+                createPostInFacebookFeed(urlify(data.updates[i][0]), data.updates[i][2], data.updates[i][1], data.updates[i].image);
             }
         }
     });
 }
 
 
+
+function urlify(text) {
 //Creates a pop in the social media feed with the given parameters
-function createPostInFacebookFeed(message, time, person){
+function createPostInFacebookFeed(message, time, person, img_src){
+    var date = new Date(time * 1000);
+    var formattedDate = (date.toLocaleString().substring(0,3) + ' ' + 
+			 date.toLocaleTimeString());
+    
     $('#facebookFeed').append('<div class ="FeedPost">' +
-                      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
-                      '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
+			      '<img src="' + img_src + '" ' + 'class="user_img" alt="User Avatar"/>' +
+			      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
+			      '<div class="nameTime">' + person + ' - ' + formattedDate + '</div><div class="message">' + message + '</div></div>');
 }
 
 function loadTwitterFeed()
@@ -140,21 +143,28 @@ function loadTwitterFeed()
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-           // alert('OK! ' + data);
-            // data is a JSON array, each JSON elements has {text, datetime, author}
-            //$.each(data, function(v) {
-             // createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
-            //});
+            $('#twitterFeed').empty();
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
-                createPostInTwitterFeed(posts.tweets[i].text, "12:00" , posts.tweets[i].user.name)
+                createPostInTwitterFeed(urlify(posts.tweets[i].text), 
+                                        posts.tweets[i].created_at , 
+                                        posts.tweets[i].user.name,
+                                        posts.tweets[i].user.profile_image_url);
 	    }
         }
     });
 }
 
-function createPostInTwitterFeed(message, time, person){
+function createPostInTwitterFeed(message, time, person, profilePicture){
     $('#twitterFeed').append('<div class ="FeedPost">' +
-                    '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
-                    '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
+			     '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
+			     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
+			     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
+}
+
+function urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    })
 }
