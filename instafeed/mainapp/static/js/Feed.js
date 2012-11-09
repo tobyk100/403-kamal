@@ -109,13 +109,8 @@ function loadFacebookFeed()
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('Facebook feeds: ' + data);
-            // data is a JSON array, each JSON elements has {text, datetime, author}
-            // $.each(data, function(elem) {
-            // createPostInFacebookFeed(elem['text'], elem['datetime'], elem['author']);
-            // });
-
-            //var posts = JSON.parse(data);
+            //alert('Facebook feeds: ' + data);
+	    $('#facebookFeed').empty();
             for(var i = 0; i < data.updates.length; i++){
                 createPostInFacebookFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1]);
             }
@@ -126,9 +121,13 @@ function loadFacebookFeed()
 
 //Creates a pop in the social media feed with the given parameters
 function createPostInFacebookFeed(message, time, person){
+    var date = new Date(time * 1000);
+    var formattedDate = (date.toLocaleString().substring(0,3) + ' ' + 
+			 date.toLocaleTimeString());
+    
     $('#facebookFeed').append('<div class ="FeedPost">' +
                       '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
-                      '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
+                      '<div class="nameTime">' + person + ' - ' + formattedDate + '</div><div class="message">' + message + '</div></div>');
 }
 
 function loadTwitterFeed()
@@ -140,11 +139,7 @@ function loadTwitterFeed()
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-           // alert('OK! ' + data);
-            // data is a JSON array, each JSON elements has {text, datetime, author}
-            //$.each(data, function(v) {
-             // createPostInTwitterFeed(elem['text'], elem['datetime'], elem['user']['name']);
-            //});
+            $('#twitterFeed').empty();
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
                 createPostInTwitterFeed(posts.tweets[i].text, "12:00" , posts.tweets[i].user.name)

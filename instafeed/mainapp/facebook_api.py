@@ -48,7 +48,7 @@ def facebook_auth():
 #If you use this function, front end will have to handle the redirect and 
 #parse out the returned 'access_token'
 def facebook_auth_url():
-	F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status']
+	F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status', 'offline_access']
 	return F.get_auth_url()
 
 #Example of how to use facebook_api.py:
