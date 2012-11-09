@@ -32,12 +32,12 @@ def google_signup(request):
 
   account = GoogleAccount.get_account(request.user)
   if account is None:
-    #redirect = request_refresh_token(request)
-    response['success'] = True
-    response['authenticated'] = True
-    response['account'] = False
-    response['message'] = "User redirected to G+ for signin"
-    return HttpResponse(json.dumps(response))
+    redirect = _request_refresh_token()
+    redirect['success'] = True
+    redirect['authenticated'] = True
+    redirect['account'] = False
+    redirect['message'] = "User redirected to G+ for signin"
+    return redirect
 
   response['refresh_token'] = account.refresh_token
   return HttpResponse(json.dumps(response))
@@ -47,8 +47,39 @@ def google_get_posts(request):
   response = {}
   token = request.session.get('google_token')
   if (token is None) or (not is_valid(token)):
-    token = google_api.google_request_token(request)
-
+    token = _request_token(request)
   return HttpResponse(json.dumps(response), 'application/json')
-
   return HttpResponseRedirect(url)
+
+def _request_token(request):
+  response = {}
+  account = GoogleAccount.get_account(request.user)
+  response['refresh_token'] = request_refresh_token(request) if not account else \
+                              account.refresh_token
+  return HttpResponse(json.dumps(response))
+
+# Asks google for a code, google calls back '_google_callback_code'
+# and that method handles getting the request and putting it in the DB
+def _request_refresh_token():
+  """
+  request_post = google_api.request_token_post(request.code)
+  url = request_token_url()
+  redirect = HttpResponseRedirect(url)
+  redirect.POST.update(request_post)
+  """
+  url = google_api.TOKEN_URL
+  redirect = HttpResponseRedirect(url)
+  return redirect
+
+# returns a json object with the following fields:
+#   authorized - A boolean representing whether the user gave us access
+def _google_callback_code(request):
+  response = {}
+  response['authorized'] = (request.GET.get('error') != 'access_denied')
+  if response['authorized']:
+    response['code'] = request.GET.get('code')
+
+  return HttpResponse(json.dumps(response))
+
+def google_callback_token(request):
+  pass

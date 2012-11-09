@@ -53,6 +53,7 @@ class GoogleTest(TestCase):
     self.assertFalse(json_response["authenticated"])
 
   def test_signup_authenticated_no_account(self):
+    """
     user = User.objects.get(id=1)
     c = Client()
     c.login(email=self.email, password=self.password)
@@ -61,7 +62,14 @@ class GoogleTest(TestCase):
     self.assertTrue(json_response["success"])
     self.assertTrue(json_response["authenticated"])
     self.assertFalse(json_response["account"])
+    """
+    response = _request_refresh_token()
+    self.assertRedirects(response, google_api.TOKEN_URL)
 
-  def test_request_code(self):
+"""
+  def test_signup_authenticated_no_account(self):
     c = Client()
     c.login(email=self.email, password=self.password)
+    self.addAccountToDB
+    reponse = c.post('/oogle_api.request_token(request)
+"""
