@@ -3,3 +3,4 @@ venv
 virtualenv*
 *.pyc
 local_settings.py
+mox*
