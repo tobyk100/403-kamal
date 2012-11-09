@@ -16,6 +16,14 @@ redirect_uri = google_api.REDIRECT_URI + '/google_callback_token'
 FLOW = OAuth2WebServerFlow(client_id, client_secret, scope, redirect_uri)
 
 def google_signup(request):
+  auth_uri = FLOW.step1_get_authorize_url()
+  return HttpResponseRedirect(auth_uri)
+
+def google_callback_token(request):
+  return HttpResponse("Hi")
+"""
+
+def google_signup(request):
   storage = Storage(CredentialsModel, 'id', request.user, 'credential')
   credentials = storage.get()
   if credentials is None or credentials.invalid:
@@ -34,3 +42,4 @@ def google_callback_token(request):
   storage = Storage(CredentialsModel, 'id', request.user, 'credential')
   storage.put(credential)
   return HttpResponseRedirect("/")
+"""
