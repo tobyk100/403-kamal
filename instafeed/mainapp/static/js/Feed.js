@@ -144,15 +144,18 @@ function loadTwitterFeed()
             $('#twitterFeed').empty();
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
-                createPostInTwitterFeed(urlify(posts.tweets[i].text), posts.tweets[i].created_at , posts.tweets[i].user.name);
+                createPostInTwitterFeed(urlify(posts.tweets[i].text), 
+                                        posts.tweets[i].created_at , 
+                                        posts.tweets[i].user.name,
+                                        posts.tweets[i].user.profile_image_url);
 	    }
         }
     });
 }
 
-function createPostInTwitterFeed(message, time, person){
+function createPostInTwitterFeed(message, time, person, profilePicture){
     $('#twitterFeed').append('<div class ="FeedPost">' +
-			     '<img src="https://s-static.ak.facebook.com/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif" class="user_img" alt="User Avatar"/>' +
+			     '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
 			     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
 			     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 }
@@ -162,6 +165,4 @@ function urlify(text) {
     return text.replace(urlRegex, function(url) {
         return '<a href="' + url + '">' + url + '</a>';
     })
-    // or alternatively
-    //     // return text.replace(urlRegex, '<a href="$1">$1</a>')
 }
