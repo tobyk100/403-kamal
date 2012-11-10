@@ -7,6 +7,7 @@ from django.contrib.sessions.models import Session
 import twitter_api, facebook_api, json, models, urllib2
 from models import TwitterAccount, FacebookAccount, Account
 
+#view that handles all fb requests
 @csrf_exempt
 def facebook_request(request):
   response = {}
@@ -20,8 +21,11 @@ def facebook_request(request):
   else:
     response['success'] = 'false'
     response['message'] = 'Uknown facebook request.'
+  if response.type == HttpResponse:
+    return response
   return HttpResponse(json.dumps(response), mimetype="application/json")
 
+#helper function that will post the desired message to fb
 @csrf_exempt
 def facebook_upload(request):
   response = {}
@@ -37,9 +41,11 @@ def facebook_upload(request):
     facebook_api.facebook_post_feed(request.POST.get('message'), fb_account.access_token)
   except urllib2.HTTPError:
     print "Error: Token is invalid"
-    get_fb_url(1)
+    return get_fb_url(1)
   return response
 
+
+#helper function that will pull the users feed data from fb and return it to our client side
 @csrf_exempt
 def facebook_feed_request(request):
   response = {}
@@ -55,9 +61,11 @@ def facebook_feed_request(request):
     response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
   except urllib2.HTTPError:
     print "Error: Token is invalid"
-    get_fb_url(1)
+    return get_fb_url(1)
   return response
 
+#helper function that will return the fb aut url either with an error if the user has
+#an invalid token or with success if the user has never signed in before
 def get_fb_url(error):
   url = facebook_api.facebook_auth_url()
   if(error):
@@ -65,22 +73,26 @@ def get_fb_url(error):
   else:
     return HttpResponse(url, status=200)
 
+#called when either the user has never connected their fb or if their token is invalid
 @csrf_exempt
 def facebook_signin(request):
-  get_fb_url(0)
+  return get_fb_url(0)
   
-
+#callback function that is called after fb authenticates so that we can store the token
 @csrf_exempt
 def facebook_callback(request):
   if request.GET.get('access_token') != None:
     fb_access_token = request.POST.get('access_token')
     facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
+    facebook_account.save()
     return_dict = {}
     return_dict['success'] = 'true'
     return HttpResponse(json.dumps(return_dict))
   else:
     return render(request, 'channel.html')
 
+#if fb fails to give a proper http response this is called from js with proper arguments to save
+#the users credentials
 @csrf_exempt
 def facebook_access(request):
   fb_access_token = request.POST.get('token')
