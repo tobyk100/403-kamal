@@ -1,2 +1,2 @@
 DEBUG = False
-LOCAL = True
+LOCAL = False
