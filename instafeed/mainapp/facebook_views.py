@@ -53,10 +53,11 @@ def facebook_feed_request(request):
     fb_account = FacebookAccount.get_account(request.user.id)
   except Entry.DoesNotExist:
     response['success'] = 'false'
-    response['message'] = 'Failed to get data for user'
+    response['message'] = 'Failed to get data for user' 
     return response
   
   try:
+    print "trying to get stuff from fb"
     response['success'] = 'true'
     response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
   except urllib2.HTTPError:
@@ -77,7 +78,7 @@ def get_fb_url(error):
 @csrf_exempt
 def facebook_signin(request):
   response = get_fb_url(0)
-  return HttpResponse(response['url'], status response['status'])
+  return HttpResponse(response['url'], status=response['status'])
   
 #callback function that is called after fb authenticates so that we can store the token
 @csrf_exempt
