@@ -125,8 +125,9 @@ function createPostInFacebookFeed(message, time, person){
 			 date.toLocaleTimeString());
     
     $('#facebookFeed').append('<div class ="FeedPost">' +
-                      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
-                      '<div class="nameTime">' + person + ' - ' + formattedDate + '</div><div class="message">' + message + '</div></div>');
+			      '<img src="https://s-static.ak.facebook.com/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif" class="user_img" alt="User Avatar"/>' +
+			      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
+			      '<div class="nameTime">' + person + ' - ' + formattedDate + '</div><div class="message">' + message + '</div></div>');
 }
 
 function loadTwitterFeed()
@@ -149,6 +150,7 @@ function loadTwitterFeed()
 
 function createPostInTwitterFeed(message, time, person){
     $('#twitterFeed').append('<div class ="FeedPost">' +
-                    '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
-                    '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
+			     '<img src="https://s-static.ak.facebook.com/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif" class="user_img" alt="User Avatar"/>' +
+			     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
+			     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 }
