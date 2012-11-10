@@ -113,13 +113,15 @@ function loadFacebookFeed()
         success: function (data) {
 	    $('#facebookFeed').empty();
             for(var i = 0; i < data.updates.length; i++){
-                createPostInFacebookFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1], data.updates[i].image);
+                createPostInFacebookFeed(urlify(data.updates[i][0]), data.updates[i][2], data.updates[i][1], data.updates[i].image);
             }
         }
     });
 }
 
 
+
+function urlify(text) {
 //Creates a pop in the social media feed with the given parameters
 function createPostInFacebookFeed(message, time, person, img_src){
     var date = new Date(time * 1000);
