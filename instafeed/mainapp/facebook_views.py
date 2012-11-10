@@ -21,7 +21,7 @@ def facebook_request(request):
   else:
     response['success'] = 'false'
     response['message'] = 'Uknown facebook request.'
-  if response.has['url']
+  if response.has['url']:
     return HttpResponse(response['url'], status=response['status'])
   return HttpResponse(json.dumps(response), mimetype="application/json")
 
@@ -77,7 +77,7 @@ def get_fb_url(error):
 @csrf_exempt
 def facebook_signin(request):
   response = get_fb_url(0)
-  return HttpResponse(response['url'], statusresponse['status'])
+  return HttpResponse(response['url'], status response['status'])
   
 #callback function that is called after fb authenticates so that we can store the token
 @csrf_exempt
