@@ -21,7 +21,7 @@ def facebook_request(request):
   else:
     response['success'] = 'false'
     response['message'] = 'Uknown facebook request.'
-  if response.has['url']:
+  if 'url' in response:
     return HttpResponse(response['url'], status=response['status'])
   return HttpResponse(json.dumps(response), mimetype="application/json")
 
