@@ -83,18 +83,18 @@ function submitAndResetPost() {
 }
 
 function post_ajax_call(msg, url) {
-  $.ajax({
-    type: 'POST',
-    url: url,
-    data: {
-      message: msg,
-      type: 'upload'
-    },
-    datatype: 'json',
-    error: function(data) {
-      console.log(data);
-    }
-  });
+    $.ajax({
+	type: 'POST',
+	url: url,
+	data: {
+	    message: msg,
+	    type: 'upload'
+	},
+	datatype: 'json',
+	error: function(data) {
+	    $(location).attr('href',data);
+	}
+    });
 }
 
 //Loads Facebook feeds from server
@@ -107,7 +107,7 @@ function loadFacebookFeed()
         data: { title: "ajax call from facebook",
 		type: "feedRequest"},
         datatype: "json",
-        error: function (data) { alert('Error:' + data); },
+        error: function (data) {  $(location).attr('href',data); },
         success: function (data) {
 	    $('#facebookFeed').empty();
             for(var i = 0; i < data.updates.length; i++){
