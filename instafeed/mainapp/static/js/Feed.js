@@ -107,7 +107,7 @@ function loadFacebookFeed()
         data: { title: "ajax call from facebook",
 		type: "feedRequest"},
         datatype: "json",
-        error: function (data) {  $(location).attr('href',data); },
+        error: function (data) {  $(location).attr('href',data.url); },
         success: function (data) {
 	    $('#facebookFeed').empty();
             for(var i = 0; i < data.updates.length; i++){
