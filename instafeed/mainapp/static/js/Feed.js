@@ -83,18 +83,18 @@ function submitAndResetPost() {
 }
 
 function post_ajax_call(msg, url) {
-  $.ajax({
-    type: 'POST',
-    url: url,
-    data: {
-      message: msg,
-      type: 'upload'
-    },
-    datatype: 'json',
-    error: function(data) {
-      console.log(data);
-    }
-  });
+    $.ajax({
+	type: 'POST',
+	url: url,
+	data: {
+	    message: msg,
+	    type: 'upload'
+	},
+	datatype: 'json',
+	error: function(data) {
+	    $(location).attr('href',data);
+	}
+    });
 }
 
 //Loads Facebook feeds from server
@@ -107,11 +107,13 @@ function loadFacebookFeed()
         data: { title: "ajax call from facebook",
 		type: "feedRequest"},
         datatype: "json",
-        error: function (data) { alert('Error:' + data); },
+        error: function (data) { 
+	    $(location).attr('href',data.url);
+	},
         success: function (data) {
 	    $('#facebookFeed').empty();
             for(var i = 0; i < data.updates.length; i++){
-                createPostInFacebookFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1]);
+                createPostInFacebookFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1], data.updates[i].image);
             }
         }
     });
@@ -119,13 +121,13 @@ function loadFacebookFeed()
 
 
 //Creates a pop in the social media feed with the given parameters
-function createPostInFacebookFeed(message, time, person){
+function createPostInFacebookFeed(message, time, person, img_src){
     var date = new Date(time * 1000);
     var formattedDate = (date.toLocaleString().substring(0,3) + ' ' + 
 			 date.toLocaleTimeString());
     
     $('#facebookFeed').append('<div class ="FeedPost">' +
-			      '<img src="https://s-static.ak.facebook.com/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif" class="user_img" alt="User Avatar"/>' +
+			      '<img src="' + img_src + '" ' + 'class="user_img" alt="User Avatar"/>' +
 			      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
 			      '<div class="nameTime">' + person + ' - ' + formattedDate + '</div><div class="message">' + message + '</div></div>');
 }

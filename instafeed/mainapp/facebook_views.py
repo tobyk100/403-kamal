@@ -21,8 +21,8 @@ def facebook_request(request):
   else:
     response['success'] = 'false'
     response['message'] = 'Uknown facebook request.'
-  if response.type == HttpResponse:
-    return response
+  if response.has['url']:
+    return HttpResponse(response['url'], status=response['status'])
   return HttpResponse(json.dumps(response), mimetype="application/json")
 
 #helper function that will post the desired message to fb
@@ -69,14 +69,15 @@ def facebook_feed_request(request):
 def get_fb_url(error):
   url = facebook_api.facebook_auth_url()
   if(error):
-    return HttpResponse(url, status=409)
+    return {'url': url, 'status': 409}
   else:
-    return HttpResponse(url, status=200)
+    return {'url': url, 'status': 200}
 
 #called when either the user has never connected their fb or if their token is invalid
 @csrf_exempt
 def facebook_signin(request):
-  return get_fb_url(0)
+  response = get_fb_url(0)
+  return HttpResponse(response['url'], status response['status'])
   
 #callback function that is called after fb authenticates so that we can store the token
 @csrf_exempt
