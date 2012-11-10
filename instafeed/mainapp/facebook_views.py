@@ -37,7 +37,7 @@ def facebook_upload(request):
     facebook_api.facebook_post_feed(request.POST.get('message'), fb_account.access_token)
   except urllib2.HTTPError:
     print "Error: Token is invalid"
-    facebook_signin(request)
+    get_fb_url(1)
   return response
 
 @csrf_exempt
@@ -55,13 +55,20 @@ def facebook_feed_request(request):
     response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
   except urllib2.HTTPError:
     print "Error: Token is invalid"
-    facebook_signin(request)
+    get_fb_url(1)
   return response
+
+def get_fb_url(error):
+  url = facebook_api.facebook_auth_url()
+  if(error):
+    return HttpResponse(url, status=409)
+  else:
+    return HttpResponse(url, status=200)
 
 @csrf_exempt
 def facebook_signin(request):
-  url = facebook_api.facebook_auth_url()
-  return HttpResponse(url)
+  get_fb_url(0)
+  
 
 @csrf_exempt
 def facebook_callback(request):
