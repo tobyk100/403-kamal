@@ -142,7 +142,7 @@ function loadTwitterFeed()
             $('#twitterFeed').empty();
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
-                createPostInTwitterFeed(posts.tweets[i].text, "12:00" , posts.tweets[i].user.name)
+                createPostInTwitterFeed(urlify(posts.tweets[i].text), "12:00" , posts.tweets[i].user.name)
 	    }
         }
     });
@@ -152,4 +152,13 @@ function createPostInTwitterFeed(message, time, person){
     $('#twitterFeed').append('<div class ="FeedPost">' +
                     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
+}
+
+function urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '">' + url + '</a>';
+    })
+    // or alternatively
+    //     // return text.replace(urlRegex, '<a href="$1">$1</a>')
 }
