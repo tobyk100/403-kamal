@@ -21,7 +21,7 @@ import types
 from urlparse import urlparse, parse_qs
 from urllib import urlencode
 from pprint import pprint
-from settings import DEBUG
+from settings import LOCAL, DEBUG
 
 #APP_ID = '179745182062082'
 if LOCAL:
