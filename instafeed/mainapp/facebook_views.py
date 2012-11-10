@@ -4,7 +4,7 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
-import twitter_api, facebook_api, json, models
+import twitter_api, facebook_api, json, models, urllib2
 from models import TwitterAccount, FacebookAccount, Account
 
 @csrf_exempt
@@ -33,7 +33,11 @@ def facebook_upload(request):
     return response
   
   response['success'] = 'true'
-  facebook_api.facebook_post_feed(request.POST.get('message'), fb_account.access_token)
+  try:
+    facebook_api.facebook_post_feed(request.POST.get('message'), fb_account.access_token)
+  except urllib2.HTTPError:
+    print "Error: Token is invalid"
+    facebook_signin(request)
   return response
 
 @csrf_exempt
@@ -46,8 +50,12 @@ def facebook_feed_request(request):
     response['message'] = 'Failed to get data for user'
     return response
   
-  response['success'] = 'true'
-  response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
+  try:
+    response['success'] = 'true'
+    response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
+  except urllib2.HTTPError:
+    print "Error: Token is invalid"
+    facebook_signin(request)
   return response
 
 @csrf_exempt
