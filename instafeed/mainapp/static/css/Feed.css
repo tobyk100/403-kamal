@@ -41,6 +41,7 @@ body{
 .FeedPost {
     border: 1pt solid black;
     width: 99.5%;
+    overflow: hidden;
 }
 
 .NameTime {
@@ -55,6 +56,11 @@ body{
     float: left;
     margin-right: 5px;
 }
+
+.user_img {
+    float: right;
+}
+
 #twitterFeed, #facebookFeed{
     border:  1pt solid black;
     width: 35%;

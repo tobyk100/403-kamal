@@ -24,7 +24,7 @@ function signinToTwitter(){
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('URL: ' + data);
+            //alert('URL: ' + data);
             $(location).attr('href',data);
         }
     });
@@ -39,7 +39,7 @@ function signinToFacebook(){
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            alert('URL: ' + data);
+           // alert('URL: ' + data);
             $(location).attr('href',data);
         }
     });
@@ -109,7 +109,6 @@ function loadFacebookFeed()
         datatype: "json",
         error: function (data) { alert('Error:' + data); },
         success: function (data) {
-            //alert('Facebook feeds: ' + data);
 	    $('#facebookFeed').empty();
             for(var i = 0; i < data.updates.length; i++){
                 createPostInFacebookFeed(data.updates[i][0], data.updates[i][2], data.updates[i][1]);
@@ -126,8 +125,9 @@ function createPostInFacebookFeed(message, time, person){
 			 date.toLocaleTimeString());
     
     $('#facebookFeed').append('<div class ="FeedPost">' +
-                      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
-                      '<div class="nameTime">' + person + ' - ' + formattedDate + '</div><div class="message">' + message + '</div></div>');
+			      '<img src="https://s-static.ak.facebook.com/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif" class="user_img" alt="User Avatar"/>' +
+			      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
+			      '<div class="nameTime">' + person + ' - ' + formattedDate + '</div><div class="message">' + message + '</div></div>');
 }
 
 function loadTwitterFeed()
@@ -142,7 +142,7 @@ function loadTwitterFeed()
             $('#twitterFeed').empty();
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
-                createPostInTwitterFeed(urlify(posts.tweets[i].text), "12:00" , posts.tweets[i].user.name)
+                createPostInTwitterFeed(urlify(posts.tweets[i].text), posts.tweets[i].created_at , posts.tweets[i].user.name);
 	    }
         }
     });
@@ -150,8 +150,9 @@ function loadTwitterFeed()
 
 function createPostInTwitterFeed(message, time, person){
     $('#twitterFeed').append('<div class ="FeedPost">' +
-                    '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
-                    '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
+			     '<img src="https://s-static.ak.facebook.com/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif" class="user_img" alt="User Avatar"/>' +
+			     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
+			     '<div class="nameTime">' + person + ' - ' + time + '</div><div class="message">' + message + '</div></div>');
 }
 
 function urlify(text) {
