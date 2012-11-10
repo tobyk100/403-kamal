@@ -24,12 +24,12 @@ from pprint import pprint
 from settings import DEBUG
 
 #APP_ID = '179745182062082'
-if DEBUG:
+if LOCAL:
   APP_ID = '131438313672419'
 else:
   APP_ID = '429901077067907'
 SERVER_PORT = 8000
-if DEBUG:
+if LOCAL:
   REDIRECT_URI = 'http://127.0.0.1:8000/facebook_callback'
 else:
   REDIRECT_URI = 'https://dry-peak-6840.herokuapp.com/facebook_callback'
