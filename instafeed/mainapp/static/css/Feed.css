@@ -53,12 +53,12 @@ body{
 }
 
 .logo {
-    float: left;
+    float: right;
     margin-right: 5px;
 }
 
 .user_img {
-    float: right;
+    float: left;
 }
 
 #twitterFeed, #facebookFeed{
