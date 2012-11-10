@@ -54,11 +54,11 @@ body{
 
 .logo {
     float: right;
-    margin-right: 5px;
 }
 
 .user_img {
     float: left;
+    margin-right: 5px;
 }
 
 #twitterFeed, #facebookFeed{
