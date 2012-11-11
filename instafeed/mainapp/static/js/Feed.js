@@ -79,7 +79,7 @@ function createPostInFacebookFeed(message, time, person, img_src){
 	  date.toLocaleTimeString()
     );
 
-    $('#facebookFeed').append('<div class ="FeedPost">' +
+    $('#facebookFeedCol').append('<div class ="FeedPost">' +
 			      '<img src="' + img_src + '" ' + 'class="user_img" alt="User Avatar"/>' +
 			      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
 			      '<div class="nameTime">' + person + ' - ' +
@@ -87,7 +87,6 @@ function createPostInFacebookFeed(message, time, person, img_src){
 }
 
 function loadTwitterFeed() {
-    console.log('twitter');
     $.ajax({
         type: "POST",
         url: "/twitter_request/",
@@ -114,7 +113,7 @@ function loadTwitterFeed() {
 }
 
 function createPostInTwitterFeed(message, time, person, profilePicture) {
-    $('#twitterFeed').append('<div class ="FeedPost">' +
+    $('#twitterFeedCol').append('<div class ="FeedPost">' +
 			     '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
 			     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
 			     '<div class="nameTime">' + person + ' - ' + time +
