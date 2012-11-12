@@ -13,8 +13,8 @@ body{
 
 #postPopup {
     z-index: 100;
-    right: 50px;
-    top: 50px;
+    right: 35px;
+    top: 42px;
     height: 200px;
     width:  500px;
     border:  2pt solid black;
