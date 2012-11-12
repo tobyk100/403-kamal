@@ -61,11 +61,11 @@ function loadFacebookFeed() {
         datatype: "json",
         error: function (data) {
 	    $(location).attr('href',data.responseText);
-	    //$('#facebookFeedPosts').append('<a href="' + data.responseText + '">Please Sign In</a>');
 	},
         success: function (data) {
 	    if(data.success == "false"){
-		$('#facebookFeedPosts').append('No Facebook Account Found:<br> <button id="signinToFacebook" class="btn">Facebook Login</button>');
+		$('#facebookFeedPosts').append('No Facebook Account Found:<br>
+<button id="signinToFacebook" class="btn">Facebook Login</button>');
 		$('#signinToFacebook').bind('click', signinToFacebook);
 	    }else {
 		for(var i = 0; i < data.updates.length; i++){
