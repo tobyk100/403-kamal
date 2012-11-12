@@ -49,18 +49,20 @@ def facebook_upload(request):
 @csrf_exempt
 def facebook_feed_request(request):
   response = {}
-  try:
-    fb_account = FacebookAccount.get_account(request.user.id)
-  except Exception:
+  fb_account = FacebookAccount.get_account(request.user.id)
+  #case where user has not added FB account yet
+  if(fb_account == None):
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user' 
     return response
   
   try:
+  #success case, we can get their 
     print "trying to get stuff from fb"
     response['success'] = 'true'
     response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
   except Exception:
+    #invalid token
     print "Error: Token is invalid"
     return get_fb_url(1)
   return response
