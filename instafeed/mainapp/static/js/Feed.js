@@ -57,7 +57,7 @@ function loadFacebookFeed() {
 	    $(location).attr('href',data.url);
 	},
         success: function (data) {
-	    $('#facebookFeedCol').empty();
+	    $('#facebookFeedPosts').empty();
             for(var i = 0; i < data.updates.length; i++){
                 createPostInFacebookFeed(urlify(
                     data.updates[i][0]),
@@ -79,7 +79,7 @@ function createPostInFacebookFeed(message, time, person, img_src){
 	  date.toLocaleTimeString()
     );
 
-    $('#facebookFeedCol').append('<div class ="FeedPost">' +
+    $('#facebookFeedPosts').append('<div class ="FeedPost">' +
 			      '<img src="' + img_src + '" ' + 'class="user_img" alt="User Avatar"/>' +
 			      '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
 			      '<div class="nameTime">' + person + ' - ' +
@@ -98,7 +98,7 @@ function loadTwitterFeed() {
             console.log('Error:', data);
         },
         success: function (data) {
-            $('#twitterFeedCol').empty();
+            $('#twitterFeedPosts').empty();
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
                 createPostInTwitterFeed(urlify(
@@ -113,7 +113,7 @@ function loadTwitterFeed() {
 }
 
 function createPostInTwitterFeed(message, time, person, profilePicture) {
-    $('#twitterFeedCol').append('<div class ="FeedPost">' +
+    $('#twitterFeedPosts').append('<div class ="FeedPost">' +
 			     '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
 			     '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
 			     '<div class="nameTime">' + person + ' - ' + time +
