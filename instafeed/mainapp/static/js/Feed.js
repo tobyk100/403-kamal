@@ -66,8 +66,8 @@ function loadFacebookFeed() {
         success: function (data) {
 	    alert(data);
 	    if(data.success == "false"){
-		$('#facebookFeedPosts').append('No Facebook Account Found:');
-		// <br> <button id="signinToFacebook" class="btn">Facebook Login</button>');
+		$('#facebookFeedPosts').append('No Facebook Account Found:<br>');
+		// <button id="signinToFacebook" class="btn">Facebook Login</button>');
 	    }else {
 		for(var i = 0; i < data.updates.length; i++){
                     createPostInFacebookFeed(urlify(
