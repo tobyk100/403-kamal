@@ -1,7 +1,3 @@
-$(document).ready(function () {
-    bindButtons();
-});
-
 //Binds all appropriate buttons with clicks
 $(document).on('ready', function() {
     $('#submitPostButton').bind('click', submitAndResetPost);
