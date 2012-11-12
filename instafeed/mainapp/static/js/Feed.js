@@ -57,7 +57,7 @@ function loadFacebookFeed() {
 	    $(location).attr('href',data.url);
 	},
         success: function (data) {
-	    $('#facebookFeed').empty();
+	    $('#facebookFeedCol').empty();
             for(var i = 0; i < data.updates.length; i++){
                 createPostInFacebookFeed(urlify(
                     data.updates[i][0]),
@@ -98,7 +98,7 @@ function loadTwitterFeed() {
             console.log('Error:', data);
         },
         success: function (data) {
-            $('#twitterFeed').empty();
+            $('#twitterFeedCol').empty();
 	    var posts = JSON.parse(data);
             for(var i = 0; i < posts.tweets.length; i++){
                 createPostInTwitterFeed(urlify(
