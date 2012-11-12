@@ -64,8 +64,7 @@ function loadFacebookFeed() {
 	},
         success: function (data) {
 	    if(data.success == "false"){
-		$('#facebookFeedPosts').append('No Facebook Account Found:<br>
-<button id="signinToFacebook" class="btn">Facebook Login</button>');
+		$('#facebookFeedPosts').append('No Facebook Account Found:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
 		$('#signinToFacebook').bind('click', signinToFacebook);
 	    }else {
 		for(var i = 0; i < data.updates.length; i++){
