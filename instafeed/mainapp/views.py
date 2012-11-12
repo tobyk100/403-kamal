@@ -56,7 +56,6 @@ def signin(request):
 
     if (user is not None) and (user.is_active):
       login(request, user)
-      # TODO: fixed the rendering once homepage is ready
       facebook_account = FacebookAccount.get_account(request_id=request.user.id)
       twitter_account = TwitterAccount.get_account(request_id=request.user.id)
       if facebook_account is None and twitter_account is None:
@@ -64,7 +63,9 @@ def signin(request):
       else:
         return redirect('/feed/', {'username': email})
     else:
-      return render(request, 'index.html', {'username': email})
+      form = EmailAuthenticationForm()
+      form.non_field_errors = 'Your email and password were incorrect.'
+      return render(request, 'index.html', {'form': form})
   else:
     form = EmailAuthenticationForm()
 
