@@ -44,7 +44,7 @@ function post_ajax_call(msg, url) {
 //Loads Facebook feeds from server
 //Post request used to get list of posts
 function loadFacebookFeed() {
-    console.log('facebook');
+    //console.log('facebook');
     $.ajax({
         type: "POST",
         url: "/facebook_request/",
