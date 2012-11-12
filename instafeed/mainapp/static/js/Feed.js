@@ -73,8 +73,7 @@ function loadFacebookFeed() {
 			data.updates[i][0]),
 					     data.updates[i][2],
 					     data.updates[i][1],
-					     data.updates[i].image
-					    );
+					     data.updates[i][3]);
 		}
 	    }
         }
