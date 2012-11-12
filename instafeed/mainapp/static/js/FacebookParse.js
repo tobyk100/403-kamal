@@ -1,9 +1,9 @@
 window.onload = function () {
-    alert(document.URL);
+    //alert(document.URL);
     var string = document.URL;
     var array = string.split("#");
     var token = array[1].split("&");
-    alert(token[0]);
+    //alert(token[0]);
     var accessToken = token[0].split("=");
     
     $.ajax({
