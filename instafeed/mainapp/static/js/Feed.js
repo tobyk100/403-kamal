@@ -1,6 +1,6 @@
-window.onload = function () {
+$(document).ready(function () {
     bindButtons();
-}
+});
 
 //Binds all appropriate buttons with clicks
 function bindButtons(){
