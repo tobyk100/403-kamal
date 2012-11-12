@@ -52,6 +52,7 @@ def facebook_feed_request(request):
   try:
     fb_account = FacebookAccount.get_account(request.user.id)
   except Exception:
+    print "user doesnt have fb"
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user' 
     return response
