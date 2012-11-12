@@ -4,6 +4,11 @@ $(document).on('ready', function() {
     $('#facebookRefreshButton').bind('click', loadFacebookFeed);
     $('#twitterRefreshButton').bind('click', loadTwitterFeed);
     $('#googleRefreshButton').bind('click', loadGoogleFeed);
+    var refreshId = setInterval(function(){
+	loadFacebookFeed();
+	loadTwitterFeed();
+	loadGoogleFeed();
+    }, 100000);
 });
 
 
@@ -45,6 +50,7 @@ function post_ajax_call(msg, url) {
 //Post request used to get list of posts
 function loadFacebookFeed() {
     //console.log('facebook');
+    $('#facebookFeedPosts').empty();
     $.ajax({
         type: "POST",
         url: "/facebook_request/",
@@ -54,10 +60,11 @@ function loadFacebookFeed() {
         },
         datatype: "json",
         error: function (data) {
-	    $(location).attr('href',data.responseText);
+	    //$(location).attr('href',data.responseText);
+	    $('#facebookFeedPosts').append('<a href="' + data.responseText + '">Please Sign In</a>');
 	},
         success: function (data) {
-	    $('#facebookFeedPosts').empty();
+	   // $('#facebookFeedPosts').empty();
             for(var i = 0; i < data.updates.length; i++){
                 createPostInFacebookFeed(urlify(
                     data.updates[i][0]),
