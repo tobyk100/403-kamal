@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import facebook_lib as F
-
+import urllib2
 #Facebook moduel for InstaFeed. 
 #Example usage can be found at bottom in main
 
@@ -31,8 +31,10 @@ def facebook_read_user_status_updates(access_token):
 				last_name = names['last_name']
 				name = first_name + " " + last_name
 			time =  str(created_time)
-			image = "graph.facebook.com/" + str(post['actor_id']) + "/picture"
-			posts.append((message, name, time, image))
+			image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
+			image1 = urllib2.urlopen(image);
+			image2 = image1.geturl();
+			posts.append((message, name, time, image2))
 	return posts	
 
 #This function will open a web browser with the page the user needs to log in to.
