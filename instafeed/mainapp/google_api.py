@@ -2,6 +2,9 @@
 # a main method for testing
 from urllib import urlencode
 from settings import DEBUG
+from models import GoogleAccount
+from django.http import HttpResponse, HttpRequest
+from django.contrib.auth.models import User
 
 AUTH_URL = 'https://accounts.google.com/o/oauth2/auth?'
 TOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
@@ -33,9 +36,3 @@ def request_token_post(code):
   post['grant_type'] = 'authorization_code'
   return post
 
-def request_token_url():
-  return TOKEN_URL
-
-
-if __name__ == '__main__':
-  print "hi"

@@ -1,82 +1,36 @@
 from django.http import HttpResponse, HttpResponseRedirect
-import json
+import json, httplib2
 import google_api
-from models import GoogleAccount
-
-"""
-Main use case flows:
-    1) Ask for users' posts
-    2) Check session for valid token
-    3) If valid, use to get posts and return
-    4) If not valid or non existent check database for refresh token
-    5) If refresh token, use to get access token, cache access token in session
-      get posts, return
-    6) If no refresh token, go to signin
-
-    1) Ask to signin user
-    2) Check for valid refresh token in database
-    3) If valid refresh token then return success (user is signed in)
-    4) If no valid refresh token then redirect to google
-    5) if callback fails return fail
-    6) if callback succeeds, put refresh token into db, get access token, cache
-      access token into session.
-"""
-
-def google_signin(request):
-  response = {}
-  if not request.user.is_authenticated():
-    response['success'] = False
-    response['authenticated'] = False
-    response['message'] = "User not authenticated"
-    return HttpResponse(json.dumps(response))
-
-  account = GoogleAccount.get_account(request.user)
-  if account is None:
-    #redirect = _request_refresh_token(request)
-    response['success'] = True
-    response['authenticated'] = True
-    response['account'] = False
-    response['message'] = "User redirected to G+ for signin"
-    return HttpResponse(json.dumps(response))
-
-  response['refresh_token'] = account.refresh_token
-  return HttpResponse(json.dumps(response))
-
-def google_request_token(request, refresh_token):
-  account = GoogleAccount.get_account(request.user)
-  refresh_token = _request_refresh_token(request) if not account else \
-                  account.refresh_token
-
-def google_get_posts(request):
-  response = {}
-  token = request.session.get('google_token')
-  if (token is None) or (not is_valid(token)):
-    token = google_request_token(request)
-
-  return HttpResponse(json.dumps(response), 'application/json')
+from models import GoogleAccount, CredentialsModel
+from oauth2client.client import OAuth2WebServerFlow
+from oauth2client.django_orm import Storage
+from django.contrib.auth.decorators import login_required
+from apiclient.discovery import build
+from django.shortcuts import render_to_response
 
 
-def google_request_code(request):
-  url = google_api.request_code()
-  return HttpResponseRedirect(url)
+client_id = google_api.CLIENT_ID
+client_secret = google_api.CLIENT_SECRET
+scope = 'https://www.googleapis.com/auth/userinfo.profile'
+redirect_uri = google_api.REDIRECT_URI + '/google_callback_token'
+FLOW = OAuth2WebServerFlow(client_id, client_secret, scope, redirect_uri)
 
-def _request_refresh_token(request):
-  request_post = google_api.request_token_post(request.code)
-  url = google_api.request_token_url()
-  redirect = HttpResponseRedirect(url)
-  redirect.POST.update(request_post)
-
-  return redirect
-
-# returns a json object with the following fields:
-#   authorized - A boolean representing whether the user gave us access
-def google_callback_code(request):
-  response = {}
-  response['authorized'] = (request.GET.get('error') != 'access_denied')
-  if response['authorized']:
-    response['code'] = request.GET.get('code')
-
-  return HttpResponse(json.dumps(response))
+def google_signup(request):
+  storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+  credentials = storage.get()
+  if credentials is None or credentials.invalid:
+    auth_uri = FLOW.step1_get_authorize_url()
+    return HttpResponseRedirect(auth_uri)
+  else:
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+    service = build("plus", "v1", http=http)
+    activities = service.activities()
+    activitylist = activities.list(collection='public', userId='me').execute()
+    render_to_response('/', {"activity_list": activitylist})
 
 def google_callback_token(request):
-  pass
+  credential = FLOW.step2_exchange(request.REQUEST)
+  storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+  storage.put(credential)
+  return HttpResponseRedirect("/")

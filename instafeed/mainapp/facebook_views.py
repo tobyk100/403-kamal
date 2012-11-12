@@ -51,15 +51,16 @@ def facebook_feed_request(request):
   response = {}
   try:
     fb_account = FacebookAccount.get_account(request.user.id)
-  except Entry.DoesNotExist:
+  except Exception:
     response['success'] = 'false'
-    response['message'] = 'Failed to get data for user'
+    response['message'] = 'Failed to get data for user' 
     return response
   
   try:
+    print "trying to get stuff from fb"
     response['success'] = 'true'
     response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
-  except urllib2.HTTPError:
+  except Exception:
     print "Error: Token is invalid"
     return get_fb_url(1)
   return response
