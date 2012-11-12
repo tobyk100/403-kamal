@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from oauth2client.django_orm import FlowField, CredentialsField
 
 # Account is an abstract class. FacebookAccount and TwitterAccount derive
 # Account. They both inherent all the fields and methods from Account.
@@ -37,3 +36,4 @@ class GoogleAccount(Account):
 
 class TwitterAccount(Account):
   access_secret = models.CharField(max_length=255)
+
