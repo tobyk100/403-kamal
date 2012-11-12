@@ -64,7 +64,7 @@ function loadFacebookFeed() {
 	    $('#facebookFeedPosts').append('<a href="' + data.responseText + '">Please Sign In</a>');
 	},
         success: function (data) {
-	   // $('#facebookFeedPosts').empty();
+	    alert(data);
             for(var i = 0; i < data.updates.length; i++){
                 createPostInFacebookFeed(urlify(
                     data.updates[i][0]),
