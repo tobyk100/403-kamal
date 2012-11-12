@@ -27,9 +27,15 @@ class GoogleTest(TestCase):
     self.user = user
 
   def test_google_signup(self):
+    c = Client()
+    c.login(email=self.email, password=self.password)
+    response = c.get('/google_signup/', follow=True)
+    self.assertRedirects(response, test_uri)
+  """
     user = User.objects.get(id=1)
     c = Client()
     c.login(email=self.email, password=self.password)
     response = c.get('/google_signup/', follow=True)
     test_uri = "https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fgoogle_callback_token&response_type=code&client_id=40247122188-8mvrgqaqh7i5d956ab8tjbu3vpt1u79m.apps.googleusercontent.com&access_type=offline"
     self.assertRedirects(response, test_uri, target_status_code=404)
+  """
