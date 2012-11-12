@@ -1,9 +1,9 @@
 //Binds all appropriate buttons with clicks
 $(document).on('ready', function() {
     $('#submitPostButton').bind('click', submitAndResetPost);
-    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
-    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
-    $('#googleRefreshButton').bind('click', loadGoogleFeed);
+    $('#facebookRefreshButton').bind('click', loadFacebookFeed());
+    $('#twitterRefreshButton').bind('click', loadTwitterFeed());
+    $('#googleRefreshButton').bind('click', loadGoogleFeed());
     var refreshId = setInterval(function(){
 	loadFacebookFeed();
 	loadTwitterFeed();
@@ -60,19 +60,24 @@ function loadFacebookFeed() {
         },
         datatype: "json",
         error: function (data) {
-	    //$(location).attr('href',data.responseText);
-	    $('#facebookFeedPosts').append('<a href="' + data.responseText + '">Please Sign In</a>');
+	    $(location).attr('href',data.responseText);
+	    //$('#facebookFeedPosts').append('<a href="' + data.responseText + '">Please Sign In</a>');
 	},
         success: function (data) {
 	    alert(data);
-            for(var i = 0; i < data.updates.length; i++){
-                createPostInFacebookFeed(urlify(
-                    data.updates[i][0]),
-                    data.updates[i][2],
-                    data.updates[i][1],
-                    data.updates[i].image
-                );
-            }
+	    if(data.success == "false"){
+		$('#facebookFeedPosts').append('No Facebook Account Found: <br/>
+<button id="signinToFacebook" class="btn">Facebook Login</button>');
+	    }else {
+		for(var i = 0; i < data.updates.length; i++){
+                    createPostInFacebookFeed(urlify(
+			data.updates[i][0]),
+					     data.updates[i][2],
+					     data.updates[i][1],
+					     data.updates[i].image
+					    );
+		}
+	    }
         }
     });
 }
