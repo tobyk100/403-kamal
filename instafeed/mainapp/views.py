@@ -79,7 +79,7 @@ def accounts(request):
 def twitter_request(request):
   one_user = TwitterAccount.get_account(request_id=request.user.id)
   if one_user is None:
-    return_dict = {'error': 'failed to get data for user'}
+    return_dict = {'success': 'false'}
     return_json = json.dumps(return_dict)
     return HttpResponse(return_json)
   request_json = request.POST
