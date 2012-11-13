@@ -99,9 +99,18 @@ def facebook_callback(request):
 #the users credentials
 @csrf_exempt
 def facebook_access(request):
+  print "got to fb access"
   fb_access_token = request.POST.get('token')
-  facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
-  facebook_account.save()
+  try:
+    print "trying to get user data from db"
+    fb_account = FacebookAccount.get_account(request.user.id)
+    fb_account.access_token = fb_access_token
+    fb_account.save()
+  except Entry.DoesNotExist:
+    print "was not able to get user data from db"
+    facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
+    facebook_account.save()
+  print "should be returning success"
   return_dict = {}
   return_dict['success'] = 'true'
   return HttpResponse(json.dumps(return_dict))
