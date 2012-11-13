@@ -1,14 +1,15 @@
 //Binds all appropriate buttons with clicks
 $(document).on('ready', function() {
     $('#submitPostButton').bind('click', submitAndResetPost);
-    $('#facebookRefreshButton').bind('click', loadFacebookFeed());
-    $('#twitterRefreshButton').bind('click', loadTwitterFeed());
-    $('#googleRefreshButton').bind('click', loadGoogleFeed());
-    var refreshId = setInterval(function(){
+    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
+    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
+    $('#googleRefreshButton').bind('click', loadGoogleFeed);
+    /*var refreshId = setInterval(function(){
 	loadFacebookFeed();
 	loadTwitterFeed();
 	loadGoogleFeed();
     }, 100000);
+    */
 });
 
 
