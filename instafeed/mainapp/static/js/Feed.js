@@ -8,7 +8,7 @@ $(document).on('ready', function() {
 	loadFacebookFeed();
 	loadTwitterFeed();
 	loadGoogleFeed();
-    }, 100000);
+    }, 60000);
     */
 });
 
@@ -109,14 +109,19 @@ function loadTwitterFeed() {
         },
         success: function (data) {
             $('#twitterFeedPosts').empty();
-	    var posts = JSON.parse(data);
-            for(var i = 0; i < posts.tweets.length; i++){
-                createPostInTwitterFeed(urlify(
-                    posts.tweets[i].text),
-                    posts.tweets[i].created_at ,
-                    posts.tweets[i].user.name,
-                    posts.tweets[i].user.profile_image_url
-                );
+	    if(data.success == "false"){
+		$('#twitterFeedPosts').append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
+		$('#signinToTwitter').bind('click', signinToTwitter);
+	    } else {
+		var posts = JSON.parse(data);
+		for(var i = 0; i < posts.tweets.length; i++){
+                    createPostInTwitterFeed(urlify(
+			posts.tweets[i].text),
+					    posts.tweets[i].created_at ,
+					    posts.tweets[i].user.name,
+					    posts.tweets[i].user.profile_image_url
+					   );
+		}
 	    }
         }
     });
