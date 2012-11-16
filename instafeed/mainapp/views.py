@@ -72,7 +72,7 @@ def signin(request):
   return render(request, 'index.html', {'form': form})
 
 def faq_request(request):
-  return render(request, 'FAQ.html')
+  return render(request, 'faq.html')
 
 def accounts(request):
   return render(request, 'Accounts.html')
