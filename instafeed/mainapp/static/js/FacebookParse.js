@@ -13,7 +13,7 @@ window.onload = function () {
             console.log('Error:', data);
         },
         success: function (data) {
-	    $(location).attr('href', window.location.href + "accounts/");
+	    $(location).attr('href', "https://dry-peak-6840.herokuapp.com/accounts/");
         }
     });
 }

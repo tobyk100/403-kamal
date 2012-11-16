@@ -110,7 +110,7 @@ def facebook_access(request):
     print "was not able to get user data from db"
     facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
     facebook_account.save()
-  print "should be returning success"
+  print "should be returning success"`
   return_dict = {}
   return_dict['success'] = 'true'
   return HttpResponse(json.dumps(return_dict))
