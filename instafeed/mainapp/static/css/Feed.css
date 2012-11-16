@@ -11,29 +11,31 @@ body{
     height: 45px;
 }
 
-#postPopup {
-    z-index: 100;
-    right: 35px;
-    top: 42px;
-    height: 200px;
-    width:  500px;
-    border:  2pt solid black;
-    background-color: white;
-    position:  absolute;
-    display:  none;
+#postButton {
+    position: absolute;
+    top: 5px;
+    right: 9px;
+    z-index: 1030;
 }
 
-#postText {
+#postBox #postOption {
+    text-align: center;
+}
+
+#postBox #postOption .checkbox {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#postBox #postOption input[type="checkbox"] {
+    margin-left: 10px;
+    margin-right:10px;
+}
+
+textarea#postText {
     resize: none;
-    height:  100px;
-    width: 400px;
-    margin-top: 15px;
-    margin-left: 50px;
-}
-
-#submitPost {
-    width:  100px;
-    margin-left: 200px;
+    width: 500px;
+    margin-left: 8px;
 }
 
 .FeedPost {
