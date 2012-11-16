@@ -22,8 +22,6 @@ function submitPost() {
         if ($('#postOptionTwitter').is(':checked')) {
             submitPostHelper(message, '/twitter_request/');
         }
-        if ($('#postOptionGooglePlus').is(':checked')) {
-        }
     }
 }
 
