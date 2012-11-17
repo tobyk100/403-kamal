@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-import logging
->>>>>>> 8f644160f3a68f3418ac16819ddcba564ad903e5
 from django.http import HttpResponse, HttpResponseRedirect, \
     HttpRequest, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
@@ -13,10 +9,6 @@ from models import GoogleAccount
 import requests
 import time
 
-<<<<<<< HEAD
-=======
-logger = logging.getLogger("google_views")
->>>>>>> 8f644160f3a68f3418ac16819ddcba564ad903e5
 @csrf_exempt
 def google_signup(request):
   response = {}
