@@ -1,5 +1,6 @@
 $('#signinToTwitter').bind('click', signinToTwitter);
 $('#signinToFacebook').bind('click', signinToFacebook);
+$('#signinToGooglePlus').bind('click', signinToGooglePlus);
 
 function signinToTwitter() {
    $.ajax({
@@ -35,3 +36,20 @@ function signinToFacebook() {
     });
 }
 
+function signinToGooglePlus() {
+   $.ajax({
+        type: "POST",
+        url: "/google_signup/",
+        data: {
+            title: "begin google signin process"
+        },
+        datatype: "json",
+        error: function (data) {
+            alert(JSON.parse(data.responseText).message)
+            console.log('Error:', data);
+        },
+        success: function (data) {
+            $(location).attr('href', data);
+        }
+    });
+}
