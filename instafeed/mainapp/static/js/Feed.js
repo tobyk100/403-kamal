@@ -161,4 +161,3 @@ function urlify(text) {
         return '<a href="' + url + '">' + url + '</a>';
     });
 }
-

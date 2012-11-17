@@ -86,7 +86,7 @@ textarea#postText {
 .feedsDisplayCol {
   border:  1pt solid black;
   width: 360px;
-  height: 500px;
+  height: 800px;
   background-color: white;
   overflow: auto;
   margin-left: 12px;
