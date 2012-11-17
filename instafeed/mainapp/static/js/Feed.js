@@ -1,14 +1,14 @@
 //Binds all appropriate buttons with clicks
 $(document).on('ready', function() {
     $('#submitPostButton').on('click', submitPost);
-    $('#facebookRefreshButton').bind('click', loadFacebookFeed());
-    $('#twitterRefreshButton').bind('click', loadTwitterFeed());
-    $('#googleRefreshButton').bind('click', loadGoogleFeed());
-    var refreshId = setInterval(function(){
-	loadFacebookFeed();
-	loadTwitterFeed();
-	loadGoogleFeed();
-    }, 60000);
+    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
+    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
+    $('#googleRefreshButton').bind('click', loadGoogleFeed);
+    //var refreshId = setInterval(function(){
+//	loadFacebookFeed();
+//	loadTwitterFeed();
+//	loadGoogleFeed();
+  //  }, 60000);
     
 });
 
@@ -55,7 +55,9 @@ function loadFacebookFeed() {
         datatype: "json",
         error: function (data) {
             $(location).attr('href',data.responseText);
-        },
+            $('#facebookFeedPosts').append('Please signin to Facebook again:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
+            $('#signinToFacebook').bind('click', signinToFacebook);
+	},
         success: function (data) {
             if (data.success == "false") {
                 $('#facebookFeedPosts').append('No Facebook Account Found:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
@@ -91,6 +93,7 @@ function createPostInFacebookFeed(message, time, person, img_src){
 }
 
 function loadTwitterFeed() {
+    $('#twitterFeedPosts').empty();
     $.ajax({
         type: "POST",
         url: "/twitter_request/",
@@ -99,13 +102,12 @@ function loadTwitterFeed() {
         },
         datatype: "json",
         error: function (data) {
-	     $('#twitterFeedPosts')
+	    $('#twitterFeedPosts')
                 .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
             $('#signinToTwitter').bind('click', signinToTwitter);
             console.log('Error:', data);
         },
         success: function (data) {
-            $('#twitterFeedPosts').empty();
             if(data.success == "false") {
                 $('#twitterFeedPosts')
                     .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
@@ -152,7 +154,45 @@ function createPostInTwitterFeed(message, time, person, profilePicture) {
 
 function loadGoogleFeed() {
     console.log('load google feed');
-    // TODO
+        //console.log('facebook');
+    $('#googleFeedPosts').empty();
+    $.ajax({
+        type: "POST",
+        url: "/google_request/",
+        data: {
+            title: "ajax call from google",
+        type: "feedRequest"
+        },
+        datatype: "json",
+        error: function (data) {
+            $(location).attr('href',data.responseText);
+        },
+        success: function (data) {
+            if (data.success == "false") {
+                $('#googleFeedPosts').append('No Google+ Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
+                $('#signinToGoogle').bind('click', signinToGoogle);
+            } else {
+                for(var i = 0; i < data.updates.length; i++) {
+                    createPostInGoogleFeed(
+                        urlify(data.updates[i][0]),
+                        data.updates[i][2],
+                        data.updates[i][1],
+                        data.updates[i][3]
+                    );
+                }
+            }
+        }
+    });
+}
+
+function createPostInGoogleFeed(message, time, person, profilePicture) {
+    $('#googleFeedPosts').append('<div class ="FeedPost">' +
+                 '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
+                 '<img src="/static/img/GoogleLogo.jpg" class="logo" alt="Google"/>' +
+                 '<div class="nameTime">' + person + ' - ' + time +
+                             '</div><div class="message">' +
+                             message + '</div></div>'
+    );
 }
 
 function urlify(text) {
