@@ -54,7 +54,7 @@ function loadFacebookFeed() {
         },
         datatype: "json",
         error: function (data) {
-            $(location).attr('href',data.responseText);
+          //  $(location).attr('href',data.responseText);
             $('#facebookFeedPosts').append('Please signin to Facebook again:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
             $('#signinToFacebook').bind('click', signinToFacebook);
 	},
@@ -158,28 +158,31 @@ function loadGoogleFeed() {
     $('#googleFeedPosts').empty();
     $.ajax({
         type: "POST",
-        url: "/google_request/",
+        url: "/google_get_posts/",
         data: {
             title: "ajax call from google",
         type: "feedRequest"
         },
         datatype: "json",
         error: function (data) {
-            $(location).attr('href',data.responseText);
+            $('#googleFeedPosts').append('No Google+ Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
+            $('#signinToGoogle').bind('click', signinToGoogle);
         },
         success: function (data) {
-            if (data.success == "false") {
-                $('#googleFeedPosts').append('No Google+ Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-                $('#signinToGoogle').bind('click', signinToGoogle);
+	    if(data.success == "false") {
+                $('#twitterFeedPosts')
+                    .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
+		$('#signinToTwitter').bind('click', signinToTwitter);
             } else {
-                for(var i = 0; i < data.updates.length; i++) {
+		var posts = JSON.parse(data);
+		for(var i = 0; i < data.updates.length; i++) {
                     createPostInGoogleFeed(
-                        urlify(data.updates[i][0]),
-                        data.updates[i][2],
-                        data.updates[i][1],
-                        data.updates[i][3]
+			urlify(data.updates[i][0]),
+			data.updates[i][2],
+			data.updates[i][1],
+			data.updates[i][3]
                     );
-                }
+		}
             }
         }
     });

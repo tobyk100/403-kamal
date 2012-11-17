@@ -21,7 +21,7 @@ def facebook_read_user_status_updates(access_token):
 		message =  post['message'].encode('utf-8')
 		created_time = post['created_time']		
 
-		if(post['actor_id'] != None):
+		if((post['actor_id'] != None) and(message != '')):
 			name_query = "SELECT first_name, last_name FROM user WHERE uid =" + str(post['actor_id'])
 			names = F.fql(name_query)
 			name = ""
