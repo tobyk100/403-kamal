@@ -1,5 +1,6 @@
 import tweepy
 from settings import DEBUG
+from datetime import timedelta
 
 if DEBUG:
   consumer_key="NTuzgYZY3fCMMQcIDn73Xg"
@@ -111,4 +112,5 @@ def _parse_user (user):
           'listed_count': user.listed_count}
 
 def _parse_datetime (date):
+  date = date - timedelta(hours=8)
   return date.strftime('%a %I:%M:%S')
