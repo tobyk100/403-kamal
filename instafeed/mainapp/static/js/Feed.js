@@ -1,14 +1,14 @@
 //Binds all appropriate buttons with clicks
 $(document).on('ready', function() {
     $('#submitPostButton').on('click', submitPost);
-    $('#facebookRefreshButton').bind('click', loadFacebookFeed());
-    $('#twitterRefreshButton').bind('click', loadTwitterFeed());
-    $('#googleRefreshButton').bind('click', loadGoogleFeed());
-    var refreshId = setInterval(function(){
-	loadFacebookFeed();
-	loadTwitterFeed();
-	loadGoogleFeed();
-    }, 60000);
+    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
+    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
+    $('#googleRefreshButton').bind('click', loadGoogleFeed);
+    //var refreshId = setInterval(function(){
+//	loadFacebookFeed();
+//	loadTwitterFeed();
+//	loadGoogleFeed();
+  //  }, 60000);
     
 });
 
@@ -201,3 +201,4 @@ function urlify(text) {
         return '<a href="' + url + '">' + url + '</a>';
     });
 }
+
