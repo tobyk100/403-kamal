@@ -86,7 +86,7 @@ textarea#postText {
 .feedsDisplayCol {
   border:  1pt solid black;
   width: 360px;
-  height: 800px;
+  height: 600px;
   background-color: white;
   overflow: auto;
   margin-left: 12px;
@@ -109,15 +109,15 @@ textarea#postText {
 }
 
 #facebookFeedCol {
-  margin-left: 10px;
+  margin-left: 50px;
 }
 
 #twitterFeedCol {
-  margin-left: 390px;
-  margin-top: -801px;
+  margin-left: 430px;
+  margin-top: -601px;
 }
 
 #googleFeedCol {
-  margin-left: 770px;
-  margin-top: -802px;
+  margin-left: 810px;
+  margin-top: -602px;
 }
