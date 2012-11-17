@@ -48,8 +48,11 @@ textarea#postText {
     font-size: small;
 }
 
-.Message {
+.message {
    font-size: medium;
+   float: left;
+   display: block;
+   width: 275px; /* set the width of the text of a post */ 
 }
 
 .logo {
@@ -57,8 +60,8 @@ textarea#postText {
 }
 
 .user_img {
-    float: left;
-    margin-right: 5px;
+    float: left;  
+    margin-right: 5px;  
 }
 
 .refreshButton {
