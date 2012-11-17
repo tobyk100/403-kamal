@@ -54,7 +54,7 @@ function loadFacebookFeed() {
         },
         datatype: "json",
         error: function (data) {
-            $(location).attr('href',data.responseText);
+          //  $(location).attr('href',data.responseText);
             $('#facebookFeedPosts').append('Please signin to Facebook again:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
             $('#signinToFacebook').bind('click', signinToFacebook);
 	},
