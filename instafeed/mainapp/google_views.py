@@ -36,17 +36,18 @@ def google_signup(request):
 def google_get_posts(request):
   response = {}
   token = request.session.get('google_token')
-  if token is None or not is_token_valid(request):
+  if token is None or is_token_expired(request):
     r = request_token(request)
     r_json = json.loads(r.content)
     if r_json['success'] == False:
       # Request token failed, fail
       return HttpResponseServerError(response)
     token = request.session.get('google_token')
-    print token
   r = requests.get(api.ACTIVITY_URL, params={'access_token': token})
-  posts = json.loads(r.text)
-  items = posts.get('items')
+  r_json = json.loads(r.text)
+  if r_json.get('error') is not None:
+    return HttpResponseServerError(json.dumps(r_json))
+  items = r_json.get('items')
   response['posts'] = package_items(items)
   response['success'] = True
   response['account'] = True
@@ -68,8 +69,8 @@ def package_items(items):
   return packaged_items
 
 
-def is_token_valid(request):
-  return request.session.get('google_token_expires') > time.time()
+def is_token_expired(request):
+  return request.session.get('google_token_expires') < time.time()
 
 # Only works if user has successfully signed up
 def request_token(request):
