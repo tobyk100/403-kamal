@@ -35,7 +35,7 @@ def request_code():
   url = AUTH_URL + urlencode(params)
   return url
 
-def request_refresh_token(code):
+def request_refresh_post(code):
   post = {}
   post['code'] = code
   post['client_id'] = CLIENT_ID
