@@ -39,7 +39,7 @@ function signinToFacebook() {
 function signinToGooglePlus() {
    $.ajax({
         type: "POST",
-        url: "/google_signup/",
+        url: "/google_signin/",
         data: {
             title: "begin google signin process"
         },
