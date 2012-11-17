@@ -171,18 +171,17 @@ function loadGoogleFeed() {
         success: function (data) {
 	    if(data.success == "false") {
                 $('#googleFeedPosts').append('No Google Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-		$('#signinToTwitter').bind('click', signinToTwitter);
+		$('#signinToGoogle').bind('click', signinToGoogle);
             } else {
 		var posts = JSON.parse(data);
-		var a = 9;
-		//for(var i = 0; i < data.updates.length; i++) {
-                  //  createPostInGoogleFeed(
-		//	urlify(data.updates[i][0]),
-		//	data.updates[i][2],
-		//	data.updates[i][1],
-		//	data.updates[i][3]
-                  //  );
-		//}
+		for(var i = 0; i < posts.length; i++) {
+                    createPostInGoogleFeed(
+			urlify(posts[i].content),
+			posts[i].published,
+			posts[i].author_display_name,
+			posts[i].author_image_url
+                    );
+		}
             }
         }
     });
