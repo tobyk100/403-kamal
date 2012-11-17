@@ -1,4 +1,3 @@
-import logging
 from django.http import HttpResponse, HttpResponseRedirect, \
     HttpRequest, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
@@ -10,7 +9,6 @@ from models import GoogleAccount
 import requests
 import time
 
-logger = logging.getLogger("google_views")
 @csrf_exempt
 def google_signup(request):
   response = {}
@@ -51,7 +49,6 @@ def package_items(items):
   packaged_items = []
   if items is not None:
     for i in items:
-      logger.debug("item: " + str(i))
       packaged_items.append({
           "author_display_name": i['actor']['displayName'],
           "author_account_url": i['actor']['url'],
