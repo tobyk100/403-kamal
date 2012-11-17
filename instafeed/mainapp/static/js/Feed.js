@@ -1,15 +1,15 @@
 //Binds all appropriate buttons with clicks
 $(document).on('ready', function() {
     $('#submitPostButton').on('click', submitPost);
-    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
-    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
-    $('#googleRefreshButton').bind('click', loadGoogleFeed);
-    /*var refreshId = setInterval(function(){
-    loadFacebookFeed();
-    loadTwitterFeed();
-    loadGoogleFeed();
+    $('#facebookRefreshButton').bind('click', loadFacebookFeed());
+    $('#twitterRefreshButton').bind('click', loadTwitterFeed());
+    $('#googleRefreshButton').bind('click', loadGoogleFeed());
+    var refreshId = setInterval(function(){
+	loadFacebookFeed();
+	loadTwitterFeed();
+	loadGoogleFeed();
     }, 60000);
-    */
+    
 });
 
 // Submits a post using an ajax request.
@@ -99,6 +99,9 @@ function loadTwitterFeed() {
         },
         datatype: "json",
         error: function (data) {
+	     $('#twitterFeedPosts')
+                .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
+            $('#signinToTwitter').bind('click', signinToTwitter);
             console.log('Error:', data);
         },
         success: function (data) {
@@ -158,4 +161,3 @@ function urlify(text) {
         return '<a href="' + url + '">' + url + '</a>';
     });
 }
-
