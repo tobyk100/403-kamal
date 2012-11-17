@@ -3,7 +3,7 @@ from settings import DEBUG
 from datetime import timedelta
 from settings import LOCAL
 
-if LOCAL:
+if DEBUG:
   consumer_key="NTuzgYZY3fCMMQcIDn73Xg"
   consumer_secret="9NAvbXWoZktTQYb9BHTQnMtleNq6UBJXlbsDUWJY"
 else:
