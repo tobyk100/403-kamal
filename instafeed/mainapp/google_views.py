@@ -74,12 +74,18 @@ def request_token(request):
     return response
   refresh_token = account.access_token # really is refresh token
   post = api.request_token(refresh_token)
-  r_json = json.loads(requests.post(api.TOKEN_URL, data = post).text)
-  request.session['google_token'] = r_json['access_token']
-  request.session['google_token_expires'] = r_json['expires_in'] + time.time()
-  response['success'] = True
-  response['account'] = True
-  response['message'] = "Access token stored in session"
+  r = (requests.post(api.TOKEN_URL, data = post).text)
+  r_json = json.loads(r)
+  if (r_json.get('error') is not None):
+    response['success'] = False
+    response['account'] = True
+    response['message'] = "Google + rejected your credentials"
+  else:
+    request.session['google_token'] = r_json['access_token']
+    request.session['google_token_expires'] = r_json['expires_in'] + time.time()
+    response['success'] = True
+    response['account'] = True
+    response['message'] = "Access token stored in session"
   return HttpResponse(json.dumps(response))
 
 # Asks google for a code, google calls back 'google_callback_code'
