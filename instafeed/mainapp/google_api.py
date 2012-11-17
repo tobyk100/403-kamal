@@ -1,7 +1,11 @@
 # This module provides google plus api interaction and 
 # a main method for testing
 from urllib import urlencode, quote
+<<<<<<< HEAD
+from settings import DEBUG
+=======
 from settings import DEBUG, LOCAL
+>>>>>>> 8f644160f3a68f3418ac16819ddcba564ad903e5
 from models import GoogleAccount
 from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.models import User
@@ -11,7 +15,11 @@ TOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
 ACTIVITY_URL = 'https://www.googleapis.com/plus/v1/people/me/activities/public'
 SCOPE = "https://www.googleapis.com/auth/plus.me"
 
+<<<<<<< HEAD
+if DEBUG:
+=======
 if LOCAL:
+>>>>>>> 8f644160f3a68f3418ac16819ddcba564ad903e5
   CLIENT_ID = '40247122188-8mvrgqaqh7i5d956ab8tjbu3vpt1u79m.apps.googleusercontent.com'
   CLIENT_SECRET = 'WumC2izjkBtsD4Dao8j_mrJ8'
   REDIRECT_URI = 'http://127.0.0.1:8000'
