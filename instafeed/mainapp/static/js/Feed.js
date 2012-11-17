@@ -170,8 +170,7 @@ function loadGoogleFeed() {
         },
         success: function (data) {
 	    if(data.success == "false") {
-                $('#twitterFeedPosts')
-                    .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
+                $('#twitterFeedPosts').append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
 		$('#signinToTwitter').bind('click', signinToTwitter);
             } else {
 		var posts = JSON.parse(data);
