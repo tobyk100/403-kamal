@@ -172,7 +172,7 @@ function loadGoogleFeed() {
             $('#googleFeedPosts').append('No Google Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
             $('#signinToGoogle').bind('click', signinToGooglePlus);
           } else {
-            var posts = JSON.parse(data);
+            var posts = JSON.parse(data).posts;
             for(var i = 0; i < posts.length; i++) {
               createPostInGoogleFeed(
                 urlify(posts[i].content),
