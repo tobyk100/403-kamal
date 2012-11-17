@@ -2,7 +2,6 @@ from django.http import HttpResponse, HttpResponseRedirect, \
     HttpRequest, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
-from settings import DEBUG
 import json
 import google_api as api
 from models import GoogleAccount
@@ -86,18 +85,12 @@ def request_token(request):
 # Asks google for a code, google calls back 'google_callback_code'
 # and that method handles getting the request and putting it in the DB
 def request_refresh_token(code):
-  if DEBUG:
-    response = {"refresh_token" : api.TEST_REFRESH_TOKEN}
-    return HttpResponse(json.dumps(response))
   post = api.request_refresh_token(code)
   r = requests.post(api.TOKEN_URL, data = post)
   refresh_token = json.loads(r.text)['refresh_token']
   return refresh_token
 
 def request_code(request):
-  if DEBUG:
-    response = {"code" : api.TEST_CODE}
-    return HttpResponse(json.dumps(response))
   url = api.request_code()
   return HttpResponse(url)
 
@@ -107,9 +100,9 @@ def google_callback_code(request):
   response = {}
   response['authorized'] = (request.GET.get('error') != 'access_denied')
   if response['authorized']:
-    response['code'] = request.GET.get('code') 
+    response['code'] = request.GET.get('code')
   refresh_token = request_refresh_token(response['code'])
-  account = GoogleAccount(user_id=request.user, 
+  account = GoogleAccount(user_id=request.user,
                           access_token=refresh_token)
   account.save()
   return HttpResponseRedirect('/accounts/')
