@@ -86,11 +86,11 @@ def request_token(request):
 # and that method handles getting the request and putting it in the DB
 def request_refresh_token(code):
   post = api.request_refresh_post(code)
-  print "request_refresh " + post
+  print "request_refresh " + str(post)
   r = requests.post(api.TOKEN_URL, data = post)
-  print "response " + r
+  print "response " + str(r)
   refresh_token = json.loads(r.text)['refresh_token']
-  print "refresh_token " + refresh_token
+  print "refresh_token " + str(refresh_token)
   return refresh_token
 
 def request_code(request):
