@@ -1,10 +1,19 @@
 # Django settings for instafeed project.
-import os
-EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
-EMAIL_HOST= 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+try:
+  import os
+  EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+  EMAIL_HOST= 'smtp.sendgrid.net'
+  EMAIL_PORT = 587
+  EMAIL_USE_TLS = True
+  EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+
+  from django.contrib.sites.models import Site
+  my_site = Site.objects.get(pk=1)
+  my_site.domain = 'dry-peak-6840.herokuapp.com'
+  my_site.name = 'Instafeed'
+  my_site.save()
+except Exception, e:
+  pass
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
