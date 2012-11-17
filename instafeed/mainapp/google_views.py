@@ -101,6 +101,7 @@ def google_callback_code(request):
   response['authorized'] = (request.GET.get('error') != 'access_denied')
   if response['authorized']:
     response['code'] = request.GET.get('code')
+  print "Call back from google: " + response['code']
   refresh_token = request_refresh_token(response['code'])
   account = GoogleAccount(user_id=request.user,
                           access_token=refresh_token)
