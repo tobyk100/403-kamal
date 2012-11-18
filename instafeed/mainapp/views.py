@@ -74,6 +74,8 @@ def signin(request):
 def faq_request(request):
   return render(request, 'faq.html')
 
+def settings(request):
+  return render(request, 'settings.html')
 def accounts(request):
   return render(request, 'Accounts.html')
 
