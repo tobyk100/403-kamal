@@ -19,7 +19,8 @@ urlpatterns = patterns('',
     url(r'^password_reset_confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', \
         'django.contrib.auth.views.password_reset_confirm', \
         {'template_name': 'password_reset_confirm.html'}),
-    url(r'^password_reset_complete/', 'django.contrib.auth.views.password_reset_complete', name = 'password_reset_complete'),
+    url(r'^password_reset_complete/', 'django.contrib.auth.views.password_reset_complete', \
+        {'template_name': 'password_reset_complete.html'}),
     url(r'^feed/', 'mainapp.views.feed', name='feed'),
     url(r'^accounts/','mainapp.views.accounts', name='accounts'),
     url(r'^twitter_request/', 'mainapp.views.twitter_request', name='twitter_request'),
