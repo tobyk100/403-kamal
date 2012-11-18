@@ -21,8 +21,17 @@
     <div class="navbar-inner">
       <a href="/feed/" class="brand">Instafeed</a>
       <ul class="nav">
-        <li>
-          <a href="/accounts/">{% block accountname %}Account{% endblock %}</a>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            {% block profilename %}Profile{% endblock %}
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            <li>
+              <a tabindex="-1" href="/accounts/">{% block accountname %}Account{% endblock %}</a>
+              <a tabindex="-1" href="/faq/">FAQ</a>
+            </li>
+          </ul>
         </li>
         {% block postbutton %}{% endblock %}
       </ul>
