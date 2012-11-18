@@ -153,8 +153,7 @@ function createPostInTwitterFeed(message, time, person, profilePicture) {
 }
 
 function loadGoogleFeed() {
-    console.log('load google feed');
-        //console.log('facebook');
+   // console.log('load google feed');
     $('#googleFeedPosts').empty();
     $.ajax({
         type: "POST",

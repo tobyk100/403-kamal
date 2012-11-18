@@ -42,7 +42,7 @@ def google_get_posts(request):
   response = requests.get(api.ACTIVITY_URL, params={'access_token': token})
   posts = json.loads(response.text)
   items = posts.get('items')
-  return HttpResponse(package_items(items))
+  return HttpResponse(json.dumps(package_items(items)))
 
 def package_items(items):
   packaged_items = []
