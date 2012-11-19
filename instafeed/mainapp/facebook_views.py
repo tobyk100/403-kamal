@@ -34,7 +34,7 @@ def facebook_upload(request):
   response = {}
   try:
     fb_account = FacebookAccount.get_account(request.user.id)
-  except Entry.DoesNotExist:
+  except FacebookAccount.DoesNotExist:
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
     return response
@@ -113,7 +113,7 @@ def facebook_access(request):
     fb_account = FacebookAccount.get_account(request.user.id)
     fb_account.access_token = fb_access_token
     fb_account.save()
-  except Entry.DoesNotExist:
+  except FacebookAccount.DoesNotExist:
     print "was not able to get user data from db"
     facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
     facebook_account.save()
