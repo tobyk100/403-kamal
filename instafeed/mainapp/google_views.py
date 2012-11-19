@@ -37,12 +37,20 @@ def google_get_posts(request):
   response = {}
   token = request.session.get('google_token')
   if token is None or not is_token_valid(request):
-    response = request_token(request)
+    r = request_token(request)
+    r_json = json.loads(r.content)
+    if r_json['success'] == False:
+      # Request token failed, fail
+      return HttpResponseServerError(response)
     token = request.session.get('google_token')
-  response = requests.get(api.ACTIVITY_URL, params={'access_token': token})
-  posts = json.loads(response.text)
+    print token
+  r = requests.get(api.ACTIVITY_URL, params={'access_token': token})
+  posts = json.loads(r.text)
   items = posts.get('items')
-  return HttpResponse(json.dumps(package_items(items)))
+  response['posts'] = package_items(items)
+  response['success'] = True
+  response['account'] = True
+  return HttpResponse(json.dumps(response))
 
 def package_items(items):
   packaged_items = []
@@ -71,7 +79,7 @@ def request_token(request):
     response['success'] = False
     response['account'] = False
     response['message'] = "No g+ account for user, call google_signup"
-    return response
+    return HttpResponse(json.dumps(response))
   refresh_token = account.access_token # really is refresh token
   post = api.request_token(refresh_token)
   r = (requests.post(api.TOKEN_URL, data = post).text)

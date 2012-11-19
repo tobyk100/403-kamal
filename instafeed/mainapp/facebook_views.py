@@ -32,9 +32,8 @@ def facebook_request(request):
 @login_required
 def facebook_upload(request):
   response = {}
-  try:
-    fb_account = FacebookAccount.get_account(request.user.id)
-  except Entry.DoesNotExist:
+  fb_account = FacebookAccount.get_account(request.user.id)
+  if fb_account is None:
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
     return response
@@ -55,7 +54,7 @@ def facebook_feed_request(request):
   response = {}
   fb_account = FacebookAccount.get_account(request.user.id)
   #case where user has not added FB account yet
-  if(fb_account == None):
+  if fb_account is None:
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
     return response
@@ -108,15 +107,14 @@ def facebook_callback(request):
 def facebook_access(request):
   print "got to fb access"
   fb_access_token = request.POST.get('token')
-  try:
-    print "trying to get user data from db"
-    fb_account = FacebookAccount.get_account(request.user.id)
-    fb_account.access_token = fb_access_token
-    fb_account.save()
-  except Entry.DoesNotExist:
+  print "trying to get user data from db"
+  fb_account = FacebookAccount.get_account(request.user.id)
+  if fb_account is None:
     print "was not able to get user data from db"
-    facebook_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
-    facebook_account.save()
+    fb_account = FacebookAccount(user_id=request.user, access_token=fb_access_token)
+  else:
+    fb_account.access_token = fb_access_token
+  fb_account.save()
   print "should be returning success"
   return_dict = {}
   return_dict['success'] = 'true'
