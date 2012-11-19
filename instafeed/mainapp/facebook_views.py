@@ -73,7 +73,6 @@ def facebook_feed_request(request):
 
 #helper function that will return the fb aut url either with an error if the user has
 #an invalid token or with success if the user has never signed in before
-@login_required
 def get_fb_url(error):
   url = facebook_api.facebook_auth_url()
   if(error):
