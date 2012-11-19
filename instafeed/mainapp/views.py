@@ -1,26 +1,21 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
+from django.contrib.auth.decorators import login_required
 import twitter_api, facebook_api, json
 from facebook_views import facebook_request, facebook_upload, facebook_feed_request, facebook_signin
 from models import TwitterAccount, FacebookAccount, Account
 
-
+@login_required
 def feed(request):
   return render(request, 'Feed.html')
 
+@login_required
 def index(request):
-  # Just trying... if cookies are set, then we can just redirect them to feed page
-  sid = request.COOKIES.get('sessionid', None)
-  uid = request.COOKIES.get('uid', None)
-  # TODO also check expiration date/time
-  if sid is None or uid is None:
-    return signin(request)
-  else:
-    return feed(request)
+  return feed(request)
 
 def signup(request):
   if request.method == 'POST':
@@ -74,13 +69,22 @@ def signin(request):
 def faq_request(request):
   return render(request, 'faq.html')
 
+@login_required
 def settings(request):
   return render(request, 'settings.html')
+
+@login_required
+def logoutuser(request):
+  logout(request)
+  return redirect('/')
+
+@login_required
 def accounts(request):
   return render(request, 'Accounts.html')
 
 #Tag needed for ajax call. May need to take this out later to protect from attacks(?)
 @csrf_exempt
+@login_required
 def twitter_request(request):
   one_user = TwitterAccount.get_account(request_id=request.user.id)
   if one_user is None:
@@ -104,6 +108,7 @@ def twitter_request(request):
 
 
 @csrf_exempt
+@login_required
 def twitter_signin(request):
   t = twitter_api.twitter_authentication_url()
   request.session['request_token'] = t[1]
@@ -111,6 +116,7 @@ def twitter_signin(request):
   return HttpResponse(t[0])
 
 #need to test this
+@login_required
 def twitter_callback(request):
   verifier = request.GET.get('oauth_verifier')
   token_info = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])

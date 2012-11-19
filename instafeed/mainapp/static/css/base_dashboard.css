@@ -12,6 +12,10 @@
   top: 0; right: 0; left: auto;
 }
 
+.navbar .nav.pull-right {
+  top: 0; right: 10px; left: auto;
+}
+
 .container {
   margin-top: 50px;
 }

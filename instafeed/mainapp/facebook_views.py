@@ -4,11 +4,13 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
+from django.contrib.auth.decorators import login_required
 import twitter_api, facebook_api, json, models, urllib2
 from models import TwitterAccount, FacebookAccount, Account
 
 #view that handles all fb requests
 @csrf_exempt
+@login_required
 def facebook_request(request):
   response = {}
   json_request = request.POST
@@ -27,6 +29,7 @@ def facebook_request(request):
 
 #helper function that will post the desired message to fb
 @csrf_exempt
+@login_required
 def facebook_upload(request):
   response = {}
   try:
@@ -47,6 +50,7 @@ def facebook_upload(request):
 
 #helper function that will pull the users feed data from fb and return it to our client side
 @csrf_exempt
+@login_required
 def facebook_feed_request(request):
   response = {}
   fb_account = FacebookAccount.get_account(request.user.id)
@@ -69,6 +73,7 @@ def facebook_feed_request(request):
 
 #helper function that will return the fb aut url either with an error if the user has
 #an invalid token or with success if the user has never signed in before
+@login_required
 def get_fb_url(error):
   url = facebook_api.facebook_auth_url()
   if(error):
@@ -78,12 +83,14 @@ def get_fb_url(error):
 
 #called when either the user has never connected their fb or if their token is invalid
 @csrf_exempt
+@login_required
 def facebook_signin(request):
   response = get_fb_url(0)
   return HttpResponse(response['url'], status=response['status'])
 
 #callback function that is called after fb authenticates so that we can store the token
 @csrf_exempt
+@login_required
 def facebook_callback(request):
   if request.GET.get('access_token') != None:
     fb_access_token = request.POST.get('access_token')
@@ -98,6 +105,7 @@ def facebook_callback(request):
 #if fb fails to give a proper http response this is called from js with proper arguments to save
 #the users credentials
 @csrf_exempt
+@login_required
 def facebook_access(request):
   print "got to fb access"
   fb_access_token = request.POST.get('token')
