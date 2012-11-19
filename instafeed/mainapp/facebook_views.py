@@ -54,7 +54,7 @@ def facebook_feed_request(request):
   response = {}
   fb_account = FacebookAccount.get_account(request.user.id)
   #case where user has not added FB account yet
-  if(fb_account == None):
+  if fb_account is None:
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
     return response
