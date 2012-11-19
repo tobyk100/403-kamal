@@ -42,7 +42,7 @@ def google_get_posts(request):
   response = requests.get(api.ACTIVITY_URL, params={'access_token': token})
   posts = json.loads(response.text)
   items = posts.get('items')
-  return HttpResponse(package_items(items))
+  return HttpResponse(json.dumps(package_items(items)))
 
 def package_items(items):
   packaged_items = []
@@ -86,11 +86,8 @@ def request_token(request):
 # and that method handles getting the request and putting it in the DB
 def request_refresh_token(code):
   post = api.request_refresh_post(code)
-  print "request_refresh " + str(post)
   r = requests.post(api.TOKEN_URL, data = post)
-  print "response " + str(r)
   refresh_token = json.loads(r.text)['refresh_token']
-  print "refresh_token " + str(refresh_token)
   return refresh_token
 
 def request_code(request):
@@ -104,9 +101,7 @@ def google_callback_code(request):
   response['authorized'] = (request.GET.get('error') != 'access_denied')
   if response['authorized']:
     response['code'] = request.GET.get('code')
-  print "Call back from google: " + response['code']
   refresh_token = request_refresh_token(response['code'])
-  print "Refresh token in callback_code: " + refresh_token
   account = GoogleAccount(user_id=request.user,
                           access_token=refresh_token)
   account.save()
