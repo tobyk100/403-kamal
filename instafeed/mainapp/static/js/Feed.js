@@ -165,12 +165,12 @@ function loadGoogleFeed() {
         datatype: "json",
         error: function (data) {
             $('#googleFeedPosts').append('No Google+ Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-            $('#signinToGoogle').bind('click', signinToGoogle);
+            $('#signinToGoogle').bind('click', signinToGooglePlus);
         },
         success: function (data) {
 	    if(data.success == "false") {
                 $('#googleFeedPosts').append('No Google Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-		$('#signinToGoogle').bind('click', signinToGoogle);
+		$('#signinToGoogle').bind('click', signinToGooglePlus);
             } else {
 		var posts = JSON.parse(data);
 		for(var i = 0; i < posts.length; i++) {
