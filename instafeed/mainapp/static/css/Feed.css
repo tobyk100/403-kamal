@@ -52,7 +52,7 @@ textarea#postText {
    font-size: medium;
    float: left;
    display: block;
-   width: 275px; /* set the width of the text of a post */ 
+   width: 275px; /* set the width of the text of a post */
 }
 
 .logo {
@@ -60,8 +60,8 @@ textarea#postText {
 }
 
 .user_img {
-    float: left;  
-    margin-right: 5px;  
+    float: left;
+    margin-right: 5px;
 }
 
 .refreshButton {
@@ -84,9 +84,12 @@ textarea#postText {
   width: 95%;
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
+  text-align: center;
 }
 
 .feedsDisplayCol {
+  display: inline-block;
   border:  1pt solid black;
   width: 360px;
   height: 600px;
@@ -109,18 +112,4 @@ textarea#postText {
   margin-top: 0px;
   margin-left: 5px;
   line-height: 30px;
-}
-
-#facebookFeedCol {
-  margin-left: 50px;
-}
-
-#twitterFeedCol {
-  margin-left: 430px;
-  margin-top: -601px;
-}
-
-#googleFeedCol {
-  margin-left: 810px;
-  margin-top: -602px;
 }
