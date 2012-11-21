@@ -43,7 +43,6 @@ function submitPostHelper(msg, url) {
 //Post request used to get list of posts
 function loadFacebookFeed() {
     //console.log('facebook');
-    $('#facebookFeedPosts').empty();
     $.ajax({
         type: "POST",
         url: "/facebook_request/",
@@ -58,6 +57,7 @@ function loadFacebookFeed() {
             $('#signinToFacebook').bind('click', signinToFacebook);
 	},
         success: function (data) {
+            $('#facebookFeedPosts').empty();
             if (data.success == "false") {
                 $('#facebookFeedPosts').append('No Facebook Account Found:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
                 $('#signinToFacebook').bind('click', signinToFacebook);
@@ -92,7 +92,6 @@ function createPostInFacebookFeed(message, time, person, img_src){
 }
 
 function loadTwitterFeed() {
-    $('#twitterFeedPosts').empty();
     $.ajax({
         type: "POST",
         url: "/twitter_request/",
@@ -107,6 +106,7 @@ function loadTwitterFeed() {
             console.log('Error:', data);
         },
         success: function (data) {
+            $('#twitterFeedPosts').empty();
             if(data.success == "false") {
                 $('#twitterFeedPosts')
                     .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
@@ -153,7 +153,6 @@ function createPostInTwitterFeed(message, time, person, profilePicture) {
 
 function loadGoogleFeed() {
    // console.log('load google feed');
-    $('#googleFeedPosts').empty();
     $.ajax({
         type: "POST",
         url: "/google_get_posts/",
@@ -167,6 +166,7 @@ function loadGoogleFeed() {
             $('#signinToGoogle').bind('click', signinToGooglePlus);
         },
         success: function (data) {
+          $('#googleFeedPosts').empty();
           if(data.success == "false") {
             $('#googleFeedPosts').append('No Google Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
             $('#signinToGoogle').bind('click', signinToGooglePlus);
