@@ -1,12 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.sessions.models import Session
 from django.contrib.auth.decorators import login_required
 import twitter_api, facebook_api, json, models, urllib2
-from models import TwitterAccount, FacebookAccount, Account
+from models import FacebookAccount, Account
 
 #view that handles all fb requests
 @csrf_exempt
