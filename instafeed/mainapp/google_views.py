@@ -41,7 +41,7 @@ def google_get_posts(request):
     r_json = json.loads(r.content)
     if r_json['success'] == False:
       # Request token failed, fail
-      return HttpResponse(response, mimetype="application/json")
+      return HttpResponse(json.dumps(r_json), mimetype="application/json")
     token = request.session.get('google_token')
   r = requests.get(api.ACTIVITY_URL, params={'access_token': token})
   r_json = json.loads(r.text)

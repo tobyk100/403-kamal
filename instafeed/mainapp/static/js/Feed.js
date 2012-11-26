@@ -173,11 +173,8 @@ function loadGoogleFeed() {
         type: "feedRequest"
         },
         datatype: "json",
-        error: function (data) {
-          displaysigninbutton('Google', signinToGooglePlus);
-        },
         success: function (data) {
-          if(data.success == "false") {
+          if(!data.success) {
             displaysigninbutton('Google', signinToGooglePlus);
           } else {
             $('#googleFeedPosts').empty();
