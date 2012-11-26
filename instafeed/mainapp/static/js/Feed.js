@@ -35,7 +35,7 @@ function submitPostHelper(msg, url) {
         datatype: 'json',
         error: function(data) {
             //$(location).attr('href',data);
-	    alert(data);
+          alert(data);
         }
     });
 }
@@ -123,7 +123,7 @@ function loadTwitterFeed() {
         displaysigninbutton('Twitter', signinToTwitter);
       } else {
         $('#twitterFeedPosts').empty();
-        var posts = JSON.parse(data);
+        var posts = data;
         for (var i = 0, length = posts.tweets.length; i < length; i++) {
           var post = posts.tweets[i];
           createPostInTwitterFeed(

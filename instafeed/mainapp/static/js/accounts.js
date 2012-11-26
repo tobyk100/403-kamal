@@ -14,7 +14,9 @@ function signinToTwitter() {
             console.log('Error:', data);
         },
         success: function (data) {
-            $(location).attr('href',data);
+            if (data.success) {
+              $(location).attr('href', data);
+            }
         }
     });
 }
