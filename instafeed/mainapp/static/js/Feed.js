@@ -107,35 +107,6 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
 }
 
 function loadTwitterFeed() {
-<<<<<<< HEAD
-    $.ajax({
-        type: "POST",
-        url: "/twitter_request/",
-        data: {
-            type: "feedRequest"
-        },
-        datatype: "json",
-        success: function (data) {
-            $('#twitterFeedPosts').empty();
-            if(!data.success) {
-                $('#twitterFeedPosts').empty();
-                $('#twitterFeedPosts').append('No Twitter Account Found:<br>' +
-                                              '<button id="signinToTwitter"' +
-                                              'class="btn">Twitter Login</button>');
-                $('#signinToTwitter').bind('click', signinToTwitter);
-            } else {
-                var posts = JSON.parse(data);
-                for (var i = 0, length = posts.tweets.length; i < length; i++) {
-                    var post = posts.tweets[i];
-                    createPostInTwitterFeed(
-                        urlify(post.text),
-                        post.created_at ,
-                        post.user.name,
-                        post.user.profile_image_url
-                    );
-                }
-            }
-=======
   $.ajax({
     type: "POST",
     url: "/twitter_request/",
@@ -161,7 +132,6 @@ function loadTwitterFeed() {
               post.user.profile_image_url,
               i
           );
->>>>>>> 090196b31647976fe444bf502227f11429ab2ab2
         }
       }
     }
@@ -203,20 +173,12 @@ function loadGoogleFeed() {
         type: "feedRequest"
         },
         datatype: "json",
-<<<<<<< HEAD
-        success: function (data) {
-          $('#googleFeedPosts').empty();
-          if(!data.success) {
-            $('#googleFeedPosts').append('No Google Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-            $('#signinToGoogle').bind('click', signinToGooglePlus);
-=======
         error: function (data) {
           displaysigninbutton('Google', signinToGooglePlus);
         },
         success: function (data) {
           if(data.success == "false") {
             displaysigninbutton('Google', signinToGooglePlus);
->>>>>>> 090196b31647976fe444bf502227f11429ab2ab2
           } else {
             $('#googleFeedPosts').empty();
             var posts = JSON.parse(data).posts;
