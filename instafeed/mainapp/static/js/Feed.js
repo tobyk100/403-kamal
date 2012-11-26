@@ -174,11 +174,8 @@ function loadGoogleFeed() {
         type: "feedRequest"
         },
         datatype: "json",
-        error: function (data) {
-          displaysigninbutton('Google', signinToGooglePlus);
-        },
         success: function (data) {
-          if(data.success == "false") {
+          if(!data.success) {
             displaysigninbutton('Google', signinToGooglePlus);
           } else {
             $('#googleFeedPosts').empty();
@@ -214,7 +211,10 @@ function urlify(text) {
 }
 
 function facebookComment(id, message){
-    //call normal post and somehow change titles to say comment
+    //TODO
+    //change post dialog to say comment
+    //submit comment up like a normal post with the id
+    //change post ui back to normal
 }
 
 function facebookLike(id){
@@ -251,6 +251,11 @@ function twitterRetweet(id){
     });
 }
 
-function twitterReplay(person){
+function twitterReply(person){
     //Create normal post putting @person infront
+    //TODO
+    //Change our post dialog to look like a reply
+    //fill in @person in text area and block off facebook check
+    //submit it like you would a normal post
+    //change post popup back to normal
 }
