@@ -47,9 +47,10 @@ function submitPostHelper(msg, url) {
 function displaysigninbutton(name, fn) {
   var colclass = '#' + name.toLowerCase() + 'FeedPosts',
       btnclass = '#signinTo' + name,
+      btnid = 'signinTo' + name,
       fbcol = $(colclass).empty(),
       signin_title = '<h6>Please log in to ' + name + ' again</h6>',
-      signin_button = '<button id="' + btnclass
+      signin_button = '<button id="' + btnid
                       + '" class="btn">' + name + ' Login</button>',
       signin_notice = ['<div style="text-align: center">',
                       signin_title, signin_button, '</div>'].join('');
