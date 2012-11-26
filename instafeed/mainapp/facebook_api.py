@@ -61,8 +61,15 @@ def facebook_like_post(post_id, access_token):
 	post_url = '/' + post_id + '/likes/'
 	params = {'access_token' : access_token}
 	F.graph_post(post_url, params)
-	print post_url	
 	
+
+#Comment on a facebook post
+#Params: The post_id of the post you want to comment on, the comment you want to post, and a valid access token
+def facebook_comment_post(post_id, comment, access_token):
+	post_url = '/' + post_id + '/comments/'
+	params = {'access_token' : access_token, 'message' : comment}
+	F.graph_post(post_url, params)
+
 
 #Example of how to use facebook_api.py:
 #Run 'python facebook_api.py' 
@@ -72,7 +79,7 @@ def main():
 	#Log in to facebook to get your access token
 #	access_token = facebook_auth()
 
-	access_token = 'AAAGGZCiT8uIMBADeKJSFoM5I7O6rA9s2miG4mu6D7KgdmYDmHhcdVpF1ZAxZCRmvAO9SyPXadlexXJuvEn7lik04cIQZBbH6ZC4T48b9IAdYTQGZAhM0kU'
+	access_token = 'AAACEdEose0cBACe6ZCZCYYgQ88RBDeP3Y9TZBkRpahEOXO6M89ffPmzvp5hxtU3T6W9mBZCxySdDv9SbhXk4ZBmIoOynvITSwzOAFX0kA9MQSIZBmmQnHk'
 
 	#Update your status
 	post = "Posting from InstaFeed!adsfadsfa"
@@ -85,7 +92,11 @@ def main():
 	post_id = posts[0][4];
 	facebook_like_post(post_id, access_token);
 
-	#print the posts out!
+	#Comment on the post!
+	comment = "COMMENTING FROM INSTAFEED!!!"
+	facebook_comment_post(post_id, comment, access_token);
+	
+	#Print the posts out
 	for post in posts:
 		print "--- Next Post ---"
 		print "message: " + post[0]
