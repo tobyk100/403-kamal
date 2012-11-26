@@ -12,7 +12,7 @@ body{
 }
 
 #postButton {
-    position: absolute;
+    position: fixed;
     top: 5px;
     right: 9px;
     z-index: 1030;
