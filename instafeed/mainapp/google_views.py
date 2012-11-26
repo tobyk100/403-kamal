@@ -15,7 +15,7 @@ def google_signup(request):
     response['success'] = False
     response['authenticated'] = False
     response['message'] = "No user signed in"
-    return HttpResponseServerError(json.dumps(response))
+    return HttpResponse(json.dumps(response), mimetype="application/json")
 
   account = GoogleAccount.get_account(request.user)
   if account is None:
@@ -30,7 +30,7 @@ def google_signup(request):
   response['authenticated'] = True
   response['account'] = True
   response['message'] = "User already signed up for G+"
-  return HttpResponseServerError(json.dumps(response))
+  return HttpResponse(json.dumps(response), mimetype="application/json")
 
 @csrf_exempt
 def google_get_posts(request):
@@ -41,17 +41,17 @@ def google_get_posts(request):
     r_json = json.loads(r.content)
     if r_json['success'] == False:
       # Request token failed, fail
-      return HttpResponseServerError(response)
+      return HttpResponse(response, mimetype="application/json")
     token = request.session.get('google_token')
   r = requests.get(api.ACTIVITY_URL, params={'access_token': token})
   r_json = json.loads(r.text)
   if r_json.get('error') is not None:
-    return HttpResponseServerError(json.dumps(r_json))
+    return HttpResponse(json.dumps(r_json), mimetype="application/json")
   items = r_json.get('items')
   response['posts'] = package_items(items)
   response['success'] = True
   response['account'] = True
-  return HttpResponse(json.dumps(response))
+  return HttpResponse(json.dumps(response), mimetype="application/json")
 
 def package_items(items):
   packaged_items = []
@@ -80,7 +80,7 @@ def request_token(request):
     response['success'] = False
     response['account'] = False
     response['message'] = "No g+ account for user, call google_signup"
-    return HttpResponse(json.dumps(response))
+    return HttpResponse(json.dumps(response), mimetype="application/json")
   refresh_token = account.access_token # really is refresh token
   post = api.request_token(refresh_token)
   r = (requests.post(api.TOKEN_URL, data = post).text)
@@ -95,7 +95,7 @@ def request_token(request):
     response['success'] = True
     response['account'] = True
     response['message'] = "Access token stored in session"
-  return HttpResponse(json.dumps(response))
+  return HttpResponse(json.dumps(response), mimetype="application/json")
 
 # Asks google for a code, google calls back 'google_callback_code'
 # and that method handles getting the request and putting it in the DB

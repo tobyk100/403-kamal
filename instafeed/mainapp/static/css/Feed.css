@@ -3,7 +3,7 @@ body{
 }
 
 .container {
-  width: 100%;
+  width: 1200px;
 }
 
 #post{
@@ -39,9 +39,10 @@ textarea#postText {
 }
 
 .FeedPost {
-    border: 1pt solid black;
-    width: 99.5%;
-    overflow: hidden;
+  margin: 2px 5px;
+  padding: 5px 5px;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
 }
 
 .NameTime {
@@ -83,7 +84,7 @@ textarea#postText {
 }
 
 #feeds {
-  width: 95%;
+  width: 1150px;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;

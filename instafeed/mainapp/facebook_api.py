@@ -34,6 +34,7 @@ def facebook_read_user_status_updates(access_token):
 			image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
 			image1 = urllib2.urlopen(image);
 			image2 = image1.geturl();
+			post_id = post['post_id']
 			posts.append((message, name, time, image2, post_id))
 	return posts	
 
@@ -54,20 +55,35 @@ def facebook_auth_url():
 	F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status', 'offline_access']
 	return F.get_auth_url()
 
+#Likes a post on facebook. 
+#Params: The post_id of the post you want to like, and a valid access token
+def facebook_like_post(post_id, access_token):
+	post_url = '/' + post_id + '/likes/'
+	params = {'access_token' : access_token}
+	F.graph_post(post_url, params)
+	print post_url	
+	
+
 #Example of how to use facebook_api.py:
 #Run 'python facebook_api.py' 
 #This script will update your status and print some recent posts from your news feed.
 #Make sure you are logged out of Facebook or the get access_token will fail
 def main():
 	#Log in to facebook to get your access token
-	access_token = facebook_auth()
-#	access_token = "AAAGGZCiT8uIMBAHBG4DVpzdNj0GAmbF8YVAe6orZBwZBfr0ByJZAvSL1eP34fccBZA67lvx46vZAabZBKPdltZCFGZAGoVEYYZBuYZBfpFU08PyQJoHJhZC865Rh"
+#	access_token = facebook_auth()
+
+	access_token = 'AAAGGZCiT8uIMBADeKJSFoM5I7O6rA9s2miG4mu6D7KgdmYDmHhcdVpF1ZAxZCRmvAO9SyPXadlexXJuvEn7lik04cIQZBbH6ZC4T48b9IAdYTQGZAhM0kU'
+
 	#Update your status
 	post = "Posting from InstaFeed!adsfadsfa"
-	facebook_post_feed(post, access_token);
+#	facebook_post_feed(post, access_token);
 
 	#View your news feed
 	posts = facebook_read_user_status_updates(access_token);
+
+	#Like the first post!
+	post_id = posts[0][4];
+	facebook_like_post(post_id, access_token);
 
 	#print the posts out!
 	for post in posts:
@@ -76,7 +92,9 @@ def main():
 		print "name: " + post[1]
 		print "timestamp: " + post[2]
 		print "image: " + post[3]
+		print "post_id" + post[4]
 		print ""
+
 #for debugging
 if __name__ == "__main__":	
 	main()
