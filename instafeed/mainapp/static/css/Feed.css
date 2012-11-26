@@ -39,9 +39,10 @@ textarea#postText {
 }
 
 .FeedPost {
-    border: 1pt solid black;
-    width: 99.5%;
-    overflow: hidden;
+  margin: 2px 5px;
+  padding: 5px 5px;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
 }
 
 .NameTime {
