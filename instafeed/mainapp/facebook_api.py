@@ -34,7 +34,7 @@ def facebook_read_user_status_updates(access_token):
 			image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
 			image1 = urllib2.urlopen(image);
 			image2 = image1.geturl();
-			posts.append((message, name, time, image2))
+			posts.append((message, name, time, image2, post_id))
 	return posts	
 
 #This function will open a web browser with the page the user needs to log in to.
