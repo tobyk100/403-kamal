@@ -53,7 +53,7 @@ textarea#postText {
    font-size: medium;
    float: left;
    display: block;
-   width: 275px; /* set the width of the text of a post */
+   width: 270px; /* set the width of the text of a post */
 }
 
 .logo {
