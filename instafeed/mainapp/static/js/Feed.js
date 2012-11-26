@@ -209,7 +209,12 @@ function urlify(text) {
 }
 
 function facebookComment(id, message){
-    //call normal post and somehow change titles to say comment
+    //TODO
+    //change post ui to say comment
+    //check facebook button and diable the twitter check
+    //call normal post with users comment typed in
+
+    //change post ui back to normal
 }
 
 function facebookLike(id){
@@ -246,6 +251,17 @@ function twitterRetweet(id){
     });
 }
 
-function twitterReplay(person){
-    //Create normal post putting @person infront
+function twitterReply(person){
+    //TODO
+    //change header of post ui to say reply and only check twitter button
+    //and disable facebook button
+    //start message with @person
+
+    //send up reply
+    //change post ui back to normal 
+   
+
+    //alert($("#myModalLabel").text());
+    //$("#myModalLabel").text("Comment");
+    //alert($("#myModalLabel").text());
 }
