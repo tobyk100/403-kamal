@@ -10,17 +10,18 @@ urlpatterns = patterns('',
     url(r'^$', 'mainapp.views.index', name='index'),
     url(r'^signup/', 'mainapp.views.signup', name='signup'),
     url(r'^signin/', 'mainapp.views.signin', name='signin'),
-    url(r'^reset/', 'django.contrib.auth.views.password_reset', \
-        {'template_name': 'password_reset_form.html', \
-         'email_template_name': 'password_reset_email.html'}, \
-        name = 'password_reset'),
-    url(r'^password_reset_done/', 'django.contrib.auth.views.password_reset_done', \
-        {'template_name': 'password_reset_done.html'}),
+
+    # Password reset
+    url(r'^reset/', 'django.contrib.auth.views.password_reset'),
+    url(r'^password_reset_done/', 'django.contrib.auth.views.password_reset_done'),
     url(r'^password_reset_confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', \
-        'django.contrib.auth.views.password_reset_confirm', \
-        {'template_name': 'password_reset_confirm.html'}),
-    url(r'^password_reset_complete/', 'django.contrib.auth.views.password_reset_complete', \
-        {'template_name': 'password_reset_complete.html'}),
+        'django.contrib.auth.views.password_reset_confirm'), \
+    url(r'^password_reset_complete/', 'django.contrib.auth.views.password_reset_complete'), \
+
+    # Password change
+    url(r'^password_change/', 'django.contrib.auth.views.password_change'), \
+    url(r'^password_change_done/', 'django.contrib.auth.views.password_change_done'), \
+
     url(r'^feed/', 'mainapp.views.feed', name='feed'),
     url(r'^accounts/','mainapp.views.accounts', name='accounts'),
     url(r'^twitter_request/', 'mainapp.twitter_views.twitter_request', name='twitter_request'),
