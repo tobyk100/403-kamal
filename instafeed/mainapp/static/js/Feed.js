@@ -67,7 +67,8 @@ function loadFacebookFeed() {
                         urlify(data.updates[i][0]),
                         data.updates[i][2],
                         data.updates[i][1],
-                        data.updates[i][3]
+                        data.updates[i][3],
+			data.updates[i][4]
                     );
                 }
             }
@@ -76,7 +77,7 @@ function loadFacebookFeed() {
 }
 
 //Creates a pop in the social media feed with the given parameters
-function createPostInFacebookFeed(message, time, person, img_src){
+function createPostInFacebookFeed(message, time, person, img_src, id){
     var date = new Date(time * 1000);
     var formattedDate = (
           date.toLocaleString().substring(0,3) +
@@ -88,7 +89,9 @@ function createPostInFacebookFeed(message, time, person, img_src){
                   '<img src="' + img_src + '" ' + 'class="user_img" alt="User Avatar"/>' +
                   '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                   '<div class="nameTime">' + person + ' - ' +
-                              formattedDate + '</div><div class="message">' + message + '</div></div>');
+                  formattedDate + '</div><div class="message">' + message + 
+		  '<br> <a class="comment" href="javascript:facebookLike(' + id +  ')">Like   </a>' +
+                  '<a class="comment" href="javascript:facebookComment(' + id + ',' + person +  ')">Comment</a></div></div>');
 }
 
 function loadTwitterFeed() {
@@ -119,7 +122,8 @@ function loadTwitterFeed() {
                         urlify(post.text),
                         post.created_at ,
                         post.user.name,
-                        post.user.profile_image_url
+                        post.user.profile_image_url,
+			i
                     );
                 }
             }
@@ -141,14 +145,15 @@ function loadTwitterFeed() {
 
  */
 
-function createPostInTwitterFeed(message, time, person, profilePicture) {
+function createPostInTwitterFeed(message, time, person, profilePicture, id) {
     $('#twitterFeedPosts').append('<div class ="FeedPost">' +
                  '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
                  '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                  '<div class="nameTime">' + person + ' - ' + time +
-                             '</div><div class="message">' +
-                             message + '</div></div>'
-    );
+                 '</div><div class="message">' + message +
+                 '<br> <a class="comment" href="javascript:twitterRetweet(' + id +  ')">Retweet   </a>' +
+                 ' <a class="comment" href="javascript:twitterReply(' + person +  ')">Reply </a></div></div>'
+		);
 }
 
 function loadGoogleFeed() {
@@ -202,3 +207,18 @@ function urlify(text) {
     });
 }
 
+function facebookComment(id, message){
+}
+
+function facebookLike(id){
+    //call hampton's function taking an id of a post to like
+    alert(id);
+}
+
+function twitterRetweet(id){
+    //call kevins function passing it an id to retweet for the user
+}
+
+function twitterReplay(person){
+    //Create normal post putting @person infront
+}
