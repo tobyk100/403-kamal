@@ -3,7 +3,7 @@ body{
 }
 
 .container {
-  width: 100%;
+  width: 1200px;
 }
 
 #post{
@@ -83,7 +83,7 @@ textarea#postText {
 }
 
 #feeds {
-  width: 95%;
+  width: 1150px;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;

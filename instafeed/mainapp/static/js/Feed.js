@@ -99,18 +99,14 @@ function loadTwitterFeed() {
             type: "feedRequest"
         },
         datatype: "json",
-        error: function (data) {
-	    $('#twitterFeedPosts')
-                .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
-            $('#signinToTwitter').bind('click', signinToTwitter);
-            console.log('Error:', data);
-        },
         success: function (data) {
             $('#twitterFeedPosts').empty();
-            if(data.success == "false") {
-                $('#twitterFeedPosts')
-                    .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
-            $('#signinToTwitter').bind('click', signinToTwitter);
+            if(!data.success) {
+                $('#twitterFeedPosts').empty();
+                $('#twitterFeedPosts').append('No Twitter Account Found:<br>' +
+                                              '<button id="signinToTwitter"' +
+                                              'class="btn">Twitter Login</button>');
+                $('#signinToTwitter').bind('click', signinToTwitter);
             } else {
                 var posts = JSON.parse(data);
                 for (var i = 0, length = posts.tweets.length; i < length; i++) {
@@ -161,13 +157,9 @@ function loadGoogleFeed() {
         type: "feedRequest"
         },
         datatype: "json",
-        error: function (data) {
-            $('#googleFeedPosts').append('No Google+ Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-            $('#signinToGoogle').bind('click', signinToGooglePlus);
-        },
         success: function (data) {
           $('#googleFeedPosts').empty();
-          if(data.success == "false") {
+          if(!data.success) {
             $('#googleFeedPosts').append('No Google Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
             $('#signinToGoogle').bind('click', signinToGooglePlus);
           } else {
