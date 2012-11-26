@@ -34,7 +34,8 @@ function submitPostHelper(msg, url) {
         },
         datatype: 'json',
         error: function(data) {
-            $(location).attr('href',data);
+            //$(location).attr('href',data);
+	    alert(data);
         }
     });
 }
@@ -208,15 +209,41 @@ function urlify(text) {
 }
 
 function facebookComment(id, message){
+    //call normal post and somehow change titles to say comment
 }
 
 function facebookLike(id){
     //call hampton's function taking an id of a post to like
     alert(id);
+    $.ajax({
+        type: 'POST',
+        url:"/facebook_like/" ,
+        data: {
+            postId: id,
+            type: 'like'
+        },
+        datatype: 'json',
+        error: function(data) {
+            alert(data);
+        }
+    });
 }
 
 function twitterRetweet(id){
     //call kevins function passing it an id to retweet for the user
+    alert(id);
+    $.ajax({
+        type: 'POST',
+        url:"/twitter_retweet/" ,
+        data: {
+            postId: id,
+            type: 'retweet'
+        },
+        datatype: 'json',
+        error: function(data) {
+            alert(data);
+        }
+    });
 }
 
 function twitterReplay(person){
