@@ -107,7 +107,7 @@ function loadTwitterFeed() {
         },
         success: function (data) {
             $('#twitterFeedPosts').empty();
-            if(data.success == "false") {
+            if(!data.success) {
                 $('#twitterFeedPosts')
                     .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
             $('#signinToTwitter').bind('click', signinToTwitter);
