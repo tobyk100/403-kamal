@@ -39,40 +39,51 @@ function submitPostHelper(msg, url) {
     });
 }
 
-//Loads Facebook feeds from server
-//Post request used to get list of posts
+// A generic function to display signin notice.
+// @param name The social media name, such as 'Facebook', 'Twitter', etc
+// @param fn The function to be invoked after the signin button is clicked
+// @return void
+function displaysigninbutton(name, fn) {
+  var colclass = '#' + name.toLowerCase() + 'FeedPosts',
+      btnclass = '#signinTo' + name,
+      fbcol = $(colclass).empty(),
+      signin_title = '<h6>Please log in to ' + name + ' again</h6>',
+      signin_button = '<button id="' + btnclass
+                      + '" class="btn">' + name + ' Login</button>',
+      signin_notice = ['<div style="text-align: center">',
+                      signin_title, signin_button, '</div>'].join('');
+  fbcol.append(signin_notice);
+  $(btnclass).bind('click', fn);
+}
+
 function loadFacebookFeed() {
-    //console.log('facebook');
-    $.ajax({
-        type: "POST",
-        url: "/facebook_request/",
-        data: {
-            title: "ajax call from facebook",
-        type: "feedRequest"
-        },
-        datatype: "json",
-        error: function (data) {
-          //  $(location).attr('href',data.responseText);
-            $('#facebookFeedPosts').append('Please signin to Facebook again:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
-            $('#signinToFacebook').bind('click', signinToFacebook);
-	},
-        success: function (data) {
-            $('#facebookFeedPosts').empty();
-            if (data.success == "false") {
-                $('#facebookFeedPosts').append('No Facebook Account Found:<br><button id="signinToFacebook" class="btn">Facebook Login</button>');
-                $('#signinToFacebook').bind('click', signinToFacebook);
-            } else {
-                for(var i = 0; i < data.updates.length; i++) {
-                    createPostInFacebookFeed(
-                        urlify(data.updates[i][0]),
-                        data.updates[i][2],
-                        data.updates[i][1],
-                        data.updates[i][3]
-                    );
-                }
-            }
+  $.ajax({
+    type: "POST",
+    url: "/facebook_request/",
+    data: {
+      title: "ajax call from facebook",
+      type: "feedRequest"
+    },
+    datatype: "json",
+    error: function (data) {
+      displaysigninbutton('Facebook', signinToFacebook);
+    },
+    success: function (data) {
+      if (data.success == "false") {
+        displaysigninbutton('Facebook', signinToFacebook);
+      } else {
+        $('#facebookFeedPosts').empty();
+        for(var i = 0; i < data.updates.length; i++) {
+          createPostInFacebookFeed(
+            urlify(data.updates[i][0]),
+            data.updates[i][2],
+            data.updates[i][1],
+            data.updates[i][3]
+          );
         }
-    });
+      }
+    }
+  });
 }
 
 //Creates a pop in the social media feed with the given parameters
@@ -92,39 +103,34 @@ function createPostInFacebookFeed(message, time, person, img_src){
 }
 
 function loadTwitterFeed() {
-    $.ajax({
-        type: "POST",
-        url: "/twitter_request/",
-        data: {
-            type: "feedRequest"
-        },
-        datatype: "json",
-        error: function (data) {
-	    $('#twitterFeedPosts')
-                .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
-            $('#signinToTwitter').bind('click', signinToTwitter);
-            console.log('Error:', data);
-        },
-        success: function (data) {
-            $('#twitterFeedPosts').empty();
-            if(data.success == "false") {
-                $('#twitterFeedPosts')
-                    .append('No Twitter Account Found:<br><button id="signinToTwitter" class="btn">Twitter Login</button>');
-            $('#signinToTwitter').bind('click', signinToTwitter);
-            } else {
-                var posts = JSON.parse(data);
-                for (var i = 0, length = posts.tweets.length; i < length; i++) {
-                    var post = posts.tweets[i];
-                    createPostInTwitterFeed(
-                        urlify(post.text),
-                        post.created_at ,
-                        post.user.name,
-                        post.user.profile_image_url
-                    );
-                }
-            }
+  $.ajax({
+    type: "POST",
+    url: "/twitter_request/",
+    data: {
+      type: "feedRequest"
+    },
+    datatype: "json",
+    error: function (data) {
+      displaysigninbutton('Twitter', signinToTwitter);
+    },
+    success: function (data) {
+      if(data.success == "false") {
+        displaysigninbutton('Twitter', signinToTwitter);
+      } else {
+        $('#twitterFeedPosts').empty();
+        var posts = JSON.parse(data);
+        for (var i = 0, length = posts.tweets.length; i < length; i++) {
+          var post = posts.tweets[i];
+          createPostInTwitterFeed(
+              urlify(post.text),
+              post.created_at ,
+              post.user.name,
+              post.user.profile_image_url
+          );
         }
-    });
+      }
+    }
+  });
 }
 
 /*
@@ -162,15 +168,13 @@ function loadGoogleFeed() {
         },
         datatype: "json",
         error: function (data) {
-            $('#googleFeedPosts').append('No Google+ Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-            $('#signinToGoogle').bind('click', signinToGooglePlus);
+          displaysigninbutton('Google', signinToGooglePlus);
         },
         success: function (data) {
-          $('#googleFeedPosts').empty();
           if(data.success == "false") {
-            $('#googleFeedPosts').append('No Google Account Found:<br><button id="signinToGoogle" class="btn">Google Login</button>');
-            $('#signinToGoogle').bind('click', signinToGooglePlus);
+            displaysigninbutton('Google', signinToGooglePlus);
           } else {
+            $('#googleFeedPosts').empty();
             var posts = JSON.parse(data).posts;
             for(var i = 0; i < posts.length; i++) {
               createPostInGoogleFeed(
