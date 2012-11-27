@@ -1,6 +1,10 @@
-$('#signinToTwitter').bind('click', signinToTwitter);
-$('#signinToFacebook').bind('click', signinToFacebook);
-$('#signinToGooglePlus').bind('click', signinToGooglePlus);
+$(document).ready(onload);
+
+function onload(){
+    $('#signinToTwitter').bind('click', signinToTwitter);
+    $('#signinToFacebook').bind('click', signinToFacebook);
+    $('#signinToGooglePlus').bind('click', signinToGooglePlus);
+}
 
 function signinToTwitter() {
    $.ajax({
