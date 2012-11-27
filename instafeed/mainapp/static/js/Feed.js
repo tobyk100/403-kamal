@@ -17,6 +17,7 @@ function submitPost() {
     if ($("#facebookCommentFlag").is(':checked')){
 	//alert($("#facebookCommentFlag").val());
 	//call comment method and pass it id and message
+	submitFacebookComment(message, $("#facebookCommentFlag").val());
 	resetPostBox();
     } else {
 	resetPostBox();
@@ -29,6 +30,23 @@ function submitPost() {
             }
 	}
     }
+}
+
+function submitFacebookComment(msg , id) {
+    $.ajax({
+        type: 'POST',
+        url: '/facebook_request/',
+        data: {
+            message: msg,
+	    postId: id,
+            type: 'comment'
+        },
+        datatype: 'json',
+        error: function(data) {
+            //$(location).attr('href',data);
+          alert(data);
+        }
+    });
 }
 
 // Changed post box ui back to normal
