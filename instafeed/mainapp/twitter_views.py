@@ -38,14 +38,9 @@ def twitter_request(request):
 @csrf_exempt
 def twitter_signin(request):
   t = twitter_api.twitter_authentication_url()
-  if t is None:
-    return_dict = {"success": False}
-    return HttpResponse(json.dumps(return_dict), mimetype="application/json")
-  else:
-    return_dict = {"success": True}
-    request.session['request_token'] = t[1]
-    request.session['request_secret'] = t[2]
-    return HttpResponse(t[0])
+  request.session['request_token'] = t[1]
+  request.session['request_secret'] = t[2]
+  return HttpResponse(t[0])
 
 #need to test this
 def twitter_callback(request):
