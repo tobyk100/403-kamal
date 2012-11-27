@@ -115,8 +115,8 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
                   '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                   '<div class="nameTime">' + person + ' - ' +
                   formattedDate + '</div><div class="message">' + message +
-		  '<br> <a class="comment" href="javascript:facebookLike(' + id +  ')">Like   </a>' +
-                  '<a class="comment" href="javascript:facebookComment("1")">Comment</a></div></div>');
+		  '<br> <a class="comment" href="#" onclick="facebookLike(\'' + id +  '\')">Like   </a>' +
+                  '<a class="comment" href="#" onclick="facebookComment(\'' + id + '\')">Comment</a></div></div>');
 }
 
 function loadTwitterFeed() {
@@ -171,8 +171,8 @@ function createPostInTwitterFeed(message, time, person, profilePicture, id) {
                  '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                  '<div class="nameTime">' + person + ' - ' + time +
                  '</div><div class="message">' + message +
-                 '<br> <a class="comment" href="javascript:twitterRetweet(' + id +  ')">Retweet   </a>' +
-                 ' <a class="comment" href="javascript:twitterReply(' + person +  ')">Reply </a></div></div>'
+                 '<br> <a class="comment" href="#" onclick="twitterRetweet(\'' + id + '\')">Retweet   </a>' +
+                 ' <a class="comment" href="#" onclick="twitterReply(\'' + person + '\')">Reply </a></div></div>'
     );
 }
 
@@ -239,7 +239,7 @@ function facebookComment(id){
 
 function facebookLike(id){
     //call hampton's function taking an id of a post to like
-    alert(id);
+    // alert(id);
     $.ajax({
         type: 'POST',
         url:"/facebook_request/" ,

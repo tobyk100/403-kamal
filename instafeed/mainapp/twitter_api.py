@@ -13,7 +13,8 @@ def twitter_authentication_url ():
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
   try:
     auth_url = auth.get_authorization_url(signin_with_twitter=True)
-  except tweepy.TweepError:
+  except tweepy.TweepError as e:
+    print e
     #tweet failed
     return None
 
