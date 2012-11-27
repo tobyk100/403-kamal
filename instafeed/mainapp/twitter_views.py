@@ -27,8 +27,11 @@ def twitter_request(request):
     return_dict = {'tweets': twitter_post, "success": True}
     return_tweets_json = json.dumps(return_dict)
     return HttpResponse(return_tweets_json, mimetype="application/json")
+  elif request_json.get('type') == 'retweet':
+    #call kevins method passing it request_json.get('postId')
+    return_dict = {'success' : True}
   else:
-    return_dict = {"success": False}
+    return_dict = {'success': False}
     return HttpResponse(json.dumps(return_dict), mimetype="application/json")
 
 

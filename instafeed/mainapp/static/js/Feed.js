@@ -222,7 +222,7 @@ function facebookLike(id){
     alert(id);
     $.ajax({
         type: 'POST',
-        url:"/facebook_like/" ,
+        url:"/facebook_request/" ,
         data: {
             postId: id,
             type: 'like'
@@ -239,7 +239,7 @@ function twitterRetweet(id){
     alert(id);
     $.ajax({
         type: 'POST',
-        url:"/twitter_retweet/" ,
+        url:"/twitter_request/" ,
         data: {
             postId: id,
             type: 'retweet'
