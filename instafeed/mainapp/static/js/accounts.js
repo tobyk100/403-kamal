@@ -7,7 +7,6 @@ function onload(){
 }
 
 function signinToTwitter() {
-   alert("twitter");
    $.ajax({
         type: "POST",
         url: "/twitter_signin/",
@@ -27,7 +26,6 @@ function signinToTwitter() {
 }
 
 function signinToFacebook() {
-   alert("facebook");
    $.ajax({
         type: "POST",
         url: "/facebook_signin/",
@@ -45,7 +43,6 @@ function signinToFacebook() {
 }
 
 function signinToGooglePlus() {
-   alert("google");
    $.ajax({
         type: "POST",
         url: "/google_signin/",
