@@ -115,3 +115,7 @@ textarea#postText {
   margin-left: 5px;
   line-height: 30px;
 }
+
+#facebookCommentFlag {
+    display:none;
+}
