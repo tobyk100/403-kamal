@@ -14,6 +14,7 @@ $(document).on('ready', function() {
 // Submits a post using an ajax request.
 function submitPost() {
     var message = $('#postText').val();
+    resetPostBox();
     if (message != '') {
         if ($('#postOptionFacebook').is(':checked')) {
             submitPostHelper(message, '/facebook_request/');
@@ -22,6 +23,17 @@ function submitPost() {
             submitPostHelper(message, '/twitter_request/');
         }
     }
+}
+
+// Changed post box ui back to normal
+function resetPostBox(){
+    $("#myModalLabel").text("New Post");
+    $("#postOptionTwitter").attr("checked", true);
+    $("#postOptionFacebook").attr("checked", true);
+    $("#postOptionTwitter").attr("disabled", false);
+    $("#postOptionFacebook").attr("disabled", false);
+    $("#postText").attr("placeholder", "Enter Post...");
+    $("#submitPostButton").text("Submit Post");
 }
 
 function submitPostHelper(msg, url) {
@@ -215,6 +227,14 @@ function facebookComment(id, message){
     //change post dialog to say comment
     //submit comment up like a normal post with the id
     //change post ui back to normal
+    $("#myModalLabel").text("New Facebook Comment");
+    $("#postOptionTwitter").attr("checked", false);
+    $("#postOptionFacebook").attr("checked", true);
+    $("#postOptionTwitter").attr("disabled", true);
+    $("#postOptionFacebook").attr("disabled", true);
+    $("#postText").attr("placeholder", "Enter Facebook Comment...");
+    $("#submitPostButton").text("Submit Comment");
+    $("#postButton").click();
 }
 
 function facebookLike(id){
