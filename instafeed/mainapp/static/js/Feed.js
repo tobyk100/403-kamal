@@ -14,14 +14,20 @@ $(document).on('ready', function() {
 // Submits a post using an ajax request.
 function submitPost() {
     var message = $('#postText').val();
-    resetPostBox();
-    if (message != '') {
-        if ($('#postOptionFacebook').is(':checked')) {
-            submitPostHelper(message, '/facebook_request/');
-        }
-        if ($('#postOptionTwitter').is(':checked')) {
-            submitPostHelper(message, '/twitter_request/');
-        }
+    if ($("#facebookCommentFlag").is(':checked')){
+	//alert($("#facebookCommentFlag").val());
+	//call comment method and pass it id and message
+	resetPostBox();
+    } else {
+	resetPostBox();
+	if (message != '') {
+            if ($('#postOptionFacebook').is(':checked')) {
+		submitPostHelper(message, '/facebook_request/');
+            }
+            if ($('#postOptionTwitter').is(':checked')) {
+		submitPostHelper(message, '/twitter_request/');
+            }
+	}
     }
 }
 
@@ -33,6 +39,7 @@ function resetPostBox(){
     $("#postOptionTwitter").attr("disabled", false);
     $("#postOptionFacebook").attr("disabled", false);
     $("#postText").attr("placeholder", "Enter Post...");
+    $("#facebookCommentFlag").attr("checked", false);
     $("#submitPostButton").text("Submit Post");
 }
 
@@ -234,6 +241,8 @@ function facebookComment(id){
     $("#postOptionFacebook").attr("disabled", true);
     $("#postText").attr("placeholder", "Enter Facebook Comment...");
     $("#submitPostButton").text("Submit Comment");
+    $("#facebookCommentFlag").attr("checked", true);
+    $("#facebookCommentFlag").val(id);
     $("#postButton").click();
 }
 
