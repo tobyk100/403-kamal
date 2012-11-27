@@ -14,14 +14,51 @@ $(document).on('ready', function() {
 // Submits a post using an ajax request.
 function submitPost() {
     var message = $('#postText').val();
-    if (message != '') {
-        if ($('#postOptionFacebook').is(':checked')) {
-            submitPostHelper(message, '/facebook_request/');
-        }
-        if ($('#postOptionTwitter').is(':checked')) {
-            submitPostHelper(message, '/twitter_request/');
-        }
+    if ($("#facebookCommentFlag").is(':checked')){
+	//alert($("#facebookCommentFlag").val());
+	//call comment method and pass it id and message
+	submitFacebookComment(message, $("#facebookCommentFlag").val());
+	resetPostBox();
+    } else {
+	resetPostBox();
+	if (message != '') {
+            if ($('#postOptionFacebook').is(':checked')) {
+		submitPostHelper(message, '/facebook_request/');
+            }
+            if ($('#postOptionTwitter').is(':checked')) {
+		submitPostHelper(message, '/twitter_request/');
+            }
+	}
     }
+}
+
+function submitFacebookComment(msg , id) {
+    $.ajax({
+        type: 'POST',
+        url: '/facebook_request/',
+        data: {
+            message: msg,
+	    postId: id,
+            type: 'comment'
+        },
+        datatype: 'json',
+        error: function(data) {
+            //$(location).attr('href',data);
+          alert(data);
+        }
+    });
+}
+
+// Changed post box ui back to normal
+function resetPostBox(){
+    $("#myModalLabel").text("New Post");
+    $("#postOptionTwitter").attr("checked", true);
+    $("#postOptionFacebook").attr("checked", true);
+    $("#postOptionTwitter").attr("disabled", false);
+    $("#postOptionFacebook").attr("disabled", false);
+    $("#postText").attr("placeholder", "Enter Post...");
+    $("#facebookCommentFlag").attr("checked", false);
+    $("#submitPostButton").text("Submit Post");
 }
 
 function submitPostHelper(msg, url) {
@@ -103,8 +140,8 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
                   '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                   '<div class="nameTime">' + person + ' - ' +
                   formattedDate + '</div><div class="message">' + message +
-		  '<br> <a class="comment" href="javascript:facebookLike(' + id +  ')">Like   </a>' +
-                  '<a class="comment" href="javascript:facebookComment(' + id + ',' + person +  ')">Comment</a></div></div>');
+		  '<br> <a class="comment" href="#" onclick="facebookLike(\'' + id +  '\')">Like   </a>' +
+                  '<a class="comment" href="#" onclick="facebookComment(\'' + id + '\')">Comment</a></div></div>');
 }
 
 function loadTwitterFeed() {
@@ -159,8 +196,8 @@ function createPostInTwitterFeed(message, time, person, profilePicture, id) {
                  '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                  '<div class="nameTime">' + person + ' - ' + time +
                  '</div><div class="message">' + message +
-                 '<br> <a class="comment" href="javascript:twitterRetweet(' + id +  ')">Retweet   </a>' +
-                 ' <a class="comment" href="javascript:twitterReply(' + person +  ')">Reply </a></div></div>'
+                 '<br> <a class="comment" href="#" onclick="twitterRetweet(\'' + id + '\')">Retweet   </a>' +
+                 ' <a class="comment" href="#" onclick="twitterReply(\'' + person + '\')">Reply </a></div></div>'
     );
 }
 
@@ -210,19 +247,29 @@ function urlify(text) {
     });
 }
 
-function facebookComment(id, message){
+function facebookComment(id){
     //TODO
     //change post dialog to say comment
     //submit comment up like a normal post with the id
     //change post ui back to normal
+    $("#myModalLabel").text("New Facebook Comment");
+    $("#postOptionTwitter").attr("checked", false);
+    $("#postOptionFacebook").attr("checked", true);
+    $("#postOptionTwitter").attr("disabled", true);
+    $("#postOptionFacebook").attr("disabled", true);
+    $("#postText").attr("placeholder", "Enter Facebook Comment...");
+    $("#submitPostButton").text("Submit Comment");
+    $("#facebookCommentFlag").attr("checked", true);
+    $("#facebookCommentFlag").val(id);
+    $("#postButton").click();
 }
 
 function facebookLike(id){
     //call hampton's function taking an id of a post to like
-    alert(id);
+    // alert(id);
     $.ajax({
         type: 'POST',
-        url:"/facebook_like/" ,
+        url:"/facebook_request/" ,
         data: {
             postId: id,
             type: 'like'
@@ -239,7 +286,7 @@ function twitterRetweet(id){
     alert(id);
     $.ajax({
         type: 'POST',
-        url:"/twitter_retweet/" ,
+        url:"/twitter_request/" ,
         data: {
             postId: id,
             type: 'retweet'
@@ -258,4 +305,12 @@ function twitterReply(person){
     //fill in @person in text area and block off facebook check
     //submit it like you would a normal post
     //change post popup back to normal
+    $("#myModalLabel").text("New Twitter Reply");
+    $("#postOptionTwitter").attr("checked", true);
+    $("#postOptionFacebook").attr("checked", false);
+    $("#postOptionTwitter").attr("disabled", true);
+    $("#postOptionFacebook").attr("disabled", true);
+    $("#postText").text("@" + person);
+    $("#submitPostButton").text("Submit Reply");
+    $("#postButton").click();
 }

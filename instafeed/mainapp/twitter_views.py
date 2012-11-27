@@ -27,22 +27,20 @@ def twitter_request(request):
     return_dict = {'tweets': twitter_post, "success": True}
     return_tweets_json = json.dumps(return_dict)
     return HttpResponse(return_tweets_json, mimetype="application/json")
+  elif request_json.get('type') == 'retweet':
+    #call kevins method passing it request_json.get('postId')
+    return_dict = {'success' : True}
   else:
-    return_dict = {"success": False}
+    return_dict = {'success': False}
     return HttpResponse(json.dumps(return_dict), mimetype="application/json")
 
 
 @csrf_exempt
 def twitter_signin(request):
   t = twitter_api.twitter_authentication_url()
-  if t is None:
-    return_dict = {"success": False}
-    return HttpResponse(json.dumps(return_dict), mimetype="application/json")
-  else:
-    return_dict = {"success": True}
-    request.session['request_token'] = t[1]
-    request.session['request_secret'] = t[2]
-    return HttpResponse(t[0])
+  request.session['request_token'] = t[1]
+  request.session['request_secret'] = t[2]
+  return HttpResponse(t[0])
 
 #need to test this
 def twitter_callback(request):

@@ -17,6 +17,13 @@ def facebook_request(request):
     print "just posted to fb"
   elif json_request.get('type') == 'feedRequest':
     response = facebook_feed_request(request)
+  elif json_request.get('type') == 'like':
+    print "liking a fb post"
+    #call hamptons method passing it json_request.get("postId")
+  elif json_request.get('type') == 'comment':
+    print "commenting on post"
+    #calll hampton method passing it json_request.get("postId")
+    #and json_request.get("msg")
   else:
     response['success'] = 'false'
     response['message'] = 'Uknown facebook request.'

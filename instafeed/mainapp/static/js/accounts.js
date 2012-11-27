@@ -1,6 +1,10 @@
-$('#signinToTwitter').bind('click', signinToTwitter);
-$('#signinToFacebook').bind('click', signinToFacebook);
-$('#signinToGooglePlus').bind('click', signinToGooglePlus);
+$(document).ready(onload);
+
+function onload(){
+    $('#signinToTwitter').bind('click', signinToTwitter);
+    $('#signinToFacebook').bind('click', signinToFacebook);
+    $('#signinToGooglePlus').bind('click', signinToGooglePlus);
+}
 
 function signinToTwitter() {
    $.ajax({
@@ -14,9 +18,7 @@ function signinToTwitter() {
             console.log('Error:', data);
         },
         success: function (data) {
-            if (data.success) {
-              $(location).attr('href', data);
-            }
+            $(location).attr('href', data);
         }
     });
 }
