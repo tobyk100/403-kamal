@@ -116,7 +116,7 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
                   '<div class="nameTime">' + person + ' - ' +
                   formattedDate + '</div><div class="message">' + message +
 		  '<br> <a class="comment" href="javascript:facebookLike(' + id +  ')">Like   </a>' +
-                  '<a class="comment" href="javascript:facebookComment(' + id + ',' + person +  ')">Comment</a></div></div>');
+                  '<a class="comment" href="javascript:facebookComment("1")">Comment</a></div></div>');
 }
 
 function loadTwitterFeed() {
@@ -222,7 +222,7 @@ function urlify(text) {
     });
 }
 
-function facebookComment(id, message){
+function facebookComment(id){
     //TODO
     //change post dialog to say comment
     //submit comment up like a normal post with the id
