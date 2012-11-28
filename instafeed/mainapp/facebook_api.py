@@ -20,9 +20,10 @@ def facebook_read_user_status_updates(access_token):
   for post in F.fql(query):
     message =  post['message'].encode('utf-8')
     created_time = post['created_time']
+    actor_id = str(post['actor_id'])
 
     if((post['actor_id'] != None) and(message != '')):
-      name_query = "SELECT first_name, last_name FROM user WHERE uid =" + str(post['actor_id'])
+      name_query = "SELECT first_name, last_name FROM user WHERE uid =" + actor_id
       names = F.fql(name_query)
       name = ""
       if(len(names) > 0):
@@ -30,6 +31,10 @@ def facebook_read_user_status_updates(access_token):
         first_name = names['first_name']
         last_name = names['last_name']
         name = first_name + " " + last_name
+      else:
+        page_query = "SELECT name FROM page WHERE page_id = " + actor_id
+        res = F.fql(page_query)
+        if (len(res) > 0): name = res[0][u'name']
       time =  str(created_time)
       image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
       image1 = urllib2.urlopen(image);
