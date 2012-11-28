@@ -120,3 +120,8 @@ textarea#postText {
 #facebookCommentFlag {
     display:none;
 }
+
+#textCount {
+  font-weight: 2em;
+  margin-right: 8px;
+}

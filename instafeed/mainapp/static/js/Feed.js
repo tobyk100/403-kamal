@@ -4,32 +4,51 @@ $(document).on('ready', function() {
     $('#facebookRefreshButton').bind('click', loadFacebookFeed());
     $('#twitterRefreshButton').bind('click', loadTwitterFeed());
     $('#googleRefreshButton').bind('click', loadGoogleFeed());
+    $('#postText').bind('keyup keypress', countNewPostChars);
     var refreshId = setInterval(function(){
       loadFacebookFeed();
       loadTwitterFeed();
       loadGoogleFeed();
     }, 60000);
+    $('#postBox').on('hide', resetPostBox);
 });
+
+function countNewPostChars() {
+  if ($('#postOptionTwitter').is(':checked')) {
+    var count = $(this).val().length,
+        count_elem = $('#textCount');
+    count_elem.text(count);
+    if (count > 140) {
+      count_elem.addClass('text-error');
+    } else {
+      count_elem.removeClass('text-error');
+    }
+  } else {
+    $('#textCount').text('');
+  }
+}
 
 // Submits a post using an ajax request.
 function submitPost() {
-    var message = $('#postText').val();
+  var message = $('#postText').val(),
+      twitterchecked = $('#postOptionTwitter').is(':checked');
+  if (!twitterchecked || message.length <= 140) {
+    $('#postBox').modal('hide');
     if ($("#facebookCommentFlag").is(':checked')){
       //alert($("#facebookCommentFlag").val());
       //call comment method and pass it id and message
       submitFacebookComment(message, $("#facebookCommentFlag").val());
-      resetPostBox();
     } else {
-      resetPostBox();
       if (message != '') {
         if ($('#postOptionFacebook').is(':checked')) {
           submitPostHelper(message, '/facebook_request/');
         }
-        if ($('#postOptionTwitter').is(':checked')) {
+        if (twitterchecked && message.length <= 140) {
           submitPostHelper(message, '/twitter_request/');
         }
       }
     }
+  }
 }
 
 function submitFacebookComment(msg , id) {
@@ -56,7 +75,8 @@ function resetPostBox(){
     $("#postOptionFacebook").attr("checked", true);
     $("#postOptionTwitter").attr("disabled", false);
     $("#postOptionFacebook").attr("disabled", false);
-    $("#postText").attr("placeholder", "Enter Post...");
+    $("#postText").attr("placeholder", "Enter Post...").val('');
+    $('#textCount').text('0').removeClass('text-error');
     $("#facebookCommentFlag").attr("checked", false);
     $("#submitPostButton").text("Submit Post");
 }

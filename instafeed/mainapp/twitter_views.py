@@ -15,10 +15,15 @@ def twitter_request(request):
     return HttpResponse(return_json, mimetype="application/json")
   request_json = request.POST
   if request_json.get('type') == 'upload':
-    twitter_api.twitter_post(one_user.access_token, one_user.access_secret, request_json.get('message'))
-    return_dict = {'success': True}
-    return_post_json = json.dumps(return_dict)
-    return HttpResponse(return_post_json, mimetype="application/json")
+    message = request_json.get('message')
+    if len(message) <= 140:
+      twitter_api.twitter_post(one_user.access_token, one_user.access_secret, message)
+      return_dict = {'success': True}
+      return_post_json = json.dumps(return_dict)
+      return HttpResponse(return_post_json, mimetype="application/json")
+    return_dict = {'success' : False}
+    return_json = json.dumps(return_dict)
+    return HttpResponse(return_json, mimetype="application/json")
   elif request_json.get('type') == 'feedRequest':
     print "hi"
     #get stuff from twitter
