@@ -138,7 +138,7 @@ class _RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                              '</head></html>')
 
 def help():
-    
+
     "Print out some helpful information"""
     print '''
 The following commands are available:
@@ -169,7 +169,7 @@ def authenticate():
     If you want to request certain permissions, set the AUTH_SCOPE global
     variable to the list of permissions you want.
     """
- 
+
     webbrowser.open('https://www.facebook.com/dialog/oauth?' +
                         urlencode({'client_id':APP_ID,
                                    'redirect_uri':REDIRECT_URI,
@@ -207,7 +207,7 @@ def graph_post(path, params=None):
         urllib2.HTTPCookieProcessor(cookielib.CookieJar()),
         _MultipartPostHandler)
     return json.load(opener.open(_get_url(path), params))
-    
+
 def graph_delete(path, params=None):
     """Send a DELETE request to the graph api.
 

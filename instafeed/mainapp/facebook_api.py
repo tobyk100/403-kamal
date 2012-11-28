@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import facebook_lib as F
 import urllib2
+import datetime
 #Facebook moduel for InstaFeed.
 #Example usage can be found at bottom in main
 
@@ -17,12 +18,22 @@ def facebook_read_user_status_updates(access_token):
   posts = []
   F.ACCESS_TOKEN = access_token
   query = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') AND is_hidden = 0"
+  graph_path = '/me/home'
+  graph_res = F.graph(graph_path)
+  for d in graph_res['data']:
+    name = d['from']['name']
+    time = d['created_time']
+    message = d['message']
+    post_id = d['id']
+    image_src = F.graph(d['from']['id'] + '/picture')['data']['url']
+    posts.append((message, name, time, image_src, post_id))
+  """
   for post in F.fql(query):
     message =  post['message'].encode('utf-8')
     created_time = post['created_time']
     actor_id = str(post['actor_id'])
 
-    if((post['actor_id'] != None) and(message != '')):
+    if((actor_id != None) and(message != '')):
       name_query = "SELECT first_name, last_name FROM user WHERE uid =" + actor_id
       names = F.fql(name_query)
       name = ""
@@ -35,12 +46,14 @@ def facebook_read_user_status_updates(access_token):
         page_query = "SELECT name FROM page WHERE page_id = " + actor_id
         res = F.fql(page_query)
         if (len(res) > 0): name = res[0][u'name']
+      print datetime.fromtimestamp(created_time)
       time =  str(created_time)
       image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
       image1 = urllib2.urlopen(image);
       image2 = image1.geturl();
       post_id = post['post_id']
       posts.append((message, name, time, image2, post_id))
+  """
   return posts
 
 #This function will open a web browser with the page the user needs to log in to.
