@@ -15,20 +15,20 @@ $(document).on('ready', function() {
 function submitPost() {
     var message = $('#postText').val();
     if ($("#facebookCommentFlag").is(':checked')){
-	//alert($("#facebookCommentFlag").val());
-	//call comment method and pass it id and message
-	submitFacebookComment(message, $("#facebookCommentFlag").val());
-	resetPostBox();
+      //alert($("#facebookCommentFlag").val());
+      //call comment method and pass it id and message
+      submitFacebookComment(message, $("#facebookCommentFlag").val());
+      resetPostBox();
     } else {
-	resetPostBox();
-	if (message != '') {
-            if ($('#postOptionFacebook').is(':checked')) {
-		submitPostHelper(message, '/facebook_request/');
-            }
-            if ($('#postOptionTwitter').is(':checked')) {
-		submitPostHelper(message, '/twitter_request/');
-            }
-	}
+      resetPostBox();
+      if (message != '') {
+        if ($('#postOptionFacebook').is(':checked')) {
+          submitPostHelper(message, '/facebook_request/');
+        }
+        if ($('#postOptionTwitter').is(':checked')) {
+          submitPostHelper(message, '/twitter_request/');
+        }
+      }
     }
 }
 
@@ -38,7 +38,7 @@ function submitFacebookComment(msg , id) {
         url: '/facebook_request/',
         data: {
             message: msg,
-	    postId: id,
+            postId: id,
             type: 'comment'
         },
         datatype: 'json',
@@ -140,7 +140,7 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
                   '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                   '<div class="nameTime">' + person + ' - ' +
                   formattedDate + '</div><div class="message">' + message +
-		  '<br> <a class="comment" href="#" onclick="facebookLike(\'' + id +  '\')">Like   </a>' +
+                  '<br> <a class="comment" href="#" onclick="facebookLike(\'' + id +  '\')">Like   </a>' +
                   '<a class="comment" href="#" onclick="facebookComment(\'' + id + '\')">Comment</a></div></div>');
 }
 
@@ -202,32 +202,31 @@ function createPostInTwitterFeed(message, time, person, profilePicture, id) {
 }
 
 function loadGoogleFeed() {
-   // console.log('load google feed');
-    $.ajax({
-        type: "POST",
-        url: "/google_get_posts/",
-        data: {
-            title: "ajax call from google",
-        type: "feedRequest"
-        },
-        datatype: "json",
-        success: function (data) {
-          if(!data.success) {
-            displaysigninbutton('Google', signinToGooglePlus);
-          } else {
-            $('#googleFeedPosts').empty();
-            var posts = JSON.parse(data).posts;
-            for(var i = 0; i < posts.length; i++) {
-              createPostInGoogleFeed(
-                urlify(posts[i].content),
-                posts[i].published,
-                posts[i].author_display_name,
-                posts[i].author_image_url
-              );
-            }
-          }
+  $.ajax({
+    type: "POST",
+    url: "/google_get_posts/",
+    data: {
+      title: "ajax call from google",
+      type: "feedRequest"
+    },
+    datatype: "json",
+    success: function (data) {
+      if(!data.success) {
+        displaysigninbutton('Google', signinToGooglePlus);
+      } else {
+        $('#googleFeedPosts').empty();
+        var posts = data.posts;
+        for(var i = 0; i < posts.length; i++) {
+          createPostInGoogleFeed(
+            urlify(posts[i].content),
+            posts[i].published,
+            posts[i].author_display_name,
+            posts[i].author_image_url
+          );
         }
-    });
+      }
+    }
+  });
 }
 
 function createPostInGoogleFeed(message, time, person, profilePicture) {
