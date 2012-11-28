@@ -18,6 +18,7 @@ def facebook_read_user_status_updates(access_token):
   posts = []
   F.ACCESS_TOKEN = access_token
   query = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') AND is_hidden = 0"
+  """
   graph_path = '/me/home'
   graph_res = F.graph(graph_path)
   for d in graph_res['data']:
@@ -53,7 +54,6 @@ def facebook_read_user_status_updates(access_token):
       image2 = image1.geturl();
       post_id = post['post_id']
       posts.append((message, name, time, image2, post_id))
-  """
   return posts
 
 #This function will open a web browser with the page the user needs to log in to.
