@@ -98,6 +98,7 @@ textarea#postText {
   background-color: white;
   overflow: auto;
   margin-left: 12px;
+  vertical-align: bottom;
 }
 
 .feedsDisplayCol .header {
