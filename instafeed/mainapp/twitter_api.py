@@ -52,6 +52,14 @@ def twitter_home_timeline (access_token, access_secret, count):
 
   return status_list;
 
+def twitter_retweet (access_token, access_secret, post_id):
+  auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+  auth.set_access_token(access_token, access_secret)
+
+  api = tweepy.API(auth)
+  api.retweet(post_id)
+  
+
 def _parse_status (status):
   return {'contributors': status.contributors,
           'truncated': status.truncated,
