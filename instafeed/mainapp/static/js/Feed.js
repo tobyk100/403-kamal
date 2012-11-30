@@ -11,12 +11,8 @@ $(document).on('ready', function() {
       loadGoogleFeed();
     }, 60000);
     $('#postBox').on('hide', resetPostBox);
-    $('#closePost').bind('click', test);
 });
 
-function test() {
-    alert("closing");
-}
 function countNewPostChars() {
   if ($('#postOptionTwitter').is(':checked')) {
     var count = $(this).val().length,
@@ -34,25 +30,25 @@ function countNewPostChars() {
 
 // Submits a post using an ajax request.
 function submitPost() {
-  var message = $('#postText').val(),
-      twitterchecked = $('#postOptionTwitter').is(':checked');
-  if (!twitterchecked || message.length <= 140) {
-    $('#postBox').modal('hide');
-    if ($("#facebookCommentFlag").is(':checked')){
-      //alert($("#facebookCommentFlag").val());
-      //call comment method and pass it id and message
-      submitFacebookComment(message, $("#facebookCommentFlag").val());
-    } else {
-      if (message != '') {
-        if ($('#postOptionFacebook').is(':checked')) {
-          submitPostHelper(message, '/facebook_request/');
-        }
-        if (twitterchecked && message.length <= 140) {
-          submitPostHelper(message, '/twitter_request/');
-        }
-      }
+    var message = $('#postText').val(),
+    twitterchecked = $('#postOptionTwitter').is(':checked');
+    if (!twitterchecked || message.length <= 140) {
+	if ($("#facebookCommentFlag").is(':checked')){
+	    //alert($("#facebookCommentFlag").val());
+	    //call comment method and pass it id and message
+	    submitFacebookComment(message, $("#facebookCommentFlag").val());
+	} else {
+	    if (message != '') {
+		if ($('#postOptionFacebook').is(':checked')) {
+		    submitPostHelper(message, '/facebook_request/');
+		}
+		if (twitterchecked && message.length <= 140) {
+		    submitPostHelper(message, '/twitter_request/');
+		}
+	    }
+	}
+	$('#postBox').modal('hide');
     }
-  }
 }
 
 function submitFacebookComment(msg , id) {

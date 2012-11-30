@@ -19,11 +19,10 @@ def facebook_request(request):
     response = facebook_feed_request(request)
   elif json_request.get('type') == 'like':
     print "liking a fb post"
-    #call hamptons method passing it json_request.get("postId")
+    response = facebook_like(request);
   elif json_request.get('type') == 'comment':
     print "commenting on post"
-    #calll hampton method passing it json_request.get("postId")
-    #and json_request.get("msg")
+    responce = facebook_comment(request);
   else:
     response['success'] = 'false'
     response['message'] = 'Uknown facebook request.'
@@ -41,7 +40,6 @@ def facebook_upload(request):
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
     return response
-
   response['success'] = 'true'
   try:
     facebook_api.facebook_post_feed(request.POST.get('message'), fb_account.access_token)
@@ -50,6 +48,41 @@ def facebook_upload(request):
     return get_fb_url(1)
   return response
 
+#helper function that will like a desired post on fb
+@csrf_exempt
+@login_required
+def facebook_like(request):
+  response = {}
+  fb_account = FacebookAccount.get_account(request.user.id)
+  if fb_account is None:
+    response['success'] = 'false'
+    response['message'] = 'Failed to get data for user'
+    return response
+  response['success'] = 'true'
+  try:
+    facebook_api.facebook_like_post(request.POST.get('postId'), fb_account.access_token)
+  except urllib2.HTTPError:
+    print "Error: Token is invalid"
+    return get_fb_url(1)
+  return response
+
+#helper function that will post a comment to a desired fb post
+@csrf_exempt
+@login_required
+def facebook_comment(request):
+  response = {}
+  fb_account = FacebookAccount.get_account(request.user.id)
+  if fb_account is None:
+    response['success'] = 'false'
+    response['message'] = 'Failed to get data for user'
+    return response
+  response['success'] = 'true'
+  try:
+    facebook_api.facebook_comment_post(request.POST.get('postId'), request.POST.get('msg'), fb_account.access_token)
+  except urllib2.HTTPError:
+    print "Error: Token is invalid"
+    return get_fb_url(1)
+  return response
 
 #helper function that will pull the users feed data from fb and return it to our client side
 @csrf_exempt
