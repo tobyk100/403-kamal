@@ -11,8 +11,12 @@ $(document).on('ready', function() {
       loadGoogleFeed();
     }, 60000);
     $('#postBox').on('hide', resetPostBox);
+    $('#closePost').bind('click', test);
 });
 
+function test() {
+    alert("closing");
+}
 function countNewPostChars() {
   if ($('#postOptionTwitter').is(':checked')) {
     var count = $(this).val().length,
@@ -188,7 +192,7 @@ function loadTwitterFeed() {
               post.created_at ,
               post.user.name,
               post.user.profile_image_url,
-              i
+              post.id
           );
         }
       }
@@ -302,7 +306,7 @@ function facebookLike(id){
 
 function twitterRetweet(id){
     //call kevins function passing it an id to retweet for the user
-    alert(id);
+    // alert(id);
     $.ajax({
         type: 'POST',
         url:"/twitter_request/" ,
