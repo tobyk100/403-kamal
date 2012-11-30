@@ -47,7 +47,7 @@ def facebook_read_user_status_updates(access_token):
         page_query = "SELECT name FROM page WHERE page_id = " + actor_id
         res = F.fql(page_query)
         if (len(res) > 0): name = res[0][u'name']
-      print datetime.fromtimestamp(created_time)
+      #print datetime.fromtimestamp(created_time)
       time =  str(created_time)
       image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
       image1 = urllib2.urlopen(image);

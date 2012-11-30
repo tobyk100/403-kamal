@@ -18,7 +18,6 @@ def facebook_request(request):
   elif json_request.get('type') == 'feedRequest':
     print "going into feed request"
     response = facebook_feed_request(request)
-    print response
   elif json_request.get('type') == 'like':
     print "liking a fb post"
     response = facebook_like(request);
@@ -99,7 +98,6 @@ def facebook_feed_request(request):
     response['success'] = 'false'
     response['message'] = 'Failed to get data for user'
     return response
-
   try:
   #success case, we can get their
     print "trying to get stuff from fb"
