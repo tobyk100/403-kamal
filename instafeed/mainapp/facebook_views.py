@@ -16,17 +16,21 @@ def facebook_request(request):
     response = facebook_upload(request)
     print "just posted to fb"
   elif json_request.get('type') == 'feedRequest':
+    print "going into feed request"
     response = facebook_feed_request(request)
+    print response
   elif json_request.get('type') == 'like':
     print "liking a fb post"
     response = facebook_like(request);
   elif json_request.get('type') == 'comment':
     print "commenting on post"
-    responce = facebook_comment(request);
+    response = facebook_comment(request);
   else:
+    print "unknown facebook request"
     response['success'] = 'false'
     response['message'] = 'Uknown facebook request.'
   if 'url' in response:
+    print response['url']
     return HttpResponse(response['url'], status=response['status'])
   return HttpResponse(json.dumps(response), mimetype="application/json")
 
@@ -103,7 +107,7 @@ def facebook_feed_request(request):
     response['updates'] = facebook_api.facebook_read_user_status_updates(fb_account.access_token)
   except Exception:
     #invalid token
-    print "Error: Token is invalid"
+    print "FB Error: Token is invalid"
     return get_fb_url(1)
   return response
 
