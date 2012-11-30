@@ -98,6 +98,7 @@ textarea#postText {
   background-color: white;
   overflow: auto;
   margin-left: 12px;
+  vertical-align: bottom;
 }
 
 .feedsDisplayCol .header {
@@ -114,4 +115,13 @@ textarea#postText {
   margin-top: 0px;
   margin-left: 5px;
   line-height: 30px;
+}
+
+#facebookCommentFlag {
+    display:none;
+}
+
+#textCount {
+  font-weight: 2em;
+  margin-right: 8px;
 }

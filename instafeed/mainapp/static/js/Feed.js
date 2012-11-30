@@ -4,25 +4,68 @@ $(document).on('ready', function() {
     $('#facebookRefreshButton').bind('click', loadFacebookFeed());
     $('#twitterRefreshButton').bind('click', loadTwitterFeed());
     $('#googleRefreshButton').bind('click', loadGoogleFeed());
+    $('#postText').bind('keyup keypress', countNewPostChars);
     var refreshId = setInterval(function(){
       loadFacebookFeed();
       loadTwitterFeed();
       loadGoogleFeed();
     }, 60000);
+    $('#postBox').on('hide', resetPostBox);
 });
+
+function countNewPostChars() {
+  if ($('#postOptionTwitter').is(':checked')) {
+    var count = $(this).val().length,
+        count_elem = $('#textCount');
+    count_elem.text(count);
+    if (count > 140) {
+      count_elem.addClass('text-error');
+    } else {
+      count_elem.removeClass('text-error');
+    }
+  } else {
+    $('#textCount').text('');
+  }
+}
 
 // Submits a post using an ajax request.
 function submitPost() {
-    var message = $('#postText').val();
-    resetPostBox();
-    if (message != '') {
-        if ($('#postOptionFacebook').is(':checked')) {
-            submitPostHelper(message, '/facebook_request/');
-        }
-        if ($('#postOptionTwitter').is(':checked')) {
-            submitPostHelper(message, '/twitter_request/');
-        }
+    var message = $('#postText').val(),
+    twitterchecked = $('#postOptionTwitter').is(':checked');
+    if (!twitterchecked || message.length <= 140) {
+	if ($("#facebookCommentFlag").is(':checked')){
+	    //alert($("#facebookCommentFlag").val());
+	    //call comment method and pass it id and message
+	    submitFacebookComment(message, $("#facebookCommentFlag").val());
+	} else {
+	    if (message != '') {
+		if ($('#postOptionFacebook').is(':checked')) {
+		    submitPostHelper(message, '/facebook_request/');
+		}
+		if (twitterchecked && message.length <= 140) {
+		    submitPostHelper(message, '/twitter_request/');
+		}
+	    }
+	}
+	$('#postBox').modal('hide');
     }
+}
+
+function submitFacebookComment(msg , id) {
+    $.ajax({
+        type: 'POST',
+        url: '/facebook_request/',
+        data: {
+            message: msg,
+            postId: id,
+            type: 'comment'
+        },
+        datatype: 'json',
+        error: function(data) {
+            //$(location).attr('href',data);
+          alert(data);
+        }
+    });
 }
 
 // Changed post box ui back to normal
@@ -32,7 +75,9 @@ function resetPostBox(){
     $("#postOptionFacebook").attr("checked", true);
     $("#postOptionTwitter").attr("disabled", false);
     $("#postOptionFacebook").attr("disabled", false);
-    $("#postText").attr("placeholder", "Enter Post...");
+    $("#postText").attr("placeholder", "Enter Post...").val('');
+    $('#textCount').text('0').removeClass('text-error');
+    $("#facebookCommentFlag").attr("checked", false);
     $("#submitPostButton").text("Submit Post");
 }
 
@@ -115,8 +160,8 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
                   '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                   '<div class="nameTime">' + person + ' - ' +
                   formattedDate + '</div><div class="message">' + message +
-		  '<br> <a class="comment" href="javascript:facebookLike(' + id +  ')">Like   </a>' +
-                  '<a class="comment" href="javascript:facebookComment("1")">Comment</a></div></div>');
+                  '<br> <a class="comment" href="#" onclick="facebookLike(\'' + id +  '\')">Like   </a>' +
+                  '<a class="comment" href="#" onclick="facebookComment(\'' + id + '\')">Comment</a></div></div>');
 }
 
 function loadTwitterFeed() {
@@ -143,7 +188,7 @@ function loadTwitterFeed() {
               post.created_at ,
               post.user.name,
               post.user.profile_image_url,
-              i
+              post.id
           );
         }
       }
@@ -171,38 +216,37 @@ function createPostInTwitterFeed(message, time, person, profilePicture, id) {
                  '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                  '<div class="nameTime">' + person + ' - ' + time +
                  '</div><div class="message">' + message +
-                 '<br> <a class="comment" href="javascript:twitterRetweet(' + id +  ')">Retweet   </a>' +
-                 ' <a class="comment" href="javascript:twitterReply(' + person +  ')">Reply </a></div></div>'
+                 '<br> <a class="comment" href="#" onclick="twitterRetweet(\'' + id + '\')">Retweet   </a>' +
+                 ' <a class="comment" href="#" onclick="twitterReply(\'' + person + '\')">Reply </a></div></div>'
     );
 }
 
 function loadGoogleFeed() {
-   // console.log('load google feed');
-    $.ajax({
-        type: "POST",
-        url: "/google_get_posts/",
-        data: {
-            title: "ajax call from google",
-        type: "feedRequest"
-        },
-        datatype: "json",
-        success: function (data) {
-          if(!data.success) {
-            displaysigninbutton('Google', signinToGooglePlus);
-          } else {
-            $('#googleFeedPosts').empty();
-            var posts = JSON.parse(data).posts;
-            for(var i = 0; i < posts.length; i++) {
-              createPostInGoogleFeed(
-                urlify(posts[i].content),
-                posts[i].published,
-                posts[i].author_display_name,
-                posts[i].author_image_url
-              );
-            }
-          }
+  $.ajax({
+    type: "POST",
+    url: "/google_get_posts/",
+    data: {
+      title: "ajax call from google",
+      type: "feedRequest"
+    },
+    datatype: "json",
+    success: function (data) {
+      if(!data.success) {
+        displaysigninbutton('Google', signinToGooglePlus);
+      } else {
+        $('#googleFeedPosts').empty();
+        var posts = data.posts;
+        for(var i = 0; i < posts.length; i++) {
+          createPostInGoogleFeed(
+            urlify(posts[i].content),
+            posts[i].published,
+            posts[i].author_display_name,
+            posts[i].author_image_url
+          );
         }
-    });
+      }
+    }
+  });
 }
 
 function createPostInGoogleFeed(message, time, person, profilePicture) {
@@ -234,12 +278,14 @@ function facebookComment(id){
     $("#postOptionFacebook").attr("disabled", true);
     $("#postText").attr("placeholder", "Enter Facebook Comment...");
     $("#submitPostButton").text("Submit Comment");
+    $("#facebookCommentFlag").attr("checked", true);
+    $("#facebookCommentFlag").val(id);
     $("#postButton").click();
 }
 
 function facebookLike(id){
     //call hampton's function taking an id of a post to like
-    alert(id);
+    // alert(id);
     $.ajax({
         type: 'POST',
         url:"/facebook_request/" ,
@@ -256,7 +302,7 @@ function facebookLike(id){
 
 function twitterRetweet(id){
     //call kevins function passing it an id to retweet for the user
-    alert(id);
+    // alert(id);
     $.ajax({
         type: 'POST',
         url:"/twitter_request/" ,
