@@ -8,7 +8,8 @@ def CheckForUpdates():
   posts = ScheduledUpdates.objects.filter(
 		publish_date__year=now.year,
 		publish_date__month=now.month,
-		publish_date__day=now.day)
+		publish_date__day=now.day,
+		publish_date__hour=now.hour)
   for post in posts:
     #TODO for each post that has been found for the day we need to make a twitter/facebook request	 
     if post.publish_site is 1 or 3:
