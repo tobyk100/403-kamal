@@ -247,7 +247,7 @@ def fql_multiquery(query):
 
     """
     url = _get_url('/method/fql.multiquery',
-                   args={'queries': query, 'format': 'json', 'limit' : 100},
+                   args={'queries': query, 'format': 'json'},
                    graph=False)
 
     return json.load(urllib2.urlopen(url))
