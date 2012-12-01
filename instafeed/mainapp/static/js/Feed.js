@@ -211,10 +211,17 @@ function loadTwitterFeed() {
  */
 
 function createPostInTwitterFeed(message, time, person, profilePicture, id) {
+    var date = new Date(time);
+    var formattedDate = (
+          date.toLocaleString().substring(0,3) +
+          ' ' +
+      date.toLocaleTimeString()
+    );
+
     $('#twitterFeedPosts').append('<div class ="FeedPost">' +
                  '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
                  '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
-                 '<div class="nameTime">' + person + ' - ' + time +
+                 '<div class="nameTime">' + person + ' - ' + formattedDate +
                  '</div><div class="message">' + message +
                  '<br> <a class="comment" href="#" onclick="twitterRetweet(\'' + id + '\')">Retweet   </a>' +
                  ' <a class="comment" href="#" onclick="twitterReply(\'' + person + '\')">Reply </a></div></div>'
