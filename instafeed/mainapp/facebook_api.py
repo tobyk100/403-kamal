@@ -38,15 +38,13 @@ def facebook_read_user_status_updates(access_token):
       first_name = ""
       last_name = ""
       name = ""
-'''
-      for entry in query2:
+      #for entry in query2:
         #look for user_id in query2 to get name
-        if entry['uid'] == post['actor_id']:
-          first_name = entry['first_name']
-          last_name = entry['last_name']
-          break
-'''
-      name = first_name + " " + last_name
+      #  if entry['uid'] == post['actor_id']:
+      #    first_name = entry['first_name']
+      #    last_name = entry['last_name']
+      #    break
+#      name = first_name + " " + last_name
       time = str(created_time)
       image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
       image1 = urllib2.urlopen(image);
@@ -111,7 +109,7 @@ def main():
 
   #Update your status
   post = "Postinadsfg from InstaFeed!adsawwdsfadxsfa"
-  facebook_post_feed(post, access_token);
+#  facebook_post_feed(post, access_token);
 
   #View your news feed
   posts = facebook_read_user_status_updates(access_token);
