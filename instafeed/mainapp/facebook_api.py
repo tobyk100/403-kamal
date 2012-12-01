@@ -22,7 +22,7 @@ def facebook_read_user_status_updates(access_token):
 
   queries['query1'] = "SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed'"
 
-  queries['query2'] = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM #query1) AND is_hidden = 0 limit 100"
+  queries['query2'] = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM #query1) AND is_hidden = 0"
 
   queries['query3'] = "SELECT first_name, last_name, uid FROM user WHERE uid IN (SELECT actor_id FROM #query2)"
 
