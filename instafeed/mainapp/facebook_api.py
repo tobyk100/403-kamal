@@ -50,7 +50,8 @@ def facebook_read_user_status_updates(access_token):
       image1 = urllib2.urlopen(image);
       image2 = image1.geturl();
       post_id = post['post_id']
-      posts.append((message, name, time, image2, post_id))
+      if(name != ""):
+        posts.append((message, name, time, image2, post_id))
   return posts
 
   """
