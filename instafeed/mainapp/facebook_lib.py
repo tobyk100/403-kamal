@@ -236,6 +236,22 @@ def fql(query):
 
     return json.load(urllib2.urlopen(url))
 
+
+
+def fql_multiquery(query):
+    """Make an fql request.
+
+    For example:
+
+      >>> fql('SELECT name FROM user WHERE uid = me()')
+
+    """
+    url = _get_url('/method/fql.multiquery',
+                   args={'queries': query, 'format': 'json'},
+                   graph=False)
+
+    return json.load(urllib2.urlopen(url))
+
 INTRO_MESSAGE = '''\
   __ _                                _
  / _| |                              | |

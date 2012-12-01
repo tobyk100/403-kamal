@@ -2,6 +2,7 @@
 import facebook_lib as F
 import urllib2
 import datetime
+import json
 #Facebook moduel for InstaFeed.
 #Example usage can be found at bottom in main
 
@@ -17,7 +18,42 @@ def facebook_post_feed(post, access_token):
 def facebook_read_user_status_updates(access_token):
   posts = []
   F.ACCESS_TOKEN = access_token
-  query = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed') AND is_hidden = 0"
+  queries = {}
+
+  queries['query1'] = "SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed'"
+
+  queries['query2'] = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM #query1) AND is_hidden = 0"
+
+  queries['query3'] = "SELECT first_name, last_name, uid FROM user WHERE uid IN (SELECT actor_id FROM #query2)"
+
+  results = F.fql_multiquery(queries);
+  query1 = results[1]['fql_result_set'];
+  query2 = results[2]['fql_result_set'];
+
+  for post in query1:
+    message = post['message'].encode('utf-8')
+    created_time = post['created_time']
+    actor_id = str(post['actor_id'])
+    if((actor_id != None) and (message != "")):
+      first_name = ""
+      last_name = ""
+      name = ""
+      for entry in query2:
+        #look for user_id in query2 to get name
+        if entry['uid'] == post['actor_id']:
+          first_name = entry['first_name']
+          last_name = entry['last_name']
+          break
+
+    name = first_name + " " + last_name
+    time = str(created_time)
+    image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
+    image1 = urllib2.urlopen(image);
+    image2 = image1.geturl();
+    post_id = post['post_id']
+    posts.append((message, name, time, image2, post_id))
+  return posts
+
   """
   graph_path = '/me/home'
   graph_res = F.graph(graph_path)
@@ -29,32 +65,6 @@ def facebook_read_user_status_updates(access_token):
     image_src = F.graph(d['from']['id'] + '/picture')['data']['url']
     posts.append((message, name, time, image_src, post_id))
   """
-  for post in F.fql(query):
-    message =  post['message'].encode('utf-8')
-    created_time = post['created_time']
-    actor_id = str(post['actor_id'])
-
-    if((actor_id != None) and(message != '')):
-      name_query = "SELECT first_name, last_name FROM user WHERE uid =" + actor_id
-      names = F.fql(name_query)
-      name = ""
-      if(len(names) > 0):
-        names = names[0]
-        first_name = names['first_name']
-        last_name = names['last_name']
-        name = first_name + " " + last_name
-      else:
-        page_query = "SELECT name FROM page WHERE page_id = " + actor_id
-        res = F.fql(page_query)
-        if (len(res) > 0): name = res[0][u'name']
-      #print datetime.fromtimestamp(created_time)
-      time =  str(created_time)
-      image = "https://graph.facebook.com/" + str(post['actor_id']) + "/picture"
-      image1 = urllib2.urlopen(image);
-      image2 = image1.geturl();
-      post_id = post['post_id']
-      posts.append((message, name, time, image2, post_id))
-  return posts
 
 #This function will open a web browser with the page the user needs to log in to.
 #It will parse out the 'access_token' and return it.
@@ -96,12 +106,11 @@ def facebook_comment_post(post_id, comment, access_token):
 def main():
   #Log in to facebook to get your access token
 # access_token = facebook_auth()
-
-  access_token = 'AAACEdEose0cBACe6ZCZCYYgQ88RBDeP3Y9TZBkRpahEOXO6M89ffPmzvp5hxtU3T6W9mBZCxySdDv9SbhXk4ZBmIoOynvITSwzOAFX0kA9MQSIZBmmQnHk'
+  access_token = 'AAACEdEose0cBAPIcbq4Uzw5LQprCIwdA30VtOkk1bhjFG4I8E4cgyKJM0CaZCCizQtSDIwc6x2xmeORHojXQDKQeDZAFKZA4ZBS3OZBfTX7rAN3ZAeM6hG'
 
   #Update your status
-  post = "Posting from InstaFeed!adsfadsfa"
-# facebook_post_feed(post, access_token);
+  post = "Postinadsfg from InstaFeed!adsawwdsfadxsfa"
+  facebook_post_feed(post, access_token);
 
   #View your news feed
   posts = facebook_read_user_status_updates(access_token);
