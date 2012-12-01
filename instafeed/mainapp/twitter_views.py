@@ -33,8 +33,17 @@ def twitter_request(request):
     return HttpResponse(return_tweets_json, mimetype="application/json")
   elif request_json.get('type') == 'retweet':
     #call kevins method passing it request_json.get('postId')
-    print "retweet"
-    return_dict = {'success' : True}
+    postId = request_json.get('postId')
+    print "trying retweet "
+    success = twitter_api.twitter_retweet(one_user.access_token, one_user.access_secret, postId)
+    return_dict = None
+    if success:
+      print "retweet"
+      return_dict = {'success' : True}
+    else: 
+      print "failed"
+      return_dict = {'success' : False}
+
     return_retweet_json = json.dumps(return_dict);
     return HttpResponse(return_retweet_json, mimetype="application/json");
   else:

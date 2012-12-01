@@ -57,7 +57,11 @@ def twitter_retweet (access_token, access_secret, post_id):
   auth.set_access_token(access_token, access_secret)
 
   api = tweepy.API(auth)
-  api.retweet(post_id)
+  try: 
+    api.retweet(post_id)
+    return True
+  except:
+    return False
   
 
 def _parse_status (status):
