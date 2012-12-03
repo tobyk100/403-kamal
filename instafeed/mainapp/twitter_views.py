@@ -27,7 +27,7 @@ def twitter_request(request):
   elif request_json.get('type') == 'feedRequest':
     print "hi"
     #get stuff from twitter
-    twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 10)
+    twitter_post = twitter_api.twitter_home_timeline(one_user.access_token, one_user.access_secret, 30)
     return_dict = {'tweets': twitter_post, "success": True}
     return_tweets_json = json.dumps(return_dict)
     return HttpResponse(return_tweets_json, mimetype="application/json")

@@ -81,7 +81,12 @@ def accounts(request):
   return render(request, 'Accounts.html')
 
 def schedule(request):
-  return render(request, 'schedule.html')
+  now = datetime.datetime.now()
+  year_list = [now.year, now.year + 1]
+  month_list = [x for x in range(1, 13)]
+  day_list = [x for x in range(1, 32)]
+  return render(request, 'schedule.html', {'year_list': year_list, \
+      'month_list': month_list, 'day_list': day_list})
 
 def scheduled_update(request):
   # TODO handle a post/tweet that will be processed at a later date
