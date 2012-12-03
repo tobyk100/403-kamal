@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -135,9 +135,7 @@ def facebook_callback(request):
     facebook_account.save()
     return_dict = {}
     return_dict['success'] = 'true'
-    return HttpResponse(json.dumps(return_dict))
-  else:
-    return render(request, 'channel.html')
+  return HttpResponseRedirect('/feed/')
 
 #if fb fails to give a proper http response this is called from js with proper arguments to save
 #the users credentials
