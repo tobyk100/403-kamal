@@ -66,4 +66,4 @@ def twitter_callback(request):
   if user:
     twitter_account = TwitterAccount(user_id=user, access_token=token_info[0], access_secret=token_info[1])
     twitter_account.save()
-  return render(request, 'Feed.html')
+  return HttpResponseRedirect('/feed/')

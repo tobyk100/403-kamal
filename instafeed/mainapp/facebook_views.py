@@ -135,7 +135,7 @@ def facebook_callback(request):
     facebook_account.save()
     return_dict = {}
     return_dict['success'] = 'true'
-    return HttpResponseRedirect('/feed/')
+    return HttpResponse(json.dumps(return_dict))
   else:
     return render(request, 'channel.html')
 
