@@ -85,8 +85,13 @@ def schedule(request):
   year_list = [now.year, now.year + 1]
   month_list = [x for x in range(1, 13)]
   day_list = [x for x in range(1, 32)]
+  hour_list = [x for x in range(0, 24)]
+  minute_list = [x for x in range(0, 60)]
+  second_list = [x for x in range(0, 60)]
   return render(request, 'schedule.html', {'year_list': year_list, \
-      'month_list': month_list, 'day_list': day_list})
+      'month_list': month_list, 'day_list': day_list, \
+      'hour_list': hour_list, 'minute_list': minute_list, \
+      'second_list': second_list})
 
 def scheduled_update(request):
   # TODO handle a post/tweet that will be processed at a later date
