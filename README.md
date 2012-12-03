@@ -30,6 +30,6 @@ Views needed by front end javascript
 
 
 ######Scheduled update:
-*Javascript sends up a message that looks like this:
-    *{'post_site': <1,2,or 3>, 'message': <post>, 'year': <year>, 'month': <month>, 'day': <day>, 'hour': <hour>, 'second': <second>, 'microsecond': <microsecond>}
-    *AJAX call to /scheduled_update
+* Javascript sends up a message that looks like this:
+    * {'post_site': <1,2,or 3>, 'message': <post>, 'year': <year>, 'month': <month>, 'day': <day>, 'hour': <hour>, 'second': <second>, 'microsecond': <microsecond>}
+    * AJAX call to /scheduled_update
