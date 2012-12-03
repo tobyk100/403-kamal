@@ -40,7 +40,7 @@ urlpatterns = patterns('',
     url(r'^google_signin/', 'mainapp.google_views.google_signup', name='google_signup'),
     url(r'^google_callback_code', 'mainapp.google_views.google_callback_code', name='google_callback_code'),
     url(r'^google_get_posts', 'mainapp.google_views.google_get_posts', name='google_get_posts'),
-    url(r'^scheduled_update', 'mainapp.views.scheduled_update', name='store_scheduled_updates'),
+    url(r'^scheduled_update', 'mainapp.views.scheduled_update', name='scheduled_update'),
     url(r'^schedule', 'mainapp.views.schedule', name='schedule'),
     # url(r'^instafeed/', include('instafeed.foo.urls')),
 
