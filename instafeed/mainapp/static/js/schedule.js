@@ -1,5 +1,6 @@
 $(document).on('ready', function() {
     //bind submit button
+    alert("got into js");
     $('#submitScheduledPost').on('click', submit_scheduled_post);
 });
 
@@ -46,6 +47,7 @@ function submit_scheduled_post(){
     } else {
 	return;
     }
+    alert("calling shedule");
     //check to make sure all selected
     schedule_post(year, month, day, hour, message, post_site);
 }
