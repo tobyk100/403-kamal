@@ -165,35 +165,35 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
 }
 
 function loadTwitterFeed() {
-  $.ajax({
-    type: "POST",
-    url: "/twitter_request/",
-    data: {
-      type: "feedRequest"
-    },
-    datatype: "json",
-    error: function (data) {
-      displaysigninbutton('Twitter', signinToTwitter);
-    },
-    success: function (data) {
-      if(!data.success) {
-        displaysigninbutton('Twitter', signinToTwitter);
-      } else {
-        $('#twitterFeedPosts').empty();
-        var posts = data;
-        for (var i = 0, length = posts.tweets.length; i < length; i++) {
-          var post = posts.tweets[i];
-          createPostInTwitterFeed(
-              urlify(post.text),
-              post.created_at ,
-              post.user.name,
-              post.user.profile_image_url,
-              post.id
-          );
-        }
-      }
-    }
-  });
+    $.ajax({
+	type: "POST",
+	url: "/twitter_request/",
+	data: {
+	    type: "feedRequest"
+	},
+	datatype: "json",
+	error: function (data) {
+	    displaysigninbutton('Twitter', signinToTwitter);
+	},
+	success: function (data) {
+	    if(!data.success) {
+		displaysigninbutton('Twitter', signinToTwitter);
+	    } else {
+		$('#twitterFeedPosts').empty();
+		var posts = data;
+		for (var i = 0, length = posts.tweets.length; i < length; i++) {
+		    var post = posts.tweets[i];
+		    createPostInTwitterFeed(
+			urlify(post.text),
+			post.created_at ,
+			post.user.name,
+			post.user.profile_image_url,
+			post.id_str
+		    );
+		}
+	    }
+	}
+    });
 }
 
 /*
@@ -309,7 +309,6 @@ function facebookLike(id){
 
 function twitterRetweet(id){
     //call kevins function passing it an id to retweet for the user
-    // alert(id);
     $.ajax({
         type: 'POST',
         url:"/twitter_request/" ,

@@ -81,7 +81,7 @@ def facebook_comment(request):
     return response
   response['success'] = 'true'
   try:
-    facebook_api.facebook_comment_post(request.POST.get('postId'), request.POST.get('msg'), fb_account.access_token)
+    facebook_api.facebook_comment_post(request.POST.get('postId'), request.POST.get('message'), fb_account.access_token)
   except urllib2.HTTPError:
     print "Error: Token is invalid"
     return get_fb_url(1)
