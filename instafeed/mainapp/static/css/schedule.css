@@ -1,0 +1,24 @@
+select {
+  width: auto;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.container {
+  width: 500px;
+  padding: 0px 50px;
+  text-align: center;
+}
+
+form {
+  text-align: left;
+  width: 220px;
+  margin: 5px auto;
+}
+
+#textCount {
+  font-weight: 2em;
+  margin-right: 8px;
+}
