@@ -57,7 +57,7 @@ def twitter_retweet (access_token, access_secret, post_id):
   auth.set_access_token(access_token, access_secret)
 
   api = tweepy.API(auth)
-  try: 
+  try:
     api.retweet(post_id)
     return True
   except:
