@@ -120,4 +120,4 @@ def google_callback_code(request):
   account = GoogleAccount(user_id=request.user,
                           access_token=refresh_token)
   account.save()
-  return HttpResponseRedirect('/feed/')
+  return HttpResponseRedirect('/accounts/')
