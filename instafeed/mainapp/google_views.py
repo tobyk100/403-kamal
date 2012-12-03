@@ -15,22 +15,10 @@ def google_signup(request):
     response['success'] = False
     response['authenticated'] = False
     response['message'] = "No user signed in"
-    return HttpResponse(json.dumps(response), mimetype="application/json")
+    return HttpResponseServerError(json.dumps(response), mimetype="application/json")
 
-  account = GoogleAccount.get_account(request.user)
-  if account is None:
-    redirect = request_code(request)
-    redirect['success'] = True
-    redirect['authenticated'] = True
-    redirect['account'] = False
-    redirect['message'] = "User redirected to G+ for signin"
-    return redirect
-
-  response['success'] = False
-  response['authenticated'] = True
-  response['account'] = True
-  response['message'] = "User already signed up for G+"
-  return HttpResponse(json.dumps(response), mimetype="application/json")
+  redirect = request_code(request)
+  return redirect
 
 @csrf_exempt
 def google_get_posts(request):
@@ -116,8 +104,8 @@ def google_callback_code(request):
   response['authorized'] = (request.GET.get('error') != 'access_denied')
   if response['authorized']:
     response['code'] = request.GET.get('code')
-  refresh_token = request_refresh_token(response['code'])
-  account = GoogleAccount(user_id=request.user,
-                          access_token=refresh_token)
-  account.save()
+    refresh_token = request_refresh_token(response['code'])
+    account = GoogleAccount(user_id=request.user,
+                            access_token=refresh_token)
+    account.save()
   return HttpResponseRedirect('/accounts/')
