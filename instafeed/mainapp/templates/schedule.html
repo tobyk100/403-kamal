@@ -31,6 +31,24 @@
         <option value="{{i}}">{{i}}</option>
       {% endfor %}
     </select>
+    <select id="scheduleHour">
+      <option value="0">Hour</option>
+      {% for i in hour_list %}
+        <option value="{{i}}">{{i}}</option>
+      {% endfor %}
+    </select>
+    <select id="scheduleMinute">
+      <option value="0">Minute</option>
+      {% for i in minute_list %}
+        <option value="{{i}}">{{i}}</option>
+      {% endfor %}
+    </select>
+    <select id="scheduleSecond">
+      <option value="0">Second</option>
+      {% for i in second_list %}
+        <option value="{{i}}">{{i}}</option>
+      {% endfor %}
+    </select>
     <label>Content</label>
     <textarea rows="5" id="updateContent"></textarea>
     <div class="form-inline" id="postOption">
