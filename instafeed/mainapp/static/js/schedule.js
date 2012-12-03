@@ -50,3 +50,19 @@ function submit_scheduled_post(){
     //check to make sure all selected
     schedule_post(year, month, day, hour, message, post_site);
 }
+
+function countNewPostChars() {
+  if ($('#postOptionTwitter').is(':checked')) {
+    var count = $(this).val().length,
+        count_elem = $('#textCount');
+    count_elem.text(count);
+    if (count > 140) {
+      count_elem.addClass('text-error');
+    } else {
+      count_elem.removeClass('text-error');
+    }
+  } else {
+    $('#textCount').text('');
+  }
+}
+
