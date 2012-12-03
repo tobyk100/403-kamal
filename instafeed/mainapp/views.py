@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from models import ScheduledUpdates, TwitterAccount, FacebookAccount, Account
 import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required
@@ -93,17 +94,24 @@ def schedule(request):
       'hour_list': hour_list, 'minute_list': minute_list, \
       'second_list': second_list})
 
+@csrf_exempt
 def scheduled_update(request):
+  print "got to scheduled update"
   # TODO handle a post/tweet that will be processed at a later date
   request_json = request.POST
-  date_to_post = datetime.datetime(
-                    request_json.get('year'), \
-                    request_json.get('month'), \
-                    request_json.get('day'), \
-                    request_json.get('hour'),  \
-                    request_json.get('minute'), \
-                    request_json.get('second'), \
-                    request_json.get('microsecond') \
-                  )
+  print request_json
+  year = request_json.get('year')
+  month = request_json.get('month')
+  day = request_json.get('day')
+  hour = request_json.get('hour')
+  minute = request_json.get('minute')
+  second = request_json.get('second')
+  microsecond = request_json.get('microsecond')
+  print "" + year + " " + month + " " + day + " " + hour + " " + minute + " " + second + " " + microsecond
+  #TODO this fails and I have no idea why
+  date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
+  print "just got date"
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=request_json.get('post_site'))
+  print "tried to save"
   scheduled_update_entry.save()
+  print "saved"
