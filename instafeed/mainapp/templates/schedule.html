@@ -1,0 +1,39 @@
+{% extends "base_dashboard.html" %}
+
+{% block stylesheets %}
+  <link href="/static/css/schedule.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block scripts %}
+  <script src=/static/js/bootstrap.js type="text/javascript"></script>
+  <script src="/static/js/schedule.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="social_accounts_container">
+    <legend>Manage Social Networks</legend>
+    <div class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="signinToFacebook">Facebook</label>
+        <div class="controls">
+          <button id="signinToFacebook" class="btn">Facebook Login</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="signinToTwitter">Twitter</label>
+        <div class="controls">
+          <button id="signinToTwitter" class="btn">Twitter Login</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="signinToGooglePlus">Google+</label>
+        <div class="controls">
+          <button id="signinToGooglePlus" class="btn">Google Login</button>
+          <p class="text-warning">
+              <small>Warning: we do not support posting to Google+. </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

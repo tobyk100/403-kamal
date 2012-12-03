@@ -80,10 +80,13 @@ def logoutuser(request):
 def accounts(request):
   return render(request, 'Accounts.html')
 
+def schedule(request):
+  return render(request, 'schedule.html')
+
 def scheduled_update(request):
   # TODO handle a post/tweet that will be processed at a later date
   request_json = request.POST
   date_to_post = datetime.datetime(request_json.get('year'), request_json.get('month'), request_json.get('day'), request_json.get('hour'),  \
 				   request_json.get('minute'), request_json.get('second'), request_json.get('microsecond')
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, request_json.get('message'), date_to_post, request_json.get('post_site'))
-  scheduled_update.save() 
+  scheduled_update.save()
