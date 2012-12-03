@@ -10,30 +10,38 @@
 {% endblock %}
 
 {% block content %}
-  <div class="social_accounts_container">
-    <legend>Manage Social Networks</legend>
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="signinToFacebook">Facebook</label>
-        <div class="controls">
-          <button id="signinToFacebook" class="btn">Facebook Login</button>
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="signinToTwitter">Twitter</label>
-        <div class="controls">
-          <button id="signinToTwitter" class="btn">Twitter Login</button>
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="signinToGooglePlus">Google+</label>
-        <div class="controls">
-          <button id="signinToGooglePlus" class="btn">Google Login</button>
-          <p class="text-warning">
-              <small>Warning: we do not support posting to Google+. </small>
-          </p>
-        </div>
-      </div>
+  <legend>Scheduled Posting</legend>
+  <form>
+    <label>When</label>
+    <select id="scheduleYear">
+      <option value="0">Year</option>
+      {% for i in year_list %}
+        <option value="{{i}}">{{i}}</option>
+      {% endfor %}
+    </select>
+    <select id="scheduleMonth">
+      <option value="0">Month</option>
+      {% for i in month_list %}
+        <option value="{{i}}">{{i}}</option>
+      {% endfor %}
+    </select>
+    <select id="scheduleDay">
+      <option value="0">Day</option>
+      {% for i in day_list %}
+        <option value="{{i}}">{{i}}</option>
+      {% endfor %}
+    </select>
+    <label>Content</label>
+    <textarea rows="5" id="updateContent"></textarea>
+    <div class="form-inline" id="postOption">
+        <label class="checkbox">
+            <input type="checkbox" checked="checked" id="postOptionFacebook">Facebook
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" checked="checked" id="postOptionTwitter">Twitter
+        </label>
+        <span id="textCount"></span>
     </div>
-  </div>
+    <button class="btn btn-primary" type="submit">Submit Schedule</button>
+  </form>
 {% endblock %}
