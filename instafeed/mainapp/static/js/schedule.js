@@ -1,10 +1,11 @@
 $(document).on('ready', function() {
     $('#updateContent').bind('keyup keypress', countNewPostChars);
     //bind submit button
-    $('#scheduleForm').on('submit', submit_scheduled_post);
+    $('#sumbitScheduledPost').on('click', submit_scheduled_post);
 });
 
 function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
+    alert("ajax");
     $.ajax({
         type: 'POST',
         url: '/scheduled_update/',
@@ -22,7 +23,7 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
         },
         datatype: 'json',
         error: function(data) {
-          alert(data);
+          alert("failure" + data);
         },
         success: function(data) {
             alert("Message scheduled");
@@ -31,7 +32,7 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
 }
 
 function submit_scheduled_post(){
-    alert("button clicked");
+    //alert("button clicked");
     var year = $('#scheduleYear').val();
     var month = $('#scheduleMonth').val();
     var day = $('#scheduleDay').val();
@@ -50,11 +51,12 @@ function submit_scheduled_post(){
     }
     
     if (year == 'Year' || month == 'Month' || 
-	day == 'Day' || hour == 'Hour' || 
-	message == '') {
-	alert("Fill in all fields");
-	return;
+		day == 'Day' || hour == 'Hour' || 
+		message == '') {
+		alert("Fill in all fields");
+		return;
     }
+    alert("about to call ajax function");
     schedule_post(year, month, day, hour, message, post_site);
 }
 
