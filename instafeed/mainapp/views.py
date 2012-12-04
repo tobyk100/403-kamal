@@ -93,9 +93,11 @@ def schedule(request):
       'hour_list': hour_list, 'minute_list': minute_list, \
       'second_list': second_list})
 
+@login_required
 def scheduled_update(request):
   # TODO handle a post/tweet that will be processed at a later date
   request_json = request.POST
+  print "into view schedule"
   date_to_post = datetime.datetime(
                     request_json.get('year'), \
                     request_json.get('month'), \
