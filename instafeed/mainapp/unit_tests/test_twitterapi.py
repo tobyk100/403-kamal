@@ -5,6 +5,13 @@ from .. import twitter_api
 
 
 class TwitterApiTestCase(TestCase):
+
+  def test_twitter_authentication_url(self):
+    auth_url, key, secret = twitter_api.twitter_authentication_url()
+    self.assertNotEquals(auth_url, None)
+    self.assertNotEquals(key, None)
+    self.assertNotEquals(secret, None)
+
   def test_parse_datetime(self):
     d = datetime.datetime(2012, 8, 4, 12, 30, 45)
     d2 = datetime.datetime(2012, 12, 4, 0, 0, 0)
