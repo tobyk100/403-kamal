@@ -4,7 +4,7 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from models import ScheduledUpdates, TwitterAccount, FacebookAccount, Account
-import datetime
+import datetime, traceback, json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
@@ -36,7 +36,7 @@ def signup(request):
 
       # Since user does not have any accounts by the time they signe in,
       # we should redirect them to accounts page instead of feed page.
-      return redirect('/accounts/')
+      return redirect('/feed/')
 
   else:
     form = EmailUserCreationForm()
@@ -54,7 +54,7 @@ def signin(request):
       facebook_account = FacebookAccount.get_account(request_id=request.user.id)
       twitter_account = TwitterAccount.get_account(request_id=request.user.id)
       if facebook_account is None and twitter_account is None:
-        return redirect('/accounts/')
+        return redirect('/feed/', {'username': email})
       else:
         return redirect('/feed/', {'username': email})
     else:
@@ -112,8 +112,11 @@ def scheduled_update(request):
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
   date_to_post = timezone.make_aware(date_to_post, timezone.utc)
   site = int(request_json.get('post_site'))
+  #models.ScheduledUpdates.objects.creat
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
-  print "created object"
   scheduled_update_entry.save()
-  print "trying to save"
-  return HttpResponse(" ")
+  return_dict = {'success': 'true'}
+  return_json = json.dumps(return_dict)
+  return HttpResponse(return_json)
+
+
