@@ -15,10 +15,9 @@ class Command(BaseCommand):
                                             publish_date__day=now.day)
                                             #publish_date__hour=now.hour)
     for post in posts:
-      
-      if post.publish_site is 1 or 3:
-        fb_account = FacebookAccount.get_account(post.user_id)
-        facebook_api.facebook_post_feed(post.update, fb_account.access_token)
-      if post.publish_site is 2 or 3:
+      #if post.publish_site is 1 or 3:
+      #  fb_account = FacebookAccount.get_account(post.user_id)
+      #  facebook_api.facebook_post_feed(post.update, fb_account.access_token)
+      if post.publish_site is 2 or 3 and post.publish_date.hour == now.hour:
         twitter_account = TwitterAccount.get_account(post.user_id)
         twitter_api.twitter_post(twitter_account.access_token, twitter_account.access_secret, post.update)   
