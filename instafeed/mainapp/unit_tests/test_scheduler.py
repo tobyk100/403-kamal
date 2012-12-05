@@ -25,3 +25,4 @@ class SchedulerTestCase(TestCase):
         publish_date__day = self.when.day)
 #        publish_date__time = self.when.hour)
     self.assertTrue(events.count(), 1)
+    print type(events[0].publish_date)
