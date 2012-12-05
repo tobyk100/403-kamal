@@ -105,10 +105,19 @@ def scheduled_update(request):
   minute = int(request_json.get('minute'))
   second = int(request_json.get('second'))
   microsecond = int(request_json.get('microsecond'))
+  tz= request_json.get('timezone')
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
-  date_to_post = timezone.make_aware(date_to_post, pytz.timezone('US/Pacific'))
+  try:
+    print "got correct tz"
+    date_to_post = timezone.make_aware(date_to_post, pytz.timezone(tz))
+  except:
+    print "failed to get tz"
+    date_to_post = timezone.make_aware(date_to_post, timezone.utc)
   now = datetime.datetime.now()
-  now = timezone.make_aware(now, pytz.timezone('US/Pacific'))
+  try:
+    now = timezone.make_aware(now, pytz.timezone(tz))
+  except:
+    now = timezone.make_aware(now, pytz.timezone(timezone.utc))
   print now
   print date_to_post
   if now > date_to_post:
