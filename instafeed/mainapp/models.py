@@ -45,7 +45,7 @@ class ScheduledUpdates(models.Model):
 
   publish_date = models.DateTimeField()
 
-  pubish_site = models.IntegerField(max_length=10) #For now it will allow us to distinguish
+  publish_site = models.IntegerField(max_length=10) #For now it will allow us to distinguish
     #between the sites we want to post to
     #1=fb, 2=twitter, 3=both
     #We can change this later but I thought it

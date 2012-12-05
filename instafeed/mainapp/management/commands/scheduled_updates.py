@@ -6,12 +6,12 @@ import datetime, mainapp.twitter_views, mainapp.facebook_views
 class Command(BaseCommand):
 
   def handle(self, *args, **options):
-    now = datetime.datetime.now()
+    now = datetime.datetime.utcnow()
     #we can now call now.year, now.hour,  now.month, and now.day to figure out the exact date
     #querying the db returns datetime objects
     #TODO need to learn to query these date times correctly. For some reason giving me an error on hour
-    posts = ScheduledUpdates.objects.filter(publish_date__year=now.year,
-                                            publish_date__month=now.month,
+    posts = ScheduledUpdates.objects.filter(publish_date__year=now.year, \
+                                            publish_date__month=now.month, \
                                             publish_date__day=now.day)
                                             #publish_date__hour=now.hour)
     for post in posts:

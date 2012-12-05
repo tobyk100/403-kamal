@@ -1,9 +1,13 @@
 //Binds all appropriate buttons with clicks
 $(document).on('ready', function() {
+    loadFacebookFeed();
+    loadTwitterFeed();
+    loadGoogleFeed();
     $('#submitPostButton').on('click', submitPost);
-    $('#facebookRefreshButton').bind('click', loadFacebookFeed());
-    $('#twitterRefreshButton').bind('click', loadTwitterFeed());
-    $('#googleRefreshButton').bind('click', loadGoogleFeed());
+
+    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
+    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
+    $('#googleRefreshButton').bind('click', loadGoogleFeed);
     $('#postText').bind('keyup keypress', countNewPostChars);
     var refreshId = setInterval(function(){
       loadFacebookFeed();
@@ -160,7 +164,7 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
                   '<img src="/static/img/FacebookLogo.jpg" class="logo" alt="Facebook"/>' +
                   '<div class="nameTime">' + person + ' - ' +
                   formattedDate + '</div><div class="message">' + message +
-                  '<br> <a class="comment" href="#" onclick="facebookLike(\'' + id +  '\')">Like   </a>' +
+                  '<br> <a class="comment" id="likeid' + id + '" href="#" onclick="facebookLike(\'' + id +  '\')">Like   </a>' +
                   '<a class="comment" href="#" onclick="facebookComment(\'' + id + '\')">Comment</a></div></div>');
 }
 
@@ -301,6 +305,10 @@ function facebookLike(id){
             type: 'like'
         },
         datatype: 'json',
+        success: function(data){
+            var like_btn = $("#likeid" + id);
+            like_btn.text("Liked ");
+        },
         error: function(data) {
             alert(data);
         }
