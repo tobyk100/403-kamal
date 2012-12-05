@@ -69,9 +69,10 @@
         <th>Message</th>
       </tr>
     {% for post in posts %}
-    <tr>
+    <tr post-id={{post.id}}>
       <td>{{post.publish_date}}</td>
       <td> {{post.update}}</td>
+      <td></td>
     </tr>
     {% endfor %}
     </table>
