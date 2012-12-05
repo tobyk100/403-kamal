@@ -14,7 +14,10 @@ class Command(BaseCommand):
                                             publish_date__month=now.month, \
                                             publish_date__day=now.day)
                                             #publish_date__hour=now.hour)
+    
+    
     for post in posts:
+      print post.publish_date
       #if post.publish_site is 1 or 3:
       #  fb_account = FacebookAccount.get_account(post.user_id)
       #  facebook_api.facebook_post_feed(post.update, fb_account.access_token)
