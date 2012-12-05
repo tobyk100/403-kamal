@@ -90,6 +90,9 @@ def schedule(request):
   hour_list = [x for x in range(0, 24)]
   minute_list = [x for x in range(0, 60)]
   second_list = [x for x in range(0, 60)]
+  posts = []
+  if request.user is not None:
+    posts = ScheduledUpdates.objects.filter(user_id == request.user)
   return render(request, 'schedule.html', {'year_list': year_list, \
       'month_list': month_list, 'day_list': day_list, \
       'hour_list': hour_list, 'minute_list': minute_list, \
