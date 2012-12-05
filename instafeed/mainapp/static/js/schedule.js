@@ -2,7 +2,7 @@ $(document).on('ready', function() {
     $('#updateContent').bind('keyup keypress', countNewPostChars);
     //bind submit button
     $('#sumbitScheduledPost').on('click', submit_scheduled_post);
-    $('#scheduledPosts.edit-post"
+    //$('#scheduledPosts.delete-post").click(delete_scheduled
 });
 
 function schedule_post(year_, month_, day_, hour_, message_, post_site_) {

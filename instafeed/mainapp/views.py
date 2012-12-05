@@ -13,7 +13,7 @@ import pytz
 
 @login_required
 def feed(request):
-  return render(request, 'Feed.html')`
+  return render(request, 'Feed.html')
 
 @login_required
 def index(request):
