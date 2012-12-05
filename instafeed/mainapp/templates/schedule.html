@@ -63,4 +63,8 @@
     <button class="btn btn-primary" id="sumbitScheduledPost">Submit Schedule</button>
   </div>
   <legend>Schedule</legend>
+    <ul>
+    {% for post in posts %}
+    <li>{{post}}</li>
+    {% endfor %}
 {% endblock %}
