@@ -36,7 +36,6 @@ def twitter_request(request):
           one_user.access_secret,
           postId
       )
-      return_dict = None
       return_dict['success'] = success
   return_json = json.dumps(return_dict)
   return HttpResponse(return_json, mimetype="application/json")
