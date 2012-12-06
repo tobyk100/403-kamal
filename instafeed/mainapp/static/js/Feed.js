@@ -259,7 +259,7 @@ function createPostInTwitterFeed(message, time, person, profilePicture, id) {
                  '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                  '<div class="nameTime">' + person + ' - ' + time +
                  '</div><div class="message">' + message +
-                 '<br> <a class="comment" href="#" onclick="twitterRetweet(\'' + id + '\')">Retweet   </a>' +
+                 '<br> <a class="comment" id="retweetid' + id + '"  href="#" onclick="twitterRetweet(\'' + id + '\')">Retweet   </a>' +
                  ' <a class="comment" href="#" onclick="twitterReply(\'' + person + '\')">Reply </a></div></div>'
     );
 }
@@ -373,6 +373,11 @@ function twitterRetweet(id){
             type: 'retweet'
         },
         datatype: 'json',
+        success: function(data){
+          var retweet_btn = $("#retweetid" + id);
+          retweet_btn.text("Retweeted ");
+          
+        },
         error: function(data) {
             alert(data);
         }
