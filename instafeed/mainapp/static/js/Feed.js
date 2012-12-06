@@ -123,7 +123,10 @@ function loadFacebookFeed() {
   //if there are no posts currently displayed
   if($('#facebookFeedPosts').children().length == 0)
   {  
-    $('#facebookFeedPosts').text("LOADING...");
+    var load = $("<p>");
+    load.attr('id', 'loading_message');
+    load.text("Loading Facebook Posts...");
+    $('#facebookFeedPosts').append.load;
   }
   $.ajax({
     type: "POST",
