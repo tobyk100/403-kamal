@@ -130,6 +130,7 @@ function loadFacebookFeed() {
    
     var gif = $("<a>");
     gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    gif.attr('alt', 'loading gif');
     $('#facebookFeedPosts').append(gif);
   }
   $.ajax({
