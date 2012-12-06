@@ -374,6 +374,7 @@ function twitterRetweet(id){
         },
         datatype: 'json',
         success: function(data){
+          alert(id);
           var retweet_btn = $("#retweetid" + id);
           retweet_btn.text("Retweeted ");
           
