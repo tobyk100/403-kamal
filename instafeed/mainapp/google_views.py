@@ -106,7 +106,7 @@ def google_callback_code(request):
     response['code'] = request.GET.get('code')
     refresh_token = request_refresh_token(response['code'])
     account = GoogleAccount.get_account(request.user.id)
-    if user is None:
+    if account is None:
       account = GoogleAccount(user_id=request.user,
                               access_token=refresh_token)
     else:
