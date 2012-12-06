@@ -104,12 +104,8 @@ def google_callback_code(request):
   response['authorized'] = (request.GET.get('error') != 'access_denied')
   if response['authorized']:
     response['code'] = request.GET.get('code')
-    refresh_token = request_token(response['code'])
-    account = GoogleAccount.get_account(request.user.id)
-    if account is None:
-      account = GoogleAccount(user_id=request.user,
-                              access_token=refresh_token)
-    else:
-      account.access_token=refresh_token
+    refresh_token = request_refresh_token(response['code'])
+    account = GoogleAccount(user_id=request.user,
+                            access_token=refresh_token)
     account.save()
   return HttpResponseRedirect('/feed/')
