@@ -127,6 +127,10 @@ function loadFacebookFeed() {
     load.attr('id', 'loading_message');
     load.text("Loading Facebook Posts...");
     $('#facebookFeedPosts').append(load);
+   
+    var gif = $("<a>");
+    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    $('#facebookFeedPosts').append(gif);
   }
   $.ajax({
     type: "POST",
