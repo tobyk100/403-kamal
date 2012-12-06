@@ -123,13 +123,11 @@ function loadFacebookFeed() {
   //if there are no posts currently displayed
   if($('#facebookFeedPosts').children().length > 2)
   {  
-    alert('loading 1');
     $('#facebookFeedPosts').text("loading...");
   }
   else
   {
-    alert('loading 2');
-    alert($('#facebookFeedPosts').children().length);
+//    alert($('#facebookFeedPosts').children().length);
     $('#facebookFeedPosts').text("LOADING...");
   }
   $.ajax({
