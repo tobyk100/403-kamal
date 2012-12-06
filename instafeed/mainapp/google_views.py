@@ -112,4 +112,5 @@ def google_callback_code(request):
     else:
       account.access_token=refresh_token
     account.save()
-  return HttpResponseRedirect('/accounts/')
+  return HttpResponseRedirect('/feed/')
+#  return HttpResponseRedirect('/accounts/')
