@@ -2,8 +2,13 @@ $(document).on('ready', function() {
     $('#updateContent').bind('keyup keypress', countNewPostChars);
     //bind submit button
     $('#sumbitScheduledPost').on('click', submit_scheduled_post);
+    $('#scheduledPosts.delete-post').click(delete_scheduled_post);
 });
 
+function delete_scheduled_post() {
+  var post_id = $(this).parents($('tr').attr('post-id'));
+  alert("Deleting " + post_id);
+}
 function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
     alert("ajax");
     $.ajax({
@@ -19,6 +24,7 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
             microsecond: '0',
             message: message_,
             post_site: post_site_,
+            timezone: jstz.determine().name(),
             type: 'scheduled_post'
         },
         datatype: 'json',

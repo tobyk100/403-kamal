@@ -72,7 +72,10 @@
     <tr post-id={{post.id}}>
       <td>{{post.publish_date}}</td>
       <td> {{post.update}}</td>
-      <td></td>
+      <td>
+        <button class="btn edit-post">Edit</button>
+        <button class="btn delete-post">Delete</button>
+      </td>
     </tr>
     {% endfor %}
     </table>
