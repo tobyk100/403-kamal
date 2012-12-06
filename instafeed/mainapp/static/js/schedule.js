@@ -23,7 +23,7 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
         },
         datatype: 'json',
         error: function(data) {
-          alert("failure" + data);
+          alert("failure" + data.error);
         },
         success: function(data) {
             alert("Message scheduled");

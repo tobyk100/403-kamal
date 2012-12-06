@@ -78,10 +78,6 @@ def logoutuser(request):
   logout(request)
   return redirect('/')
 
-@login_required
-def accounts(request):
-  return render(request, 'Accounts.html')
-
 def schedule(request):
   now = datetime.datetime.now()
   year_list = [now.year, now.year + 1]
@@ -90,10 +86,11 @@ def schedule(request):
   hour_list = [x for x in range(0, 24)]
   minute_list = [x for x in range(0, 60)]
   second_list = [x for x in range(0, 60)]
+  posts = ScheduledUpdates.objects.filter(user_id = request.user) if request.user else []
   return render(request, 'schedule.html', {'year_list': year_list, \
       'month_list': month_list, 'day_list': day_list, \
       'hour_list': hour_list, 'minute_list': minute_list, \
-      'second_list': second_list})
+      'second_list': second_list, 'posts': posts})
 
 @csrf_exempt
 def scheduled_update(request):
