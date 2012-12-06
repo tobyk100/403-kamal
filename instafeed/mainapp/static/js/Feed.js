@@ -20,7 +20,7 @@ $(document).on('ready', function() {
 function loadFacebookFeedRefresh()
 {
   //clear out the old posts so the 'loading' message will be displayed when called
-  $('facebookFeedPosts').empty();
+  $('#facebookFeedPosts').empty();
   loadFacebookFeed();
 }
 
@@ -28,14 +28,14 @@ function loadFacebookFeedRefresh()
 function loadTwitterFeedRefresh()
 {
   //clear out the old posts so the 'loading' message will be displayed when called
-  $('twitterFeedPosts').empty();
+  $('#twitterFeedPosts').empty();
   loadTwitterFeed();
 }
 
 function loadGoogleFeedRefresh()
 {
   //clear out the old posts so the 'loading' message will be displayed when called
-  $('googleFeedPosts').empty();
+  $('#googleFeedPosts').empty();
   loadGoogleFeed();
 }
 
