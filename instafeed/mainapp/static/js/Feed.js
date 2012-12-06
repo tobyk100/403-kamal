@@ -3,6 +3,7 @@ $(document).on('ready', function() {
     loadFacebookFeed();
     loadTwitterFeed();
     loadGoogleFeed();
+    $('#test').on('click', loadFacebookFeed);
     $('#submitPostButton').on('click', submitPost);
     $('#facebookRefreshButton').bind('click', loadFacebookFeed);
     $('#twitterRefreshButton').bind('click', loadTwitterFeed);
