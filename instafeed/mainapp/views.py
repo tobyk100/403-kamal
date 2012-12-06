@@ -108,8 +108,8 @@ def scheduled_update(request):
   tz= request_json.get('timezone')
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
   try:
-    print "got correct tz"
     date_to_post = timezone.make_aware(date_to_post, pytz.timezone(tz))
+    print "got correct tz"
   except:
     print "failed to get tz"
     date_to_post = timezone.make_aware(date_to_post, timezone.utc)
