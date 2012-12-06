@@ -307,7 +307,7 @@ function facebookLike(id){
         datatype: 'json',
         success: function(data){
             var like_btn = $("#likeid" + id);
-            like_btn.text("liked");
+            like_btn.text("Liked ");
         },
         error: function(data) {
             alert(data);
