@@ -125,6 +125,10 @@ function loadFacebookFeed() {
   {  
     $('#facebookFeedPosts').val("loading...");
   }
+  else
+  {
+    $('#facebookFeedPosts').val("LOADING...");
+  }
   $.ajax({
     type: "POST",
     url: "/facebook_request/",
