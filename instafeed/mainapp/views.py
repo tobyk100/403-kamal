@@ -7,9 +7,7 @@ from models import ScheduledUpdates, TwitterAccount, FacebookAccount, Account
 import datetime, traceback, json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from pytz import timezone
 import pytz
-from django.utils import timezone
 
 
 @login_required
@@ -108,9 +106,9 @@ def scheduled_update(request):
   second = int(request_json.get('second'))
   microsecond = int(request_json.get('microsecond'))
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
-  date_to_post = timezone.make_aware(date_to_post, timezone('US/Pacific'))
+  date_to_post = timezone.make_aware(date_to_post, pytz.timezone('US/Pacific'))
   now = datetime.datetime.now()
-  now = timezone.make_aware(now, timezone('US/Pacific'))
+  now = timezone.make_aware(now, pytz.timezone('US/Pacific'))
   print now
   print date_to_post
   if now > date_to_post:
