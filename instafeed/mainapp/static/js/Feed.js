@@ -5,9 +5,9 @@ $(document).on('ready', function() {
     loadGoogleFeed();
     $('#submitPostButton').on('click', submitPost);
 
-    $('#facebookRefreshButton').bind('click', loadFacebookFeed);
-    $('#twitterRefreshButton').bind('click', loadTwitterFeed);
-    $('#googleRefreshButton').bind('click', loadGoogleFeed);
+    $('#facebookRefreshButton').bind('click', loadFacebookFeedRefresh);
+    $('#twitterRefreshButton').bind('click', loadTwitterFeedRefresh);
+    $('#googleRefreshButton').bind('click', loadGoogleFeedRefresh);
     $('#postText').bind('keyup keypress', countNewPostChars);
     var refreshId = setInterval(function(){
       loadFacebookFeed();
@@ -16,6 +16,29 @@ $(document).on('ready', function() {
     }, 60000);
     $('#postBox').on('hide', resetPostBox);
 });
+
+function loadFacebookFeedRefresh()
+{
+  //clear out the old posts so the 'loading' message will be displayed when called
+  $('facebookFeedPosts').empty();
+  loadFacebookFeed();
+}
+
+
+function loadTwitterFeedRefresh()
+{
+  //clear out the old posts so the 'loading' message will be displayed when called
+  $('twitterFeedPosts').empty();
+  loadTwitterFeed();
+}
+
+function loadGoogleFeedRefresh()
+{
+  //clear out the old posts so the 'loading' message will be displayed when called
+  $('googleFeedPosts').empty();
+  loadGoogleFeed();
+}
+
 
 function countNewPostChars() {
   if ($('#postOptionTwitter').is(':checked')) {
