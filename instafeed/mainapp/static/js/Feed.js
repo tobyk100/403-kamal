@@ -177,6 +177,14 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
 }
 
 function loadTwitterFeed() {
+  if($('#twitterFeedPosts').children().length == 0)
+  {  
+    var gif = $("<img>");
+    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    gif.attr('alt', 'loading gif');
+    $('#twitterFeedPosts').append(gif);
+  }
+
     $.ajax({
 	type: "POST",
 	url: "/twitter_request/",
