@@ -109,6 +109,7 @@ def scheduled_update(request):
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
   date_to_post = timezone.make_aware(date_to_post, timezone.utc)
   now = datetime.datetime.utcnow()
+  now = timezone.make_aware(now, timezone.utc)
   if now > date_to_post:
     return_dict = {'success': 'false'}
     return_dict['error'] = 'invalid date'
