@@ -36,7 +36,7 @@ def signup(request):
 
       # Since user does not have any accounts by the time they signe in,
       # we should redirect them to accounts page instead of feed page.
-      return redirect('/accounts/')
+      return redirect('/feed/')
 
   else:
     form = EmailUserCreationForm()
@@ -54,7 +54,7 @@ def signin(request):
       facebook_account = FacebookAccount.get_account(request_id=request.user.id)
       twitter_account = TwitterAccount.get_account(request_id=request.user.id)
       if facebook_account is None and twitter_account is None:
-        return redirect('/accounts/')
+        return redirect('/feed/', {'username': email})
       else:
         return redirect('/feed/', {'username': email})
     else:
