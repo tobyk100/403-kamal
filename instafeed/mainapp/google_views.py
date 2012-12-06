@@ -105,11 +105,11 @@ def google_callback_code(request):
   if response['authorized']:
     response['code'] = request.GET.get('code')
     refresh_token = request_refresh_token(response['code'])
-    user = GoogleAccount.get_account(request.user.id)
+    account = GoogleAccount.get_account(request.user.id)
     if user is None:
       account = GoogleAccount(user_id=request.user,
                               access_token=refresh_token)
     else:
-      user.access_token=refresh_token
+      account.access_token=refresh_token
     account.save()
   return HttpResponseRedirect('/accounts/')

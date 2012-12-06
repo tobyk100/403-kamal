@@ -120,6 +120,18 @@ function displaysigninbutton(name, fn) {
 }
 
 function loadFacebookFeed() {
+  //if there are no posts currently displayed
+  if($('#facebookFeedPosts').children().length == 0)
+  {  
+    var load = $("<p>");
+    load.attr('id', 'loading_message');
+    load.text("Loading Facebook Posts...");
+    $('#facebookFeedPosts').append(load);
+   
+    var gif = $("<a>");
+    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    $('#facebookFeedPosts').append(gif);
+  }
   $.ajax({
     type: "POST",
     url: "/facebook_request/",
@@ -307,7 +319,7 @@ function facebookLike(id){
         datatype: 'json',
         success: function(data){
             var like_btn = $("#likeid" + id);
-            like_btn.text("liked");
+            like_btn.text("Liked ");
         },
         error: function(data) {
             alert(data);
