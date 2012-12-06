@@ -108,6 +108,12 @@ def scheduled_update(request):
   microsecond = int(request_json.get('microsecond'))
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
   date_to_post = timezone.make_aware(date_to_post, timezone.utc)
+  now = datetime.datetime.utcnow()
+  if now > date_to_post:
+    return_dict = {'success': 'false'}
+    return_dict['error'] = 'invalid date'
+    return_json = json.dumps(return_dict)
+    return HttpResponse(return_json, status=400)
   site = int(request_json.get('post_site'))
   #models.ScheduledUpdates.objects.creat
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
