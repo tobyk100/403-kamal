@@ -5,13 +5,12 @@ import datetime
 from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from emailusernames.utils import create_user
-from pytz import timezone
-import pytz
+from django.utils import timezone
 
 class SchedulerTestCase(TestCase):
   def setUp(self):
     user = create_user(email="test@gmail.com", password="secret")
-    self.when = datetime.datetime(2013, 1, 2, 3, 4, 5, 6, timezone('US/Pacific'))
+    self.when = datetime.datetime(2012, 12, 6, 22, 4, 5, 6, timezone.utc)
     new = models.ScheduledUpdates.objects.create(user_id = user,
                                            update = "hey",
                                            publish_date = self.when,
@@ -25,4 +24,7 @@ class SchedulerTestCase(TestCase):
         publish_date__day = self.when.day)
 #        publish_date__time = self.when.hour)
     self.assertTrue(events.count(), 1)
-    print type(events[0].publish_date)
+    now = datetime.datetime.utcnow()
+    print events[0].publish_date
+    print now
+    print events[0].publish_date.hour == now.hour
