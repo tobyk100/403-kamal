@@ -128,7 +128,7 @@ function loadFacebookFeed() {
     load.text("Loading Facebook Posts...");
     $('#facebookFeedPosts').append(load);
    
-    var gif = $("<a>");
+    var gif = $("<img>");
     gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
     gif.attr('alt', 'loading gif');
     $('#facebookFeedPosts').append(gif);
