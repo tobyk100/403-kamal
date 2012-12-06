@@ -242,6 +242,15 @@ function createPostInTwitterFeed(message, time, person, profilePicture, id) {
 }
 
 function loadGoogleFeed() {
+
+  if($('#googleFeedPosts').children().length == 0)
+  {  
+    var gif = $("<img>");
+    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    gif.attr('alt', 'loading gif');
+    $('#googleFeedPosts').append(gif);
+  }
+
   $.ajax({
     type: "POST",
     url: "/google_get_posts/",
