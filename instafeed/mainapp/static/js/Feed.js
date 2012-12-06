@@ -125,7 +125,7 @@ function loadFacebookFeed() {
   {  
     var load = $("<p>");
     load.attr('id', 'loading_message');
-    load.val("Loading Facebook Posts...");
+    load.text("Loading Facebook Posts...");
     $('#facebookFeedPosts').append(load);
   }
   $.ajax({
