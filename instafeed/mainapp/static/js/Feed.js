@@ -5,8 +5,6 @@ $(document).on('ready', function() {
     loadGoogleFeed();
     $('#submitPostButton').on('click', submitPost);
 
-    $('#facebookRefreshButton').bind('click', loadFacebookFeedTest);
-
     $('#facebookRefreshButton').bind('click', loadFacebookFeed);
     $('#twitterRefreshButton').bind('click', loadTwitterFeed);
     $('#googleRefreshButton').bind('click', loadGoogleFeed);
@@ -18,11 +16,6 @@ $(document).on('ready', function() {
     }, 60000);
     $('#postBox').on('hide', resetPostBox);
 });
-
-function loadFacebookFeedTest()
-{
-  alert("refresh");
-}
 
 function countNewPostChars() {
   if ($('#postOptionTwitter').is(':checked')) {
