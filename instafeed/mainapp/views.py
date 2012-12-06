@@ -4,8 +4,9 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from models import ScheduledUpdates, TwitterAccount, FacebookAccount, Account
-import datetime
+import datetime, traceback
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 
 
 @login_required
@@ -35,7 +36,7 @@ def signup(request):
 
       # Since user does not have any accounts by the time they signe in,
       # we should redirect them to accounts page instead of feed page.
-      return redirect('/accounts/')
+      return redirect('/feed/')
 
   else:
     form = EmailUserCreationForm()
@@ -53,7 +54,7 @@ def signin(request):
       facebook_account = FacebookAccount.get_account(request_id=request.user.id)
       twitter_account = TwitterAccount.get_account(request_id=request.user.id)
       if facebook_account is None and twitter_account is None:
-        return redirect('/accounts/')
+        return redirect('/feed/', {'username': email})
       else:
         return redirect('/feed/', {'username': email})
     else:
@@ -96,22 +97,25 @@ def schedule(request):
 
 @csrf_exempt
 def scheduled_update(request):
-  print "got to scheduled update"
-  # TODO handle a post/tweet that will be processed at a later date
   request_json = request.POST
   print request_json
-  year = request_json.get('year')
-  month = request_json.get('month')
-  day = request_json.get('day')
-  hour = request_json.get('hour')
-  minute = request_json.get('minute')
-  second = request_json.get('second')
-  microsecond = request_json.get('microsecond')
-  print "" + year + " " + month + " " + day + " " + hour + " " + minute + " " + second + " " + microsecond
-  #TODO this fails and I have no idea why
+  year = int(request_json.get('year'))
+  month = int(request_json.get('month'))
+  day = int(request_json.get('day'))
+  hour = int(request_json.get('hour'))
+  minute = int(request_json.get('minute'))
+  second = int(request_json.get('second'))
+  microsecond = int(request_json.get('microsecond'))
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
-  print "just got date"
-  scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=request_json.get('post_site'))
-  print "tried to save"
-  scheduled_update_entry.save()
-  print "saved"
+  date_to_post = timezone.make_aware(date_to_post, timezone.utc)
+  site = int(request_json.get('post_site'))
+  scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
+  print "created object"
+  try:
+    scheduled_update_entry.save()
+  except Exception, e:
+    print "failed to save"
+    print e
+    traceback.print_stack()
+  print "trying to save"
+  return HttpResponse(" ")

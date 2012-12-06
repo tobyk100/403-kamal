@@ -22,7 +22,7 @@ def facebook_read_user_status_updates(access_token):
 
   queries['query1'] = "SELECT filter_key FROM stream_filter WHERE uid=me() AND type='newsfeed'"
 
-  queries['query2'] = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM #query1) AND is_hidden = 0"
+  queries['query2'] = "SELECT post_id, actor_id, target_id, message, created_time FROM stream WHERE filter_key in (SELECT filter_key FROM #query1) AND is_hidden = 0 LIMIT 50"
 
   queries['query3'] = "SELECT first_name, last_name, uid FROM user WHERE uid IN (SELECT actor_id FROM #query2)"
 
@@ -74,7 +74,9 @@ def facebook_read_user_status_updates(access_token):
 #it in action.
 def facebook_auth():
   F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status', 'offline_access']
-  return F.authenticate()
+  short_token = F.authenticate()
+  params = {'client_id' : F.APP_ID, 'grant_type' : 'fb_exchange_token', 'fb_exchange_token' : short_token}
+  return F.graph_post('/oauth/access_token', params)
 
 #Returns the url the user needs to be redirected to to log into Facebook.
 #If you use this function, front end will have to handle the redirect and
@@ -105,24 +107,30 @@ def facebook_comment_post(post_id, comment, access_token):
 #Make sure you are logged out of Facebook or the get access_token will fail
 def main():
   #Log in to facebook to get your access token
-# access_token = facebook_auth()
-  access_token = 'AAACEdEose0cBAPIcbq4Uzw5LQprCIwdA30VtOkk1bhjFG4I8E4cgyKJM0CaZCCizQtSDIwc6x2xmeORHojXQDKQeDZAFKZA4ZBS3OZBfTX7rAN3ZAeM6hG'
+#  access_token = facebook_auth()
+#  access_token = 'AAACEdEose0cBAPIcbq4Uzw5LQprCIwdA30VtOkk1bhjFG4I8E4cgyKJM0CaZCCizQtSDIwc6x2xmeORHojXQDKQeDZAFKZA4ZBS3OZBfTX7rAN3ZAeM6hG'
+
+  access_token = 'AAAB3it3ZCDuMBAKbOT8LHfca6tELK8cwI4WGvnw4aMFZBZBizsNAn4Vbk48DvBAEyZCLVevmTMHaYMMz8rXCDMwHs7m1jWuk1f53WEDsW7cPNWfSOu9F'
+
+
+
 
   #Update your status
-  post = "Postinadsfg from InstaFeed!adsawwdsfadxsfa"
+#  post = "Postinadsfg from InstaFeed!adsawwdsfadxsfa"
 #  facebook_post_feed(post, access_token);
 
   #View your news feed
   posts = facebook_read_user_status_updates(access_token);
 
   #Like the first post!
-  post_id = posts[0][4];
-  facebook_like_post(post_id, access_token);
+#  post_id = posts[0][4];
+#  facebook_like_post(post_id, access_token);
 
   #Comment on the post!
-  comment = "COMMENTING FROM INSTAFEED!!!"
-  facebook_comment_post(post_id, comment, access_token);
+#  comment = "COMMENTING FROM INSTAFEED!!!"
+#  facebook_comment_post(post_id, comment, access_token);
 
+  count = 0;
   #Print the posts out
   for post in posts:
     print "--- Next Post ---"
@@ -132,6 +140,9 @@ def main():
     print "image: " + post[3]
     print "post_id" + post[4]
     print ""
+    count += 1
+
+  print 'count: ' + str(count)
 
 #for debugging
 if __name__ == "__main__":
