@@ -75,7 +75,7 @@ def facebook_read_user_status_updates(access_token):
 def facebook_auth():
   F.AUTH_SCOPE = ['publish_stream', 'read_stream', 'user_status', 'offline_access']
   short_token = F.authenticate()
-  params = {'client_id' : F.APP_ID, 'grant_type' : 'fb_exchange_token', 'fb_exchange_token' : short_token} 
+  params = {'client_id' : F.APP_ID, 'grant_type' : 'fb_exchange_token', 'fb_exchange_token' : short_token}
   return F.graph_post('/oauth/access_token', params)
 
 #Returns the url the user needs to be redirected to to log into Facebook.

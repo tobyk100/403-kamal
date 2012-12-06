@@ -4,7 +4,7 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from models import ScheduledUpdates, TwitterAccount, FacebookAccount, Account
-import datetime
+import datetime, traceback
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
@@ -111,7 +111,11 @@ def scheduled_update(request):
   site = int(request_json.get('post_site'))
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
   print "created object"
-  import pdb; pdb.set_trace()
-  scheduled_update_entry.save()
+  try:
+    scheduled_update_entry.save()
+  except Exception, e:
+    print "failed to save"
+    print e
+    traceback.print_stack()
   print "trying to save"
   return HttpResponse(" ")
