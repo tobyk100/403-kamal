@@ -4,7 +4,7 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from models import ScheduledUpdates, TwitterAccount, FacebookAccount, Account
-import datetime, traceback
+import datetime, traceback, json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
@@ -104,14 +104,19 @@ def scheduled_update(request):
   microsecond = int(request_json.get('microsecond'))
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
   date_to_post = timezone.make_aware(date_to_post, timezone.utc)
+  now = datetime.datetime.utcnow()
+  now = timezone.make_aware(now, timezone.utc)
+  if now > date_to_post:
+    return_dict = {'success': 'false'}
+    return_dict['error'] = 'invalid date'
+    return_json = json.dumps(return_dict)
+    return HttpResponse(return_json, status=400)
   site = int(request_json.get('post_site'))
+  #models.ScheduledUpdates.objects.creat
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
-  print "created object"
-  try:
-    scheduled_update_entry.save()
-  except Exception, e:
-    print "failed to save"
-    print e
-    traceback.print_stack()
-  print "trying to save"
-  return HttpResponse(" ")
+  scheduled_update_entry.save()
+  return_dict = {'success': 'true'}
+  return_json = json.dumps(return_dict)
+  return HttpResponse(return_json)
+
+
