@@ -365,6 +365,7 @@ function facebookLike(id){
 
 function twitterRetweet(id){
     //call kevins function passing it an id to retweet for the user
+    alert(id + "!");
     $.ajax({
         type: 'POST',
         url:"/twitter_request/" ,
