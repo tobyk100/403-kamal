@@ -120,6 +120,15 @@ function displaysigninbutton(name, fn) {
 }
 
 function loadFacebookFeed() {
+  //if there are no posts currently displayed
+  if($('#facebookFeedPosts').children().length > 2)
+  {  
+    $('#facebookFeedPosts').val("loading...");
+  }
+  else
+  {
+    $('#facebookFeedPosts').val("LOADING...");
+  }
   $.ajax({
     type: "POST",
     url: "/facebook_request/",
