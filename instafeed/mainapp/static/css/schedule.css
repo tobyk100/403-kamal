@@ -19,15 +19,16 @@ form {
 }
 #scheduleForm {
   float: left;
-  width: 500px;
-  border-right: 1px solid gray;
+  width: 499px;
 }
 #scheduledPosts {
   float: left;
-  width: 250px;
+  width: 499px;
 }
 #scheduledPosts table {
-  
+  border-left: 1px solid gray;
+  padding-left: 25px;
+  border-collapse: separate;
 }
 #textCount {
   font-weight: 2em;
