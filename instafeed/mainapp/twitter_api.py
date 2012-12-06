@@ -37,7 +37,12 @@ def twitter_post (access_token, access_secret, text):
   auth.set_access_token(access_token, access_secret)
 
   api = tweepy.API(auth)
-  api.update_status(text)
+  try:
+    api.update_status(text)
+    return True
+  except tweepy.TweepError as e:
+    print e
+    return False
 
 def twitter_home_timeline (access_token, access_secret, count):
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -60,7 +65,8 @@ def twitter_retweet (access_token, access_secret, post_id):
   try:
     api.retweet(post_id)
     return True
-  except:
+  except tweepy.TweepError as e:
+    print e
     return False
 
 
