@@ -62,7 +62,7 @@ def twitter_retweet (access_token, access_secret, post_id):
     return True
   except:
     return False
-  
+
 
 def _parse_status (status):
   return {'contributors': status.contributors,
