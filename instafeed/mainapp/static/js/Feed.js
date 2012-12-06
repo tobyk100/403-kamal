@@ -129,6 +129,7 @@ function loadFacebookFeed() {
   else
   {
     alert('loading 2');
+    alert($('#facebookFeedPosts').children().length);
     $('#facebookFeedPosts').text("LOADING...");
   }
   $.ajax({
