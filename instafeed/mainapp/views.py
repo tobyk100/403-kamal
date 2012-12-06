@@ -111,7 +111,6 @@ def scheduled_update(request):
   site = int(request_json.get('post_site'))
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
   print "created object"
-  import pdb; pdb.set_trace()
   scheduled_update_entry.save()
   print "trying to save"
   return HttpResponse(" ")
