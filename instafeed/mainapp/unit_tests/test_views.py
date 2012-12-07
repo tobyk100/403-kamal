@@ -28,7 +28,19 @@ class ViewsTestCase(TestCase):
   def test_signup(self):
     response = self.client.get('/signup/')
     self.assertEquals(response.status_code, 200)
+    self.assertContains(response,
+                        "<title>Instafeed</title>",
+                        status_code=200)
+    self.assertContains(response,
+                        "<h1><a href=\"/\">Instafeed</a></h1>",
+                        status_code=200)
 
   def test_faq_request(self):
     response = self.client.get('/faq/')
     self.assertEquals(response.status_code, 200)
+    self.assertContains(response,
+                        "<title>Instafeed</title>",
+                        status_code=200)
+    self.assertContains(response,
+                        "<h1>FAQ</h1>",
+                        status_code=200)
