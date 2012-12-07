@@ -7,7 +7,7 @@ button {
 }
 
 .container {
-  width: 500px;
+  width: 1000px;
   padding: 0px 50px;
   text-align: center;
 }
@@ -17,7 +17,19 @@ form {
   width: 250px;
   margin: 5px auto;
 }
-
+#scheduleForm {
+  float: left;
+  width: 499px;
+}
+#scheduledPosts {
+  float: left;
+  width: 499px;
+}
+#scheduledPosts table {
+  border-left: 1px solid gray;
+  padding-left: 25px;
+  border-collapse: separate;
+}
 #textCount {
   font-weight: 2em;
   margin-right: 8px;

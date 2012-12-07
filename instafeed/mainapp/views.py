@@ -4,9 +4,10 @@ from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from models import ScheduledUpdates, TwitterAccount, FacebookAccount, Account
-import datetime, traceback
+import datetime, traceback, json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+import pytz
 
 
 @login_required
@@ -78,10 +79,6 @@ def logoutuser(request):
   logout(request)
   return redirect('/')
 
-@login_required
-def accounts(request):
-  return render(request, 'Accounts.html')
-
 def schedule(request):
   now = datetime.datetime.now()
   year_list = [now.year, now.year + 1]
@@ -90,10 +87,12 @@ def schedule(request):
   hour_list = [x for x in range(0, 24)]
   minute_list = [x for x in range(0, 60)]
   second_list = [x for x in range(0, 60)]
+  posts = ScheduledUpdates.objects.filter(user_id = request.user).order_by(
+      "publish_date") if request.user else []
   return render(request, 'schedule.html', {'year_list': year_list, \
       'month_list': month_list, 'day_list': day_list, \
       'hour_list': hour_list, 'minute_list': minute_list, \
-      'second_list': second_list})
+      'second_list': second_list, 'posts': posts})
 
 @csrf_exempt
 def scheduled_update(request):
@@ -106,16 +105,31 @@ def scheduled_update(request):
   minute = int(request_json.get('minute'))
   second = int(request_json.get('second'))
   microsecond = int(request_json.get('microsecond'))
+  tz= request_json.get('timezone')
   date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
-  date_to_post = timezone.make_aware(date_to_post, timezone.utc)
+  try:
+    date_to_post = timezone.make_aware(date_to_post, pytz.timezone(tz))
+    print "got correct tz"
+  except:
+    print "failed to get tz"
+    date_to_post = timezone.make_aware(date_to_post, timezone.utc)
+  now = datetime.datetime.now()
+  try:
+    now = timezone.make_aware(now, pytz.timezone(tz))
+  except:
+    now = timezone.make_aware(now, pytz.timezone(timezone.utc))
+  print now
+  print date_to_post
+  if now > date_to_post:
+    return_dict = {'success': 'false'}
+    return_dict['error'] = 'invalid date'
+    return_json = json.dumps(return_dict)
+    return HttpResponse(return_json, status=400)
   site = int(request_json.get('post_site'))
   scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
-  print "created object"
-  try:
-    scheduled_update_entry.save()
-  except Exception, e:
-    print "failed to save"
-    print e
-    traceback.print_stack()
-  print "trying to save"
-  return HttpResponse(" ")
+  scheduled_update_entry.save()
+  return_dict = {'success': 'true'}
+  return_json = json.dumps(return_dict)
+  return HttpResponse(return_json)
+
+
