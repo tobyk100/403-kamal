@@ -37,26 +37,26 @@
         <option value="{{i}}">{{i}}</option>
       {% endfor %}
     </select>
-    <select id="scheduleMinute">
+   <!-- <select id="scheduleMinute">
       <option value="0">Minute</option>
       {% for i in minute_list %}
         <option value="{{i}}">{{i}}</option>
       {% endfor %}
     </select>
-    <select id="scheduleSecond">
+   <select id="scheduleSecond">
       <option value="0">Second</option>
       {% for i in second_list %}
         <option value="{{i}}">{{i}}</option>
       {% endfor %}
-    </select>
+    </select> -->
     <label>Content</label>
     <textarea rows="5" id="updateContent"></textarea>
     <div class="form-inline" id="postOption">
         <label class="checkbox">
-            <input type="checkbox" checked="checked" id="postOptionFacebook">Facebook
+            <input type="checkbox" disabled="true" checked="false" id="postOptionFacebook">Facebook (Coming Soon)
         </label>
         <label class="checkbox">
-            <input type="checkbox" checked="checked" id="postOptionTwitter">Twitter
+            <input type="checkbox" disabled="true" checked="checked" id="postOptionTwitter">Twitter
         </label>
         <span id="textCount"></span>
     </div>
