@@ -23,7 +23,6 @@ urlpatterns = patterns('',
     url(r'^password_change_done/', 'django.contrib.auth.views.password_change_done'), \
 
     url(r'^feed/', 'mainapp.views.feed', name='feed'),
-    url(r'^accounts/','mainapp.views.accounts', name='accounts'),
     url(r'^twitter_request/', 'mainapp.twitter_views.twitter_request', name='twitter_request'),
     url(r'^facebook_request/', 'mainapp.facebook_views.facebook_request', name='fb_request'),
     url(r'^twitter_signin/', 'mainapp.twitter_views.twitter_signin', name='twitter_signin'),
