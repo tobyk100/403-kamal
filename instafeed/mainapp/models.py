@@ -38,13 +38,22 @@ class TwitterAccount(Account):
   access_secret = models.CharField(max_length=255)
 
 class ScheduledUpdates(models.Model):
+  # Returns the preceding updae by date ascending.
+  # Example usage:
+  #  update = ScheduledUpdates.objects.get(id = 5)
+  #  prev = update.get_previous
+  def get_previous_id(self):
+    updates = ScheduledUpdates.objects.filter(user_id = self.user_id,
+                                              publish_date__lt = self.publish_date)\
+        .order_by("-publish_date")
+    if len(updates) > 0:
+      return updates[0].id
+    else:
+      return 0
 
   user_id = models.ForeignKey(User) #maps update to user
-
   update = models.CharField(max_length=255)
-
   publish_date = models.DateTimeField()
-
   publish_site = models.IntegerField(max_length=10) #For now it will allow us to distinguish
     #between the sites we want to post to
     #1=fb, 2=twitter, 3=both

@@ -6,8 +6,22 @@ $(document).on('ready', function() {
 });
 
 function delete_scheduled_post() {
-  var post_id = $(this).parents('tr').attr('post-id');
-  alert("Deleting " + post_id);
+  var $post_row = $(this).parents('tr');
+  var post_id = $post_row.attr('post-id');
+  $.ajax({
+      type: 'POST',
+      url: '/delete_scheduled_update/',
+      data: {
+        post_id: post_id
+      },
+      datatype: 'json',
+      error: function(data) {
+        alert("failure" + data.error);
+      },
+      success: function(data) {
+        $post_row.hide('slow', function() { $post_row.remove() });
+      }
+  });
 }
 function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
     alert("ajax");
@@ -32,7 +46,17 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
           alert("failure" + data.error);
         },
         success: function(data) {
-            alert("Message scheduled");
+          var preceding_id = data.preceding_id;
+          var $rendered_update = $(data.rendered_update);
+//          $rendered_update.find('
+          $rendered_update.hide();
+          if (preceding_id == 0) {
+            $rendered_update.insertAfter($('.table tbody .header'));
+            $rendered_update.show('slow');
+          } else {
+            $rendered_update.insertAfter($('tr[post-id$="' + preceding_id + '"]'));
+            $rendered_update.show('slow');
+          }
         }
     });
 }
