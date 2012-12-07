@@ -90,7 +90,7 @@ function submitFacebookComment(msg , id) {
         datatype: 'json',
         error: function(data) {
             //$(location).attr('href',data);
-          alert(data);
+          alert("Error posting Facebook comment.\n Please re-login and try again");
         }
     });
 }
@@ -119,7 +119,12 @@ function submitPostHelper(msg, url) {
         datatype: 'json',
         error: function(data) {
             //$(location).attr('href',data);
-          alert(data);
+            //alert(data);
+	    if(url == '/facebook_request/'){
+		alert("Error posting to Facebook. \n Please re-login and try again.");
+	    } else {
+		alert("Error posting to Twitter. \n Please re-login and try again.");
+	    }
         }
     });
 }
