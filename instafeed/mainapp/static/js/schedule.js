@@ -15,16 +15,12 @@ function delete_scheduled_post() {
         post_id: post_id
       },
       datatype: 'json',
-      error: function(data) {
-        alert("failure" + data.error);
-      },
       success: function(data) {
         $post_row.hide('slow', function() { $post_row.remove() });
       }
   });
 }
 function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
-    alert("ajax");
     $.ajax({
         type: 'POST',
         url: '/scheduled_update/',
@@ -43,12 +39,11 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
         },
         datatype: 'json',
         error: function(data) {
-          alert("failure" + data.error);
         },
         success: function(data) {
           var preceding_id = data.preceding_id;
           var $rendered_update = $(data.rendered_update);
-//          $rendered_update.find('
+          $rendered_update.find('.delete-post').click(delete_scheduled_post);
           $rendered_update.hide();
           if (preceding_id == 0) {
             $rendered_update.insertAfter($('.table tbody .header'));
@@ -62,7 +57,6 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
 }
 
 function submit_scheduled_post(){
-    //alert("button clicked");
     var year = $('#scheduleYear').val();
     var month = $('#scheduleMonth').val();
     var day = $('#scheduleDay').val();
@@ -86,7 +80,6 @@ function submit_scheduled_post(){
 		alert("Fill in all fields");
 		return;
     }
-    alert("about to call ajax function");
     schedule_post(year, month, day, hour, message, post_site);
 }
 
