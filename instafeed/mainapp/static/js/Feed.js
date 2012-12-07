@@ -88,7 +88,7 @@ function submitFacebookComment(msg , id) {
             type: 'comment'
         },
         datatype: 'json',
-        error: function(data) {
+        error: function (data) {
             //$(location).attr('href',data);
           alert("Error posting Facebook comment.\n Please re-login and try again");
         }
@@ -117,13 +117,12 @@ function submitPostHelper(msg, url) {
             type: 'upload'
         },
         datatype: 'json',
-        error: function(data) {
+        error: function (data) {
             //$(location).attr('href',data);
-            //alert(data);
 	    if(url == '/facebook_request/'){
-		alert("Error posting to Facebook. \n Please re-login and try again.");
+		alert("Error posting to Facebook.\nPlease re-login and try again.");
 	    } else {
-		alert("Error posting to Twitter. \n Please re-login and try again.");
+		alert("Error posting to Twitter.\nPlease re-login and try again.");
 	    }
         }
     });
@@ -363,7 +362,7 @@ function facebookLike(id){
             like_btn.text("Liked ");
         },
         error: function(data) {
-            alert(data);
+            alert("Error liking post. Retry.");
         }
     });
 }
@@ -384,7 +383,7 @@ function twitterRetweet(id){
           
         },
         error: function(data) {
-            alert(data);
+            alert("Error retweeting post. Retry.");
         }
     });
 }
