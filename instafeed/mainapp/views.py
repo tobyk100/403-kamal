@@ -79,6 +79,10 @@ def logoutuser(request):
   logout(request)
   return redirect('/')
 
+@login_required
+def accounts(request):
+  return render(request, 'Accounts.html')
+
 def schedule(request):
   now = datetime.datetime.now()
   year_list = [now.year, now.year + 1]
