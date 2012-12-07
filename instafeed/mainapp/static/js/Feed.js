@@ -119,7 +119,7 @@ function submitPostHelper(msg, url) {
         datatype: 'json',
         error: function(data) {
             //$(location).attr('href',data);
-            //alert(data);
+            alert(data);
 	    if(url == '/facebook_request/'){
 		alert("Error posting to Facebook. \n Please re-login and try again.");
 	    } else {
