@@ -148,9 +148,9 @@ function displaysigninbutton(name, fn) {
 function loadFacebookFeed() {
   //if there are no posts currently displayed
   if($('#facebookFeedPosts').children().length == 0)
-  {  
+  {
     var gif = $("<img>");
-    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif');
     gif.attr('alt', 'loading gif');
     $('#facebookFeedPosts').append(gif);
   }
@@ -204,9 +204,9 @@ function createPostInFacebookFeed(message, time, person, img_src, id){
 
 function loadTwitterFeed() {
   if($('#twitterFeedPosts').children().length == 0)
-  {  
+  {
     var gif = $("<img>");
-    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif');
     gif.attr('alt', 'loading gif');
     $('#twitterFeedPosts').append(gif);
   }
@@ -271,9 +271,9 @@ function createPostInTwitterFeed(message, time, person, profilePicture, id, scre
 function loadGoogleFeed() {
 
   if($('#googleFeedPosts').children().length == 0)
-  {  
+  {
     var gif = $("<img>");
-    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif'); 
+    gif.attr('src', 'http://www.henley-putnam.edu/Portals/_default/Skins/henley/images/loading.gif');
     gif.attr('alt', 'loading gif');
     $('#googleFeedPosts').append(gif);
   }
@@ -311,7 +311,7 @@ function createPostInGoogleFeed(message, time, person, profilePicture) {
           date.toLocaleString().substring(0,3) +
           ' ' +
       date.toLocaleTimeString()
-    );   
+    );
 
     $('#googleFeedPosts').append('<div class ="FeedPost">' +
                  '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
@@ -380,7 +380,7 @@ function twitterRetweet(id){
         success: function(data){
           var retweet_btn = $("#retweetid" + id);
           retweet_btn.text("Retweeted ");
-          
+
         },
         error: function(data) {
             alert("Error retweeting post. Retry.");
@@ -401,6 +401,6 @@ function twitterReply(person){
     $("#postOptionFacebook").attr("disabled", true);
     $("#submitPostButton").text("Submit Reply");
     $("#myModalLabel").text("New Twitter Reply");
-    $("#postText").val("@" + person);
+    $("#postText").val("@" + person + ' ');
     $("#postButton").click();
 }
