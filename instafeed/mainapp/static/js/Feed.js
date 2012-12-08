@@ -362,7 +362,7 @@ function facebookLike(id){
             like_btn.text("Liked ");
         },
         error: function(data) {
-            alert(data);
+            alert("Error liking post. Retry.");
         }
     });
 }
@@ -383,7 +383,7 @@ function twitterRetweet(id){
           
         },
         error: function(data) {
-            alert(data);
+            alert("Error retweeting post. Retry.");
         }
     });
 }
