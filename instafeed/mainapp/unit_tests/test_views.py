@@ -21,9 +21,39 @@ class ViewsTestCase(TestCase):
     response = self.client.post('/logout/')
     self.assertEquals(response.status_code, 302)
 
+  def test_dashboard(self):
+    response = self.client.get('/')
+    User.objects.create_user('fakename', 'fake@pukkared.com', 'mypassword')
+    res = self.client.login(email='fake@pukkared.com', password='mypassword')
+    response = self.client.post('/feed/')
+
+    self.assertContains(response,
+                        "<h1><a href=\"/\">Instafeed</a></h1>",
+                        status_code=200)
+    self.assertContains(response,
+                        "<li><a href=\"/feed/\">Feeds</a></li>",
+                        status_code=200)
+    self.assertContains(response,
+                        "<li><a href=\"/schedule/\">Scheduled Posting</a></li>",
+                        status_code=200)
+    self.assertContains(response,
+                        "<li><a href=\"/faq/\">FAQ</a></li>",
+                        status_code=200)
+    self.assertContains(response,
+                        "<li><a href=\"/password_change/\">Change my password</a></li>",
+                        status_code=200)
+    self.assertContains(response,
+                        "<li><a href="/logout/">Log out</a></li>",
+                        status_code=200)
+
+
+
   def test_feed(self):
     response = self.client.post('/feed/')
     self.assertEquals(response.status_code, 302)
+    self.assertContains(response,
+                        "<title>Instafeed</title>",
+                        status_code=302)
 
   def test_signup(self):
     response = self.client.get('/signup/')
