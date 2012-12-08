@@ -4,7 +4,6 @@ $(document).on('ready', function() {
     loadTwitterFeed();
     loadGoogleFeed();
     $('#submitPostButton').on('click', submitPost);
-
     $('#facebookRefreshButton').bind('click', loadFacebookFeedRefresh);
     $('#twitterRefreshButton').bind('click', loadTwitterFeedRefresh);
     $('#googleRefreshButton').bind('click', loadGoogleFeedRefresh);
@@ -396,12 +395,12 @@ function twitterReply(person){
     //fill in @person in text area and block off facebook check
     //submit it like you would a normal post
     //change post popup back to normal
-    $("#myModalLabel").text("New Twitter Reply");
     $("#postOptionTwitter").attr("checked", true);
     $("#postOptionFacebook").attr("checked", false);
     $("#postOptionTwitter").attr("disabled", true);
     $("#postOptionFacebook").attr("disabled", true);
     $("#submitPostButton").text("Submit Reply");
+    $("#myModalLabel").text("New Twitter Reply");
+    $("#postText").val("@" + person + ' ');
     $("#postButton").click();
-    $("#postText").text("@" + person + ' ');
 }
