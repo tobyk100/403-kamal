@@ -401,7 +401,7 @@ function twitterReply(person){
     $("#postOptionFacebook").attr("checked", false);
     $("#postOptionTwitter").attr("disabled", true);
     $("#postOptionFacebook").attr("disabled", true);
-    $("#postText").text("@" + person);
     $("#submitPostButton").text("Submit Reply");
     $("#postButton").click();
+    $("#postText").text("@" + person);
 }
