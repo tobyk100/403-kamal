@@ -108,7 +108,6 @@ def delete_scheduled_update(request):
 @csrf_exempt
 def scheduled_update(request):
   request_json = request.POST
-  print request_json
   year = int(request_json.get('year'))
   month = int(request_json.get('month'))
   day = int(request_json.get('day'))
@@ -128,8 +127,6 @@ def scheduled_update(request):
     now = timezone.make_aware(now, pytz.timezone(tz))
   except:
     now = timezone.make_aware(now, pytz.timezone(timezone.utc))
-  print now
-  print date_to_post
   if now > date_to_post:
     return_dict = {'success': 'false'}
     return_dict['error'] = 'invalid date'
