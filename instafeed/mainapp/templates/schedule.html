@@ -37,18 +37,12 @@
         <option value="{{i}}">{{i}}</option>
       {% endfor %}
     </select>
-   <!-- <select id="scheduleMinute">
+   <select id="scheduleMinute">
       <option value="0">Minute</option>
       {% for i in minute_list %}
         <option value="{{i}}">{{i}}</option>
       {% endfor %}
     </select>
-   <select id="scheduleSecond">
-      <option value="0">Second</option>
-      {% for i in second_list %}
-        <option value="{{i}}">{{i}}</option>
-      {% endfor %}
-    </select> -->
     <label>Content</label>
     <textarea rows="5" id="updateContent"></textarea>
     <div class="form-inline" id="postOption">
@@ -65,19 +59,12 @@
   </div>
   <div id="scheduledPosts">
      <table class="table">
-      <tr>
+      <tr class="header">
         <th>Date</th>
         <th>Message</th>
       </tr>
     {% for post in posts %}
-    <tr post-id={{post.id}}>
-      <td>{{post.publish_date}}</td>
-      <td> {{post.update}}</td>
-      <td>
-        <button class="btn edit-post">Edit</button>
-        <button class="btn delete-post">Delete</button>
-      </td>
-    </tr>
+    {% include "schedule_post.html" with id=post.id publish_date=post.publish_date update=post.update %}
     {% endfor %}
     </table>
   </div>

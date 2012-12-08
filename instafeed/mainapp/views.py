@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from emailusernames.forms import EmailUserCreationForm, EmailAuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -90,13 +91,19 @@ def schedule(request):
   day_list = [x for x in range(1, 32)]
   hour_list = [x for x in range(0, 24)]
   minute_list = [x for x in range(0, 60)]
-  second_list = [x for x in range(0, 60)]
   posts = ScheduledUpdates.objects.filter(user_id = request.user).order_by(
       "publish_date") if request.user else []
   return render(request, 'schedule.html', {'year_list': year_list, \
       'month_list': month_list, 'day_list': day_list, \
-      'hour_list': hour_list, 'minute_list': minute_list, \
-      'second_list': second_list, 'posts': posts})
+      'hour_list': hour_list, 'minute_list': minute_list, 'posts': posts})
+
+@csrf_exempt
+def delete_scheduled_update(request):
+  post_id = request.POST.get('post_id')
+  post = ScheduledUpdates.objects.get(id = post_id)
+  post.delete()
+  return_dict = {'success': 'false'}
+  return HttpResponse(json.dumps(return_dict), mimetype="application/json")
 
 @csrf_exempt
 def scheduled_update(request):
@@ -110,30 +117,34 @@ def scheduled_update(request):
   second = int(request_json.get('second'))
   microsecond = int(request_json.get('microsecond'))
   tz= request_json.get('timezone')
-  date_to_post = datetime.datetime(year, month, day, hour, minute, second, microsecond)
+  date_to_post = datetime.datetime(year, month, day, hour, minute, second,
+                                   microsecond)
   try:
     date_to_post = timezone.make_aware(date_to_post, pytz.timezone(tz))
-    print "got correct tz"
   except:
-    print "failed to get tz"
     date_to_post = timezone.make_aware(date_to_post, timezone.utc)
   now = datetime.datetime.now()
   try:
     now = timezone.make_aware(now, pytz.timezone(tz))
   except:
     now = timezone.make_aware(now, pytz.timezone(timezone.utc))
-  print now
-  print date_to_post
   if now > date_to_post:
     return_dict = {'success': 'false'}
     return_dict['error'] = 'invalid date'
     return_json = json.dumps(return_dict)
-    return HttpResponse(return_json, status=400)
+    return HttpResponse(return_json, status=400, mimetype="application/json")
   site = int(request_json.get('post_site'))
-  scheduled_update_entry = ScheduledUpdates(user_id=request.user, update=request_json.get('message'), publish_date=date_to_post, publish_site=site)
-  scheduled_update_entry.save()
+  scheduled_update_entry = ScheduledUpdates.objects.create(
+                                            user_id=request.user,
+                                            update=request_json.get('message'),
+                                            publish_date=date_to_post,
+                                            publish_site=site)
+  preceding_id = scheduled_update_entry.get_previous_id()
   return_dict = {'success': 'true'}
-  return_json = json.dumps(return_dict)
-  return HttpResponse(return_json)
-
+  return_dict['rendered_update'] = render_to_string('schedule_post.html',
+      {'id': scheduled_update_entry.id,
+       'publish_date': scheduled_update_entry.publish_date,
+       'update': scheduled_update_entry.update})
+  return_dict['preceding_id'] = preceding_id
+  return HttpResponse(json.dumps(return_dict), mimetype="application/json")
 
