@@ -3,6 +3,14 @@ $(document).on('ready', function() {
     //bind submit button
     $('#sumbitScheduledPost').on('click', submit_scheduled_post);
     $('#scheduledPosts .delete-post').click(delete_scheduled_post);
+    $('#datepicker').datepicker();
+    $('#timepicker').timepicker({
+      minutes: {
+        starts: 0,                // First displayed minute
+        ends: 55,                 // Last displayed minute
+        interval: 10               // Interval of displayed minutes
+      }
+     });
 });
 
 function delete_scheduled_post() {
@@ -59,11 +67,13 @@ function schedule_post(year_, month_, day_, hour_, minute_, message_, post_site_
 }
 
 function submit_scheduled_post(){
-    var year = $('#scheduleYear').val();
-    var month = $('#scheduleMonth').val();
-    var day = $('#scheduleDay').val();
-    var hour = $('#scheduleHour').val();
-    var minute = $('#scheduleMinute').val();
+    var $date = $('#datepicker').datepicker('getDate');
+    var $timepicker = $('#timepicker');
+    var year = $date.getFullYear();
+    var month = $date.getMonth() + 1;
+    var day = $date.getUTCDate();
+    var hour = $timepicker.timepicker('getHour');
+    var minute = $timepicker.timepicker('getMinute');
     var message = $('#updateContent').val();
     var post_site = 0;
     if ($('#postOptionFacebook').is(':checked') &&

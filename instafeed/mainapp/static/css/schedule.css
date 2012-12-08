@@ -7,8 +7,7 @@ button {
 }
 
 .container {
-  width: 1000px;
-  padding: 0px 50px;
+  width: 1130px;
   text-align: center;
 }
 
@@ -19,16 +18,26 @@ form {
 }
 #scheduleForm {
   float: left;
-  width: 499px;
+  width: 625px;
+  border-right: 1px solid gray;
+}
+#schedulers
+{
+  overflow: auto;
 }
 #scheduledPosts {
   float: left;
   width: 499px;
 }
 #scheduledPosts table {
-  border-left: 1px solid gray;
   padding-left: 25px;
   border-collapse: separate;
+}
+#updateContent
+{
+  width: 400px;
+  height: 200px;
+  resize: none;
 }
 #textCount {
   font-weight: 2em;
@@ -38,4 +47,17 @@ form {
 {
   color: red;
   display: none;
+}
+#datepicker
+{
+  float: left;
+  height: auto;
+  margin-right: 10px;
+}
+.ui-datepicker
+{
+  width: 14em;
+}
+.form-inline .checkbox input[type="checkbox"] {
+  margin-right: 0px;
 }

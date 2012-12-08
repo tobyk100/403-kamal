@@ -13,37 +13,9 @@
   <legend>Scheduled Posting</legend>
   <div id="scheduleForm">
     <label>When</label>
-    <div id="date-selectors">
-      <select id="scheduleYear">
-        <option value="0">Year</option>
-        {% for i in year_list %}
-          <option value="{{i}}">{{i}}</option>
-        {% endfor %}
-      </select>
-      <select id="scheduleMonth">
-        <option value="0">Month</option>
-        {% for i in month_list %}
-          <option value="{{i}}">{{i}}</option>
-        {% endfor %}
-      </select>
-      <select id="scheduleDay">
-        <option value="0">Day</option>
-        {% for i in day_list %}
-          <option value="{{i}}">{{i}}</option>
-        {% endfor %}
-      </select>
-      <select id="scheduleHour">
-        <option value="0">Hour</option>
-        {% for i in hour_list %}
-          <option value="{{i}}">{{i}}</option>
-        {% endfor %}
-      </select>
-     <select id="scheduleMinute">
-        <option value="0">Minute</option>
-        {% for i in minute_list %}
-          <option value="{{i}}">{{i}}</option>
-        {% endfor %}
-      </select>
+    <div id="schedulers">
+      <div id="datepicker"></div>
+      <div id="timepicker"></div>
     </div>
     <p id="invalid-date">Date/time has already passed</p>
     <label>Content</label>
