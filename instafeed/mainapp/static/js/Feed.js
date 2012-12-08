@@ -235,7 +235,8 @@ function loadTwitterFeed() {
 			post.created_at ,
 			post.user.name,
 			post.user.profile_image_url,
-			post.id_str
+			post.id_str,
+			post.user.screen_name
 		    );
 		}
 	    }
@@ -257,14 +258,14 @@ function loadTwitterFeed() {
 
  */
 
-function createPostInTwitterFeed(message, time, person, profilePicture, id) {
+function createPostInTwitterFeed(message, time, person, profilePicture, id, screen_name) {
     $('#twitterFeedPosts').append('<div class ="FeedPost">' +
                  '<img src=\'' + profilePicture + '\' class="user_img" alt="User Avatar"/>' +
                  '<img src="/static/img/TwitterLogo.jpg" class="logo" alt="Facebook"/>' +
                  '<div class="nameTime">' + person + ' - ' + time +
                  '</div><div class="message">' + message +
                  '<br> <a class="comment" id="retweetid' + id + '"  href="#" onclick="twitterRetweet(\'' + id + '\')">Retweet   </a>' +
-                 ' <a class="comment" href="#" onclick="twitterReply(\'' + person + '\')">Reply </a></div></div>'
+                 ' <a class="comment" href="#" onclick="twitterReply(\'' + screen_name + '\')">Reply </a></div></div>'
     );
 }
 
