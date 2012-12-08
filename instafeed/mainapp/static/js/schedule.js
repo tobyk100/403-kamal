@@ -20,7 +20,7 @@ function delete_scheduled_post() {
       }
   });
 }
-function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
+function schedule_post(year_, month_, day_, hour_, minute_, message_, post_site_) {
     $.ajax({
         type: 'POST',
         url: '/scheduled_update/',
@@ -29,7 +29,7 @@ function schedule_post(year_, month_, day_, hour_, message_, post_site_) {
             month: month_,
             day: day_,
             hour: hour_,
-            minute: '0',
+            minute: minute_,
             second: '0',
             microsecond: '0',
             message: message_,
@@ -61,6 +61,7 @@ function submit_scheduled_post(){
     var month = $('#scheduleMonth').val();
     var day = $('#scheduleDay').val();
     var hour = $('#scheduleHour').val();
+    var minute = $('#scheduleMinute').val();
     var message = $('#updateContent').val();
     var post_site = 0;
     if ($('#postOptionFacebook').is(':checked') &&
@@ -80,7 +81,7 @@ function submit_scheduled_post(){
 		alert("Fill in all fields");
 		return;
     }
-    schedule_post(year, month, day, hour, message, post_site);
+    schedule_post(year, month, day, hour, minute, message, post_site);
 }
 
 function countNewPostChars() {
