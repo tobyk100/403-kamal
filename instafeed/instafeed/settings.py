@@ -157,3 +157,9 @@ if 'test' in sys.argv:
     'ENGINE': 'django.db.backends.sqlite3',
     'NAME': 'mydatabase'
   }
+
+from django.contrib.sites.models import Site
+my_site = Site.objects.get(pk=1)
+my_site.domain = 'dry-peak-6840.herokuapp.com'
+my_site.name = 'Instafeed'
+my_site.save()
