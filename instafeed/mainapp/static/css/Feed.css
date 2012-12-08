@@ -94,11 +94,16 @@ textarea#postText {
   display: inline-block;
   border:  1pt solid black;
   width: 360px;
-  height: 570px;
+  height: 600px;
+  overflow: none;
   background-color: white;
-  overflow-y: scroll;
   margin-left: 12px;
   vertical-align: bottom;
+}
+
+.feedInnerCol {
+    height: 570px;
+    overflow-y: auto;
 }
 
 .feedsDisplayCol .header {
