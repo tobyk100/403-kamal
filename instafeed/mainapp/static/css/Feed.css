@@ -94,9 +94,9 @@ textarea#postText {
   display: inline-block;
   border:  1pt solid black;
   width: 360px;
-  height: 600px;
+  height: 570px;
   background-color: white;
-  overflow: auto;
+  overflow-y: scroll;
   margin-left: 12px;
   vertical-align: bottom;
 }
