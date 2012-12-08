@@ -141,9 +141,7 @@ def scheduled_update(request):
   preceding_id = scheduled_update_entry.get_previous_id()
   return_dict = {'success': 'true'}
   return_dict['rendered_update'] = render_to_string('schedule_post.html',
-      {'id': scheduled_update_entry.id,
-       'publish_date': scheduled_update_entry.publish_date,
-       'update': scheduled_update_entry.update})
+      {'post': scheduled_update_entry})
   return_dict['preceding_id'] = preceding_id
   return HttpResponse(json.dumps(return_dict), mimetype="application/json")
 
