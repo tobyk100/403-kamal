@@ -25,4 +25,5 @@ class Command(BaseCommand):
       if post.publish_site is 2 or 3 and post.publish_date.hour == now.hour:
         twitter_account = TwitterAccount.get_account(post.user_id)
         twitter_api.twitter_post(twitter_account.access_token, twitter_account.access_secret, post.update)
-        post.delete()
+        post.posted = True
+        post.save()

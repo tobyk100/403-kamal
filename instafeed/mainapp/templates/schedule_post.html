@@ -1,7 +1,11 @@
-<tr post-id={{id}} >
-    <td>{{publish_date}}</td>
-    <td> {{update}}</td>
+<tr post-id={{post.id}} class={% if post.posted %} "posted" {% else %} "unposted" {% endif %} >
+  <td>{{post.publish_date}}</td>
+    <td> {{post.update}}</td>
     <td>
+      {% if post.posted %}
+      <p>Posted</p>
+      {% else %}
       <button class="btn delete-post">Delete</button>
+      {% endif %}
     </td>
   </tr>

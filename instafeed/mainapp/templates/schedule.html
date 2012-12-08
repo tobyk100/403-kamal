@@ -67,7 +67,7 @@
         <th>Message</th>
       </tr>
     {% for post in posts %}
-    {% include "schedule_post.html" with id=post.id publish_date=post.publish_date update=post.update %}
+    {% include "schedule_post.html" %}
     {% endfor %}
     </table>
   </div>

@@ -27,7 +27,8 @@ def twitter_authenticate (verifier, request_token, request_secret):
 
   try:
     auth.get_access_token(verifier)
-  except tweepy.TweepError:
+  except tweepy.TweepError as e:
+    print "tweepy error" + str(e)
     return None
 
   return (auth.access_token.key, auth.access_token.secret)
