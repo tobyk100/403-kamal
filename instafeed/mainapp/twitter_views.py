@@ -51,7 +51,9 @@ def twitter_signin(request):
 #need to test this
 def twitter_callback(request):
   if request.GET.get('denied'):
+    print "denied"
     return HttpResponseRedirect('/feed/')
+  print "not denied"
   verifier = request.GET.get('oauth_verifier')
   token_info = twitter_api.twitter_authenticate(verifier, request.session['request_token'], request.session['request_secret'])
   user = request.user
