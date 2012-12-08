@@ -50,6 +50,7 @@ textarea#postText {
 }
 
 .message {
+   overflow-wrap: break-word;
    font-size: small;
    float: left;
    display: block;
