@@ -34,3 +34,8 @@ form {
   font-weight: 2em;
   margin-right: 8px;
 }
+#invalid-date
+{
+  color: red;
+  display: none;
+}

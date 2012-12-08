@@ -39,8 +39,10 @@ function schedule_post(year_, month_, day_, hour_, minute_, message_, post_site_
         },
         datatype: 'json',
         error: function(data) {
+          $('#invalid-date').show();
         },
         success: function(data) {
+          $('#invalid-date').hide();
           var preceding_id = data.preceding_id;
           var $rendered_update = $(data.rendered_update);
           $rendered_update.find('.delete-post').click(delete_scheduled_post);
