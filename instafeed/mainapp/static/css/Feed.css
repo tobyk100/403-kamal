@@ -45,12 +45,12 @@ textarea#postText {
   overflow: hidden;
 }
 
-.NameTime {
-    font-size: small;
+.FeedPost .nameTime {
+    font-weight: bold;
 }
 
 .message {
-   font-size: medium;
+   font-size: small;
    float: left;
    display: block;
    width: 265px; /* set the width of the text of a post */
