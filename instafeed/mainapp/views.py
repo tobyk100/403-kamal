@@ -108,7 +108,6 @@ def delete_scheduled_update(request):
 @csrf_exempt
 def scheduled_update(request):
   request_json = request.POST
-  print request_json
   year = int(request_json.get('year'))
   month = int(request_json.get('month'))
   day = int(request_json.get('day'))
