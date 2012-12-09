@@ -115,7 +115,7 @@ def scheduled_update(request):
   minute = int(request_json.get('minute'))
   second = int(request_json.get('second'))
   microsecond = int(request_json.get('microsecond'))
-  tz= request_json.get('timezone')
+  tz = request_json.get('timezone')
   date_to_post = datetime.datetime(year, month, day, hour, minute, second,
                                    microsecond)
   try:
