@@ -1,5 +1,5 @@
 Django==1.4.1
-Flask==0.7.2
+Flask==1.0
 Jinja2==2.6
 Werkzeug==0.7.1
 apiclient==1.0.2
