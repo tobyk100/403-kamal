@@ -16,5 +16,5 @@ pytz==2012h
 requests==0.10.4
 simplejson==2.2.1
 tweepy==1.11
-urllib3==1.5
+urllib3==1.26.5
 wsgiref==0.1.2
